@@ -7,6 +7,7 @@ const PACKS = [
     title: 'Pencil Proof Pack',
     tagline: 'Thinking & speaking without writing',
     videos: 6,
+    coinLabel: 'reflection participation',
     exercises: ['Explain a picture in 60 seconds', 'Retell a story without notes', 'Describe how something works'],
     challenges: ['30-second explanation challenge', 'Teach an imaginary friend', 'Explain using only simple words'],
     coins: 40,
@@ -20,6 +21,7 @@ const PACKS = [
     title: 'Kidinomics Pack',
     tagline: 'Understanding value, effort, and contribution',
     videos: 5,
+    coinLabel: 'value creation actions',
     exercises: ['Explain how you helped someone', 'Describe why something is valuable', 'Role-play giving help'],
     challenges: ['Create value without money', 'Choose effort over reward', 'Help someone & explain the change'],
     coins: 35,
@@ -33,34 +35,63 @@ const PACKS = [
     title: 'Self-Awareness Pack',
     tagline: 'Myers-Briggs inspired — no labels, just insight',
     videos: 5,
-    exercises: ['Choose how you would solve a problem', 'Reflect on what feels easy', 'Compare two learning styles'],
-    challenges: ['Try the opposite style', 'Explain your preference', 'Listen before speaking'],
+    coinLabel: 'reflection participation',
+    exercises: [
+      'Choose how you would solve a problem',
+      'Explain how a friend thinks differently',
+      'Reflect: what feels easy, what feels hard',
+    ],
+    challenges: [
+      'Try the opposite style for 5 minutes',
+      'Explain your preference without judging',
+      'Listen first, then speak challenge',
+    ],
     coins: 30,
     vnd: '20,000',
     sponsorLabel: 'Understanding Minds Pack',
     color: '#b083ff',
   },
   {
-    id: 'body-calm',
+    id: 'water-confidence',
     icon: '🏊',
-    title: 'Body & Calm Confidence Pack',
-    tagline: 'Breathing, body regulation, and calm presence',
+    title: 'Swimming & Water Confidence',
+    tagline: 'Breathing, calm, and body confidence',
     videos: 5,
-    exercises: ['Breathing rhythm practice', 'Calm posture speaking', 'Body scan & reset'],
-    challenges: ['Speak slower than usual', 'Stay calm while speaking', '60-second calm reset'],
+    coinLabel: 'calm participation',
+    exercises: ['Breathing with rhythm', 'Body relaxation scan', 'Calm voice practice'],
+    challenges: [
+      'Hold calm breath while speaking',
+      'Speak slower than normal',
+      'Stay calm under mild pressure',
+    ],
     coins: 30,
     vnd: '20,000',
     sponsorLabel: 'Calm & Courage Pack',
     color: '#4de8b0',
   },
   {
+    id: 'body-regulation',
+    icon: '🧘',
+    title: 'Body Intelligence & Regulation',
+    tagline: 'Your body affects your voice and presence',
+    videos: 5,
+    coinLabel: 'consistency',
+    exercises: ['Posture check + speaking', 'Movement + naming feelings', 'Slow movement storytelling'],
+    challenges: ['Speak while standing strong', 'Notice tension and release it', 'Calm reset in 60 seconds'],
+    coins: 30,
+    vnd: '20,000',
+    sponsorLabel: 'Calm Focus Pack',
+    color: '#4de8b0',
+  },
+  {
     id: 'voice-presence',
     icon: '🗣️',
-    title: 'Voice & Presence Pack',
-    tagline: 'How to be heard without force',
+    title: 'Voice, Presence & Expression',
+    tagline: 'Speaking so people listen — without volume',
     videos: 6,
-    exercises: ['Read with emotion', 'Pause before speaking', 'Change tone, same sentence'],
-    challenges: ['Tell a story with pauses', 'Speak with calm confidence', 'Use voice, not volume'],
+    coinLabel: 'speaking participation',
+    exercises: ['Read aloud with emotion', 'Change tone, same sentence', 'Pause before speaking'],
+    challenges: ['Speak with calm confidence', 'Tell a story with pauses', 'Use voice, not volume'],
     coins: 40,
     vnd: '30,000',
     sponsorLabel: 'Confident Voice Pack',
@@ -69,10 +100,11 @@ const PACKS = [
   {
     id: 'social-systems',
     icon: '🤝',
-    title: 'Social Systems Pack',
+    title: 'Social Systems & Group Dynamics',
     tagline: 'Group intelligence & cooperation',
     videos: 5,
-    exercises: ['Role rotation', 'Group decision explanation', 'Reflect on teamwork'],
+    coinLabel: 'cooperation',
+    exercises: ['Role rotation activity', 'Group decision explanation', 'Reflect on teamwork moments'],
     challenges: ['Support someone else first', 'Let someone else lead', 'Explain group success'],
     coins: 35,
     vnd: '25,000',
@@ -82,11 +114,12 @@ const PACKS = [
   {
     id: 'systems-thinking',
     icon: '🧩',
-    title: 'Systems Thinking Pack',
-    tagline: 'Cause, effect & growth',
+    title: 'Systems Thinking (Age-Scaled)',
+    tagline: 'Cause, effect & growth — everything connects',
     videos: 5,
-    exercises: ['Explain a simple system', 'Predict outcomes', 'Fix a broken system'],
-    challenges: ['Trace what happens next', 'Improve a process', 'Explain how change spreads'],
+    coinLabel: 'problem solving',
+    exercises: ['Explain a simple system', 'Trace what happens next', 'Identify feedback loops'],
+    challenges: ['Predict an outcome', 'Fix a broken system', 'Explain how change spreads'],
     coins: 35,
     vnd: '25,000',
     sponsorLabel: 'Future Thinkers Pack',
@@ -95,11 +128,12 @@ const PACKS = [
   {
     id: 'confidence-engineering',
     icon: '🎯',
-    title: 'Confidence Engineering Pack',
-    tagline: 'Building courage step-by-step',
+    title: 'Confidence Engineering',
+    tagline: 'Confidence is built — small wins matter',
     videos: 5,
-    exercises: ['Speak once more than yesterday', 'Repeat tasks calmly', 'Celebrate effort verbally'],
-    challenges: ['Do one uncomfortable thing', 'Speak without fear of mistakes', 'Try again challenge'],
+    coinLabel: 'consistency streaks',
+    exercises: ['Speak once more than yesterday', 'Repeat a task with ease', 'Celebrate effort verbally'],
+    challenges: ['Do something slightly uncomfortable', 'Speak without fear of mistakes', 'Try again challenge'],
     coins: 40,
     vnd: '30,000',
     sponsorLabel: 'Brave Steps Pack',
@@ -108,11 +142,12 @@ const PACKS = [
   {
     id: 'life-skills',
     icon: '🛠️',
-    title: 'Life Skills Pack',
-    tagline: 'Real-world communication',
+    title: 'Life Skills & Practical Intelligence',
+    tagline: 'Real-world communication that matters',
     videos: 5,
+    coinLabel: 'real-world application',
     exercises: ['Role-play daily situations', 'Explain a problem clearly', 'Practice polite disagreement'],
-    challenges: ['Ask a clear question', 'Explain your plan', 'Solve a daily issue verbally'],
+    challenges: ['Ask a clear question', 'Explain your plan', 'Solve a daily problem verbally'],
     coins: 35,
     vnd: '25,000',
     sponsorLabel: 'Ready for Life Pack',
@@ -149,6 +184,7 @@ const packCard = (p) => `
           <span class="coin-icon">🪙</span>
           <strong>${p.coins}</strong>
           <span>coins</span>
+          <span class="coin-context">${p.coinLabel}</span>
         </div>
         <div class="unlock-opt pay-opt">
           <span>💳</span>
@@ -389,7 +425,7 @@ document.querySelector('#app').innerHTML = `
         <div class="section-head">
           <p class="kicker">App-Ready Content</p>
           <h2>Content Packages</h2>
-          <p class="lead">9 self-contained, repeatable learning packs. Each is designed to build a specific life skill alongside English fluency.</p>
+          <p class="lead">10 self-contained, repeatable learning packs. Each builds a specific life skill alongside English fluency — usable across all ages and regions.</p>
         </div>
         <div class="packs-filter">
           <button class="filter-btn active" data-filter="all">All Packs</button>
@@ -413,26 +449,26 @@ document.querySelector('#app').innerHTML = `
           <div class="guarantee-grid">
             <div class="guarantee-item">
               <span class="gi-icon">📚</span>
-              <strong>Core learning is never locked</strong>
-              <p>Every student gets full access to the core program regardless of coins or payment.</p>
+              <strong>No child is blocked from learning</strong>
+              <p>Every student gets full access to the core program regardless of coins or payment. Core learning is never locked.</p>
             </div>
             <div class="guarantee-item">
-              <span class="gi-icon">🌿</span>
-              <strong>Coins encourage contribution, not pressure</strong>
-              <p>The coin system rewards participation. It never creates stress or exclusion.</p>
+              <span class="gi-icon">🌱</span>
+              <strong>Coins reward contribution</strong>
+              <p>The coin system recognises participation and consistency. It never creates pressure, rankings, or exclusion.</p>
             </div>
             <div class="guarantee-item">
               <span class="gi-icon">⚖️</span>
-              <strong>Payments unlock convenience, not status</strong>
-              <p>Paying unlocks extra depth. It never grants higher standing in the learning cell.</p>
+              <strong>Payments unlock convenience</strong>
+              <p>Payments unlock extra depth and repetition only. They never grant higher standing in a learning cell.</p>
             </div>
             <div class="guarantee-item">
               <span class="gi-icon">🤲</span>
-              <strong>Sponsors unlock access, not influence</strong>
-              <p>Sponsor gifts open packs for students. They don't affect program design or delivery.</p>
+              <strong>Sponsors unlock access</strong>
+              <p>Sponsor gifts open packs for students. They do not affect program design, delivery, or cell dynamics.</p>
             </div>
           </div>
-          <p class="guarantee-footer">This keeps the Producing Model fundamentally human.</p>
+          <p class="guarantee-footer">Only extra depth and repetition are gated. This keeps the Producing Model fundamentally human.</p>
         </div>
       </section>
 
@@ -560,7 +596,8 @@ const PACK_TAGS = {
   'pencil-proof': ['thinking'],
   kidinomics: ['thinking'],
   'self-awareness': ['thinking'],
-  'body-calm': ['confidence'],
+  'water-confidence': ['confidence'],
+  'body-regulation': ['confidence'],
   'voice-presence': ['voice'],
   'social-systems': ['social'],
   'systems-thinking': ['thinking'],
