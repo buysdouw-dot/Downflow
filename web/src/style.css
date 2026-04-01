@@ -810,3 +810,419 @@ h1 { font-size: clamp(2rem, 4.8vw, 3.8rem); line-height: 1.04; max-width: 14ch; 
   .hero { padding-top: 3.4rem; }
   .unlock-options { flex-direction: column; }
 }
+
+/* ============================================================
+   DASHBOARD SHELL
+   ============================================================ */
+.dashboard-page { min-height: 100vh; padding-bottom: 4rem; }
+
+.db-page-header {
+  padding: 2.5rem 2rem 2rem;
+  background: linear-gradient(135deg, rgba(10,18,40,0.95), rgba(5,10,25,0.98));
+  border-bottom: 1px solid var(--border-soft);
+}
+.sponsor-header   { border-bottom-color: rgba(210,173,68,0.3); }
+.student-header   { border-bottom-color: rgba(114,208,255,0.3); }
+.facilitator-header { border-bottom-color: rgba(77,232,176,0.3); }
+.connector-header { border-bottom-color: rgba(255,159,90,0.3); }
+.platform-header  { border-bottom-color: rgba(176,131,255,0.3); }
+
+.db-header-inner {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 1.5rem; margin-bottom: 2rem; max-width: 1400px; margin-left: auto; margin-right: auto;
+}
+.db-header-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; flex-shrink: 0; }
+.db-title { font-size: 2rem; font-weight: 800; margin: 0.3rem 0; letter-spacing: -0.02em; }
+.db-subtitle { font-size: 0.88rem; color: var(--text-soft); margin: 0; }
+
+.db-stats-row {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1rem; max-width: 1400px; margin: 0 auto;
+}
+.db-stat-card {
+  background: rgba(255,255,255,0.04); border: 1px solid var(--border-soft);
+  border-radius: 12px; padding: 1rem 1.2rem;
+  display: flex; align-items: center; gap: 1rem;
+  border-left: 3px solid var(--stat-color, #72d0ff);
+}
+.db-stat-icon { font-size: 1.8rem; line-height: 1; }
+.db-stat-value { font-size: 1.6rem; font-weight: 800; margin: 0; color: var(--stat-color, #fff); }
+.db-stat-label { font-size: 0.78rem; font-weight: 600; margin: 0; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.05em; }
+.db-stat-sub   { font-size: 0.72rem; color: var(--text-soft); margin: 0; opacity: 0.7; }
+
+/* ============================================================
+   TABS
+   ============================================================ */
+.db-tabs {
+  display: flex; gap: 0.25rem; padding: 1rem 2rem 0;
+  border-bottom: 1px solid var(--border-soft);
+  overflow-x: auto; max-width: 1400px; margin: 0 auto;
+}
+.db-tab {
+  background: none; border: none; padding: 0.7rem 1.2rem;
+  font-size: 0.85rem; font-weight: 600; color: var(--text-soft);
+  cursor: pointer; border-radius: 8px 8px 0 0;
+  border-bottom: 2px solid transparent; transition: all 0.15s; white-space: nowrap;
+  font-family: 'Sora', sans-serif;
+}
+.db-tab:hover { color: var(--text-main); background: rgba(255,255,255,0.04); }
+.db-tab.active { color: var(--gold-500); border-bottom-color: var(--gold-500); background: rgba(210,173,68,0.06); }
+
+.db-content { padding: 2rem; max-width: 1400px; margin: 0 auto; }
+.db-tab-content { animation: fadeUp 0.25s ease; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+
+/* ============================================================
+   PANELS
+   ============================================================ */
+.db-panel {
+  background: rgba(255,255,255,0.03); border: 1px solid var(--border-soft);
+  border-radius: 14px; padding: 1.5rem;
+}
+.db-panel-title { font-size: 1rem; font-weight: 700; margin: 0 0 1.2rem; }
+.db-panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; }
+.db-panel-header .db-panel-title { margin-bottom: 0; }
+.db-sub-note { font-size: 0.72rem; color: var(--text-soft); margin: 0.75rem 0 0; font-style: italic; }
+
+.two-col-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.section-head { margin-bottom: 1.5rem; }
+
+/* ============================================================
+   CELLS TABLE
+   ============================================================ */
+.cells-table { display: flex; flex-direction: column; gap: 0; }
+.cells-table-head {
+  display: grid; grid-template-columns: 70px 1fr 1fr 60px 120px 100px;
+  padding: 0.5rem 0.75rem; font-size: 0.72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-soft);
+  border-bottom: 1px solid var(--border-soft);
+}
+.cell-row {
+  display: grid; grid-template-columns: 70px 1fr 1fr 60px 120px 100px;
+  padding: 0.75rem; align-items: center; gap: 0.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 0.85rem;
+  transition: background 0.15s;
+}
+.cell-row:hover { background: rgba(255,255,255,0.03); }
+.cell-id { font-weight: 700; color: var(--gold-500); font-size: 0.82rem; }
+.cell-region { font-size: 0.84rem; }
+.cell-sg { font-size: 0.82rem; }
+.cell-packs { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+.pack-tag { background: rgba(255,255,255,0.07); border-radius: 4px; padding: 0.15rem 0.4rem; font-size: 0.72rem; }
+.cell-status { font-weight: 700; font-size: 0.78rem; }
+.progress-track { height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; }
+.progress-fill  { height: 100%; border-radius: 2px; background: #4de8b0; }
+.progress-label { font-size: 0.72rem; color: var(--text-soft); margin-top: 0.2rem; }
+
+/* ============================================================
+   ACTIVITY / ACTION ITEMS
+   ============================================================ */
+.activity-list { display: flex; flex-direction: column; gap: 0.6rem; }
+.activity-row {
+  display: grid; grid-template-columns: 2rem 1fr auto auto;
+  align-items: center; gap: 0.5rem; padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.activity-icon { font-size: 1rem; }
+.activity-label { font-size: 0.83rem; }
+.activity-coins { font-size: 0.78rem; color: var(--gold-500); font-weight: 700; white-space: nowrap; }
+.activity-time  { font-size: 0.72rem; color: var(--text-soft); white-space: nowrap; }
+
+.action-item-list { display: flex; flex-direction: column; gap: 0.5rem; }
+.action-item {
+  display: flex; align-items: flex-start; gap: 0.75rem;
+  padding: 0.75rem; border-radius: 8px;
+  background: rgba(255,255,255,0.03); border: 1px solid var(--border-soft);
+}
+.action-item.urgent { border-color: rgba(255,107,157,0.4); background: rgba(255,107,157,0.05); }
+
+/* ============================================================
+   NEXT SESSION
+   ============================================================ */
+.next-session { display: flex; align-items: center; gap: 1rem; }
+.ns-date { display: flex; flex-direction: column; align-items: center; background: rgba(210,173,68,0.12); border-radius: 8px; padding: 0.4rem 0.7rem; min-width: 48px; }
+.ns-day { font-size: 0.65rem; font-weight: 700; color: var(--gold-500); letter-spacing: 0.1em; }
+.ns-num { font-size: 1.4rem; font-weight: 800; color: #fff; line-height: 1; }
+.ns-info { flex: 1; }
+.ns-info strong { font-size: 0.9rem; display: block; }
+.ns-info p { margin: 0.2rem 0 0; }
+
+/* ============================================================
+   TODAY CHALLENGE
+   ============================================================ */
+.today-challenge {
+  background: linear-gradient(135deg, rgba(114,208,255,0.08), rgba(77,232,176,0.06));
+  border: 1px solid rgba(114,208,255,0.25); border-radius: 14px; padding: 1.5rem;
+}
+.tc-kicker { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #72d0ff; margin-bottom: 0.4rem; }
+.tc-title { font-size: 1.1rem; font-weight: 700; margin: 0 0 0.5rem; }
+.tc-desc  { font-size: 0.85rem; color: var(--text-soft); margin-bottom: 0.75rem; }
+.tc-reward { font-size: 0.8rem; color: var(--gold-500); font-weight: 600; margin-bottom: 1rem; }
+.btn-done { background: rgba(77,232,176,0.15) !important; color: #4de8b0 !important; border-color: rgba(77,232,176,0.3) !important; cursor: default !important; }
+
+/* ============================================================
+   STUDENT PACKS
+   ============================================================ */
+.student-packs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.student-pack-card {
+  background: rgba(255,255,255,0.03); border: 1px solid var(--pack-color, var(--border-soft));
+  border-radius: 12px; padding: 1.2rem; opacity: 1; transition: opacity 0.2s;
+}
+.student-pack-card.locked { opacity: 0.6; border-style: dashed; }
+.sp-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+.sp-icon { font-size: 1.6rem; }
+.sp-name { font-size: 0.88rem; font-weight: 700; display: block; }
+.sp-status { font-size: 0.75rem; color: var(--text-soft); margin: 0.1rem 0 0; }
+.locked-status { color: #ff6b9d; }
+.sp-pct { margin-left: auto; font-size: 1.1rem; font-weight: 800; color: var(--pack-color); }
+.sp-bar-track { height: 5px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
+.sp-bar-fill  { height: 100%; border-radius: 3px; background: var(--pack-color, #4de8b0); }
+
+/* ============================================================
+   CELL INFO / MEMBERS
+   ============================================================ */
+.cell-info-block { display: flex; flex-direction: column; gap: 0.3rem; }
+.cell-info-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.4rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 0.84rem;
+}
+.cell-info-row span { color: var(--text-soft); }
+.cell-info-row strong { font-weight: 600; }
+
+.cell-members-list { display: flex; flex-direction: column; gap: 0.5rem; }
+.cell-member-row { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem; border-radius: 8px; }
+.cell-member-row.is-me { background: rgba(114,208,255,0.08); border: 1px solid rgba(114,208,255,0.2); }
+.cm-avatar { font-size: 1.5rem; }
+.cm-info { flex: 1; }
+.cm-info strong { display: block; font-size: 0.88rem; }
+.cm-info span { font-size: 0.75rem; color: var(--text-soft); }
+.cm-streak { display: flex; gap: 0.25rem; font-size: 0.78rem; font-weight: 600; color: #ff9f5a; }
+
+/* ============================================================
+   PATHWAY LADDER
+   ============================================================ */
+.pathway-hero { text-align: center; margin-bottom: 2rem; }
+.pathway-ladder { display: flex; flex-direction: column; gap: 0; max-width: 700px; margin: 0 auto; }
+.pathway-step { display: flex; gap: 1rem; padding: 1.2rem; border-radius: 12px; margin-bottom: 0.5rem; }
+.pathway-step.current { background: rgba(77,232,176,0.07); border: 1px solid rgba(77,232,176,0.25); }
+.pathway-step.next { background: rgba(114,208,255,0.05); border: 1px solid rgba(114,208,255,0.15); }
+.pathway-step.future { opacity: 0.5; border: 1px dashed rgba(255,255,255,0.1); }
+.pathway-step-num { width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 700; flex-shrink: 0; margin-top: 0.1rem; }
+.pathway-step-body { flex: 1; }
+.pathway-step-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem; flex-wrap: wrap; }
+.pathway-step-icon { font-size: 1.2rem; }
+.current-badge { background: rgba(77,232,176,0.15); color: #4de8b0; border-radius: 20px; padding: 0.15rem 0.5rem; font-size: 0.72rem; font-weight: 700; }
+.next-badge { background: rgba(114,208,255,0.15); color: #72d0ff; border-radius: 20px; padding: 0.15rem 0.5rem; font-size: 0.72rem; font-weight: 700; }
+
+/* ============================================================
+   SG CARDS
+   ============================================================ */
+.sg-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.sg-card {
+  background: rgba(255,255,255,0.03); border: 1px solid var(--border-soft);
+  border-radius: 14px; padding: 1.25rem;
+}
+.sg-card-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+.sg-level-badge { font-size: 0.7rem; font-weight: 700; background: rgba(210,173,68,0.15); color: var(--gold-500); border-radius: 4px; padding: 0.1rem 0.4rem; }
+.sg-metrics { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.5rem; }
+.sg-metrics > div { text-align: center; background: rgba(255,255,255,0.04); border-radius: 8px; padding: 0.5rem 0.25rem; }
+.sg-metrics span { font-size: 0.68rem; color: var(--text-soft); display: block; text-transform: uppercase; }
+.sg-metrics strong { font-size: 0.9rem; font-weight: 700; }
+.sg-actions { display: flex; gap: 0.5rem; }
+
+/* ============================================================
+   CELL HEALTH ROW (Facilitator)
+   ============================================================ */
+.cell-health-row { display: flex; align-items: center; gap: 0.75rem; }
+
+/* ============================================================
+   GLOBAL MAP
+   ============================================================ */
+.global-map-wrap { border-radius: 14px; overflow: hidden; border: 1px solid var(--border-soft); }
+.global-map-svg { display: block; width: 100%; }
+
+/* ============================================================
+   REGION ROWS / CARDS
+   ============================================================ */
+.region-list { display: flex; flex-direction: column; gap: 0.6rem; }
+.region-row { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); }
+.region-flag { font-size: 1.5rem; }
+.region-info { flex: 1; }
+.region-info strong { display: block; font-size: 0.88rem; }
+.region-info span { font-size: 0.75rem; color: var(--text-soft); }
+.region-badge { font-size: 0.72rem; font-weight: 700; border-radius: 20px; padding: 0.2rem 0.5rem; }
+.region-badge.active { background: rgba(77,232,176,0.15); color: #4de8b0; }
+.region-badge.completing { background: rgba(210,173,68,0.15); color: var(--gold-500); }
+.region-badge.pipeline { background: rgba(114,208,255,0.1); color: #72d0ff; }
+
+.regions-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; }
+.region-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border-soft); border-radius: 14px; padding: 1.5rem; text-align: center; }
+.region-card.active { border-color: rgba(77,232,176,0.3); }
+.region-card.pipeline { border-color: rgba(114,208,255,0.2); }
+.region-card-flag { font-size: 2.5rem; display: block; margin-bottom: 0.5rem; }
+.region-status-badge { font-size: 0.72rem; font-weight: 700; border-radius: 20px; padding: 0.2rem 0.6rem; display: inline-block; margin-bottom: 0.5rem; }
+.region-status-badge.active { background: rgba(77,232,176,0.15); color: #4de8b0; }
+.region-status-badge.pipeline { background: rgba(114,208,255,0.1); color: #72d0ff; }
+.region-status-badge.open { background: rgba(255,255,255,0.06); color: var(--text-soft); }
+
+/* ============================================================
+   FUNDING FLOW
+   ============================================================ */
+.funding-flow { display: flex; flex-direction: column; }
+.ff-step { display: flex; gap: 0.75rem; padding: 0.75rem; border-radius: 8px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-soft); }
+.ff-icon { font-size: 1.4rem; flex-shrink: 0; }
+.ff-step strong { display: block; font-size: 0.88rem; }
+.ff-step p { margin: 0.2rem 0 0; font-size: 0.78rem; color: var(--text-soft); }
+.ff-arrow { text-align: center; color: var(--text-soft); padding: 0.2rem; font-size: 0.9rem; }
+
+/* ============================================================
+   GIFT PACKS
+   ============================================================ */
+.gift-pack-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; }
+.gift-pack-card { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.2rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-soft); border-radius: 12px; }
+.gift-pack-icon { font-size: 2rem; flex-shrink: 0; }
+.gift-pack-info { flex: 1; }
+.gift-pack-info strong { display: block; font-size: 0.9rem; }
+.gift-pack-info p { margin: 0.15rem 0 0; font-size: 0.78rem; color: var(--text-soft); }
+
+/* ============================================================
+   IMPACT METRICS
+   ============================================================ */
+.impact-metrics-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+.impact-metric-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border-soft); border-radius: 12px; padding: 1.2rem; text-align: center; }
+.impact-metric-icon { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
+.impact-metric-value { font-size: 2rem; font-weight: 800; margin: 0; color: #fff; }
+.impact-metric-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-soft); margin: 0.2rem 0 0; }
+.impact-metric-note { font-size: 0.72rem; color: var(--text-soft); opacity: 0.6; margin: 0.2rem 0 0; }
+
+/* ============================================================
+   CYCLE BARS
+   ============================================================ */
+.cycle-bars { display: flex; flex-direction: column; gap: 0.75rem; }
+.cycle-bar-row { display: flex; align-items: center; gap: 0.75rem; }
+.cycle-bar-label { font-size: 0.82rem; color: var(--text-soft); min-width: 160px; }
+.cycle-bar-track { flex: 1; height: 8px; background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden; }
+.cycle-bar-fill { height: 100%; border-radius: 4px; background: var(--gold-500); }
+.cycle-bar-pct { font-size: 0.78rem; font-weight: 700; color: var(--gold-500); min-width: 32px; text-align: right; }
+
+/* ============================================================
+   REP LEADERBOARD
+   ============================================================ */
+.rep-leaderboard { display: flex; flex-direction: column; gap: 0.4rem; }
+.rep-row { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem; border-radius: 6px; background: rgba(255,255,255,0.02); }
+.rep-rank { font-size: 0.9rem; font-weight: 800; min-width: 24px; }
+.rep-name { flex: 1; font-size: 0.85rem; font-weight: 600; }
+.rep-cell-tag { font-size: 0.72rem; background: rgba(255,255,255,0.07); border-radius: 4px; padding: 0.1rem 0.4rem; }
+
+/* ============================================================
+   GUARANTEE GRID (reusable)
+   ============================================================ */
+.guarantee-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; margin-top: 1rem; }
+.guarantee-item { background: rgba(255,255,255,0.03); border: 1px solid var(--border-soft); border-radius: 12px; padding: 1.2rem; }
+.gi-icon { font-size: 1.8rem; display: block; margin-bottom: 0.5rem; }
+.guarantee-item strong { display: block; font-size: 0.88rem; margin-bottom: 0.4rem; }
+.guarantee-item p { font-size: 0.78rem; color: var(--text-soft); margin: 0; }
+
+/* ============================================================
+   CONNECTOR SPECIFIC
+   ============================================================ */
+.payout-timeline { display: flex; flex-direction: column; gap: 0; }
+.payout-milestone {
+  display: flex; align-items: flex-start; gap: 1rem; padding: 0.75rem 0;
+  border-left: 2px solid rgba(255,255,255,0.1); margin-left: 0.5rem; padding-left: 1.25rem; position: relative;
+}
+.payout-milestone::before {
+  content: ''; position: absolute; left: -5px; top: 1rem;
+  width: 8px; height: 8px; border-radius: 50%; background: var(--border-soft);
+}
+.payout-milestone.done::before { background: #4de8b0; }
+.payout-milestone.active::before { background: var(--gold-500); box-shadow: 0 0 8px var(--gold-500); }
+.pm-label { flex: 1; font-size: 0.84rem; }
+.pm-label strong { display: block; }
+.pm-label span { font-size: 0.75rem; color: var(--text-soft); }
+.pm-amount { font-weight: 700; color: var(--gold-500); font-size: 0.88rem; white-space: nowrap; }
+
+.cell-form-wizard { display: flex; flex-direction: column; gap: 1.5rem; }
+.wizard-step { background: rgba(255,255,255,0.03); border: 1px solid var(--border-soft); border-radius: 12px; padding: 1.25rem; }
+.wizard-step.active { border-color: rgba(210,173,68,0.4); background: rgba(210,173,68,0.04); }
+.wizard-step-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+.wizard-step-num { width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 700; }
+.wizard-step.active .wizard-step-num { background: var(--gold-500); color: #000; }
+
+/* ============================================================
+   FORM ELEMENTS
+   ============================================================ */
+.db-select, .db-input {
+  width: 100%; padding: 0.6rem 0.9rem;
+  background: rgba(255,255,255,0.05); border: 1px solid var(--border-soft);
+  border-radius: 8px; color: var(--text-main); font-family: 'Sora', sans-serif;
+  font-size: 0.85rem; outline: none; transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+.db-select:focus, .db-input:focus { border-color: var(--gold-500); }
+.db-select option { background: #0a1228; }
+
+/* ============================================================
+   PORTAL CHIPS (Hero)
+   ============================================================ */
+.hero-portal-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
+.portal-chip {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  padding: 0.4rem 0.9rem; border-radius: 20px; font-size: 0.78rem; font-weight: 600;
+  text-decoration: none; border: 1px solid var(--border-soft); transition: all 0.15s;
+}
+.portal-chip:hover { transform: translateY(-1px); }
+.sponsor-chip   { background: rgba(210,173,68,0.1); border-color: rgba(210,173,68,0.4); color: var(--gold-500); }
+.student-chip   { background: rgba(114,208,255,0.1); border-color: rgba(114,208,255,0.3); color: #72d0ff; }
+.facilitator-chip { background: rgba(77,232,176,0.1); border-color: rgba(77,232,176,0.3); color: #4de8b0; }
+.connector-chip { background: rgba(255,159,90,0.1); border-color: rgba(255,159,90,0.3); color: #ff9f5a; }
+
+/* ============================================================
+   NAV ACTIVE
+   ============================================================ */
+.nav-active { color: var(--gold-500) !important; }
+
+/* ============================================================
+   NETWORK BG
+   ============================================================ */
+.network-bg-svg {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: -1; opacity: 0.45;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1100px) {
+  .db-stats-row { grid-template-columns: repeat(2,1fr); }
+  .sg-cards-grid { grid-template-columns: repeat(2,1fr); }
+  .guarantee-grid { grid-template-columns: repeat(2,1fr); }
+  .impact-metrics-grid { grid-template-columns: repeat(2,1fr); }
+  .student-packs-grid { grid-template-columns: repeat(2,1fr); }
+  .regions-grid { grid-template-columns: repeat(2,1fr); }
+}
+
+@media (max-width: 768px) {
+  .db-header-inner { flex-direction: column; }
+  .two-col-grid { grid-template-columns: 1fr; }
+  .db-stats-row { grid-template-columns: repeat(2,1fr); }
+  .cells-table-head { display: none; }
+  .cell-row { grid-template-columns: 60px 1fr 80px !important; }
+  .sg-cards-grid { grid-template-columns: 1fr; }
+  .impact-metrics-grid { grid-template-columns: repeat(2,1fr); }
+  .student-packs-grid { grid-template-columns: 1fr; }
+  .regions-grid { grid-template-columns: repeat(2,1fr); }
+  .guarantee-grid { grid-template-columns: 1fr 1fr; }
+  .gift-pack-grid { grid-template-columns: 1fr; }
+  .cycle-bar-label { min-width: 100px; font-size: 0.75rem; }
+}
+
+@media (max-width: 480px) {
+  .db-content { padding: 1rem; }
+  .db-page-header { padding: 1.5rem 1rem 1.25rem; }
+  .db-stats-row { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .impact-metrics-grid { grid-template-columns: repeat(2,1fr); }
+  .guarantee-grid { grid-template-columns: 1fr; }
+  .hero-portal-row { gap: 0.35rem; }
+}

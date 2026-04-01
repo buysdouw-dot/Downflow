@@ -1,0 +1,362 @@
+import { useState } from 'react'
+
+const MY_CELLS = [
+  { id: 'VN-01', region: 'Hanoi, Vietnam', students: 5, facilitator: 'Phuong V.', week: 7, health: 92, status: 'active', regPaid: true, lessonShare: 1200000, regShare: 1200000 },
+  { id: 'VN-03', region: 'Ho Chi Minh City', students: 5, facilitator: 'Linh T.', week: 3, health: 74, status: 'active', regPaid: true, lessonShare: 480000, regShare: 1200000 },
+  { id: 'VN-05', region: 'Da Nang, Vietnam', students: 4, facilitator: 'Pending', week: 0, health: 0, status: 'draft', regPaid: false, lessonShare: 0, regShare: 0 },
+]
+
+const EARN_RULES = [
+  { icon: '📋', label: 'Registration share (1% of cell value)', timing: 'On onboarding completion', vnd: '1,200,000', note: 'Per cell, one-time' },
+  { icon: '📅', label: 'Lesson share — activation (5%)', timing: 'After cell launches', vnd: '1,200,000', note: 'Per cell, on start' },
+  { icon: '✅', label: 'Lesson share — stability (5%)', timing: 'After stability confirmed', vnd: '1,200,000', note: 'Attendance + health + output' },
+]
+
+const ETHICS_RULES = [
+  'You do not teach. You do not handle cash.',
+  'You do not pressure families. Consent must be genuine.',
+  'You earn on quality, not volume.',
+  'Rushed or forced cells lose the stability payout.',
+  'Happy connectors keep the system alive.',
+]
+
+function CellStatusBadge({ status }) {
+  const map = { active: ['● Active', '#4de8b0'], draft: ['○ Draft', '#72d0ff'], completing: ['◐ Completing', '#d2ad44'] }
+  const [label, color] = map[status] || ['Unknown', '#b4c8e6']
+  return <span style={{ color, fontWeight: 700, fontSize: '0.8rem' }}>{label}</span>
+}
+
+export default function ConnectorDashboard() {
+  const [activeTab, setActiveTab] = useState('overview')
+  const [formStep, setFormStep] = useState(1)
+
+  const totalEarned = MY_CELLS.filter(c => c.status === 'active').reduce((sum, c) => sum + c.lessonShare + c.regShare, 0)
+  const pendingEarn = 3600000 // VN-05 potential
+
+  return (
+    <div className="dashboard-page">
+      <div className="db-page-header connector-header">
+        <div className="db-header-inner">
+          <div>
+            <p className="kicker">Connector Dashboard</p>
+            <h1 className="db-title">🔗 Connector Command Centre</h1>
+            <p className="db-subtitle">Form cells · Support families · Earn on quality — Vietnam</p>
+          </div>
+          <div className="db-header-actions">
+            <button className="btn btn-primary" onClick={() => { setActiveTab('form'); setFormStep(1) }}>+ Form New Cell</button>
+          </div>
+        </div>
+        <div className="db-stats-row">
+          <div className="db-stat-card" style={{ '--stat-color': '#ff9f5a' }}>
+            <span className="db-stat-icon">🏫</span>
+            <div><p className="db-stat-value">3</p><p className="db-stat-label">Cells Formed</p><p className="db-stat-sub">2 active · 1 draft</p></div>
+          </div>
+          <div className="db-stat-card" style={{ '--stat-color': '#4de8b0' }}>
+            <span className="db-stat-icon">👥</span>
+            <div><p className="db-stat-value">14</p><p className="db-stat-label">Students Enrolled</p><p className="db-stat-sub">Across active cells</p></div>
+          </div>
+          <div className="db-stat-card" style={{ '--stat-color': '#d2ad44' }}>
+            <span className="db-stat-icon">💰</span>
+            <div><p className="db-stat-value">{(totalEarned/1000000).toFixed(1)}M</p><p className="db-stat-label">VND Earned</p><p className="db-stat-sub">Registration + lesson share</p></div>
+          </div>
+          <div className="db-stat-card" style={{ '--stat-color': '#72d0ff' }}>
+            <span className="db-stat-icon">⏳</span>
+            <div><p className="db-stat-value">{(pendingEarn/1000000).toFixed(1)}M</p><p className="db-stat-label">VND Pending</p><p className="db-stat-sub">On VN-05 activation</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div className="db-tabs">
+        {[['overview','🔭 Overview'],['cells','🏫 My Cells'],['earnings','💰 Earnings'],['form','➕ Form Cell'],['ethics','⚖️ Ethics Rules']].map(([id,label])=>(
+          <button key={id} className={`db-tab${activeTab===id?' active':''}`} onClick={()=>setActiveTab(id)}>{label}</button>
+        ))}
+      </div>
+
+      <div className="db-content">
+
+        {activeTab === 'overview' && (
+          <div className="db-tab-content">
+            <div className="two-col-grid">
+              <div className="db-panel">
+                <h3 className="db-panel-title">📋 Action Items</h3>
+                <div className="action-item-list">
+                  {[
+                    { icon: '⚠️', text: 'VN-05 — Missing facilitator assignment. Cell cannot activate without one.', urgent: true },
+                    { icon: '✅', text: 'VN-01 — Stability confirmed. Second lesson payout (1,200,000 VND) ready to claim.', urgent: false },
+                    { icon: '📝', text: 'VN-03 — Attendance at 82%. Monitor closely for stability confirmation.', urgent: false },
+                  ].map((item, i) => (
+                    <div key={i} className={`action-item${item.urgent ? ' urgent' : ''}`}>
+                      <span>{item.icon}</span>
+                      <p style={{ flex: 1, margin: 0 }}>{item.text}</p>
+                      <button className="btn btn-secondary btn-sm">View</button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="db-panel">
+                <h3 className="db-panel-title">💡 How You Earn</h3>
+                <div className="earn-list">
+                  {EARN_RULES.map(r => (
+                    <div className="earn-row" key={r.label}>
+                      <span className="earn-icon">{r.icon}</span>
+                      <div style={{ flex: 1 }}>
+                        <span className="earn-label">{r.label}</span>
+                        <p style={{ fontSize: '0.75rem', color: 'var(--text-soft)', margin: '0.15rem 0 0' }}>{r.timing} · {r.note}</p>
+                      </div>
+                      <span style={{ color: '#d2ad44', fontWeight: 700, fontSize: '0.85rem', whiteSpace: 'nowrap' }}>{r.vnd} VND</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="earn-row" style={{ marginTop: '1rem', borderTop: '1px solid var(--border-soft)', paddingTop: '1rem' }}>
+                  <span className="earn-label" style={{ fontWeight: 700 }}>Total per cell (full cycle)</span>
+                  <span style={{ color: '#d2ad44', fontWeight: 800, fontSize: '1rem' }}>3,600,000 VND</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="db-panel" style={{ marginTop: '1.5rem' }}>
+              <h3 className="db-panel-title">🌍 Your Cell Map</h3>
+              <div className="cell-map-list">
+                {MY_CELLS.map(cell => {
+                  const hc = cell.health >= 80 ? '#4de8b0' : cell.health >= 60 ? '#d2ad44' : '#ff6b9d'
+                  return (
+                    <div key={cell.id} className="cell-map-row">
+                      <strong className="chc-id">{cell.id}</strong>
+                      <span>{cell.region}</span>
+                      <span>👥 {cell.students} students</span>
+                      <span>🧭 {cell.facilitator}</span>
+                      <div className="sp-bar-track" style={{ flex: 1, minWidth: 80 }}>
+                        <div className="sp-bar-fill" style={{ width: `${(cell.week/12)*100}%`, background: hc }} />
+                      </div>
+                      <span style={{ fontSize: '0.78rem', color: 'var(--text-soft)' }}>Wk {cell.week}/12</span>
+                      <CellStatusBadge status={cell.status} />
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'cells' && (
+          <div className="db-tab-content">
+            {MY_CELLS.map(cell => {
+              const hc = cell.health >= 80 ? '#4de8b0' : cell.health >= 60 ? '#d2ad44' : '#b4c8e6'
+              return (
+                <div key={cell.id} className="db-panel" style={{ marginBottom: '1.2rem', borderColor: hc }}>
+                  <div className="db-panel-header">
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                      <h3 className="db-panel-title" style={{ margin: 0 }}>{cell.id} — {cell.region}</h3>
+                      <CellStatusBadge status={cell.status} />
+                    </div>
+                    <button className="btn btn-secondary btn-sm">Manage</button>
+                  </div>
+                  <div className="two-col-grid">
+                    <div className="cell-info-block">
+                      {[['Students', cell.students], ['Facilitator', cell.facilitator], ['Cycle Week', `${cell.week} / 12`], ['Health Score', cell.health || 'N/A'], ['Reg Paid', cell.regPaid ? '✅ Yes' : '❌ Pending']].map(([k,v]) => (
+                        <div className="cell-info-row" key={k}><span>{k}</span><strong>{v}</strong></div>
+                      ))}
+                    </div>
+                    <div>
+                      <p className="db-panel-title">Earnings for this cell</p>
+                      <div className="cell-info-block">
+                        {[['Registration share', `${(cell.regShare/1000).toFixed(0)}k VND`], ['Lesson share earned', `${(cell.lessonShare/1000).toFixed(0)}k VND`], ['Pending stability payout', cell.status === 'active' && cell.week < 6 ? '1,200k VND' : cell.week >= 6 ? '✅ Released' : 'N/A']].map(([k,v]) => (
+                          <div className="cell-info-row" key={k}><span>{k}</span><strong style={{ color: '#d2ad44' }}>{v}</strong></div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  {cell.status !== 'draft' && (
+                    <div style={{ marginTop: '1rem' }}>
+                      <div className="sp-bar-track"><div className="sp-bar-fill" style={{ width: `${(cell.week/12)*100}%`, background: hc }} /></div>
+                      <p style={{ fontSize: '0.78rem', color: 'var(--text-soft)', marginTop: '0.3rem' }}>Cycle progress: Week {cell.week} of 12</p>
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        )}
+
+        {activeTab === 'earnings' && (
+          <div className="db-tab-content">
+            <div className="two-col-grid">
+              <div className="db-panel">
+                <h3 className="db-panel-title">💰 Earnings Breakdown</h3>
+                <div className="cycle-bars" style={{ gap: '1.2rem' }}>
+                  {MY_CELLS.filter(c => c.status === 'active').map(cell => (
+                    <div key={cell.id}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.4rem', fontSize: '0.85rem' }}>
+                        <strong>{cell.id}</strong>
+                        <span style={{ color: '#d2ad44' }}>{((cell.regShare + cell.lessonShare)/1000).toFixed(0)}k VND</span>
+                      </div>
+                      <div className="sp-bar-track">
+                        <div className="sp-bar-fill" style={{ width: `${((cell.regShare + cell.lessonShare) / 3600000) * 100}%`, background: '#d2ad44' }} />
+                      </div>
+                      <p style={{ fontSize: '0.75rem', color: 'var(--text-soft)', marginTop: '0.3rem' }}>
+                        {((cell.regShare + cell.lessonShare) / 3600000 * 100).toFixed(0)}% of full cycle earnings
+                      </p>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ borderTop: '1px solid var(--border-soft)', marginTop: '1.5rem', paddingTop: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <strong>Total earned (all cells)</strong>
+                  <span style={{ fontSize: '1.4rem', fontWeight: 800, color: '#d2ad44' }}>{(totalEarned/1000).toFixed(0)}k VND</span>
+                </div>
+              </div>
+
+              <div className="db-panel">
+                <h3 className="db-panel-title">📅 Payout Timeline</h3>
+                <div className="milestone-list">
+                  {[
+                    { icon: '✅', label: 'VN-01 Registration share', amount: '1,200k', date: 'Mar 1', type: 'milestone' },
+                    { icon: '✅', label: 'VN-01 Activation payout', amount: '1,200k', date: 'Mar 8', type: 'milestone' },
+                    { icon: '✅', label: 'VN-03 Registration share', amount: '1,200k', date: 'Mar 20', type: 'milestone' },
+                    { icon: '⏳', label: 'VN-01 Stability payout', amount: '1,200k', date: 'Apr 12 (est.)', type: 'review' },
+                    { icon: '⏳', label: 'VN-03 Activation payout', amount: '1,200k', date: 'Apr 18 (est.)', type: 'task' },
+                    { icon: '🔒', label: 'VN-05 All payouts', amount: '3,600k', date: 'Pending activation', type: 'unlock' },
+                  ].map((m, i) => (
+                    <div key={i} className="milestone-row">
+                      <span className={`milestone-dot ${m.type}`}/>
+                      <div style={{ flex: 1 }}>
+                        <strong style={{ fontSize: '0.86rem' }}>{m.icon} {m.label}</strong>
+                        <span className="milestone-date" style={{ display: 'block' }}>{m.date}</span>
+                      </div>
+                      <span style={{ color: '#d2ad44', fontWeight: 700, fontSize: '0.85rem' }}>{m.amount} VND</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'form' && (
+          <div className="db-tab-content">
+            <div className="db-panel" style={{ maxWidth: 640 }}>
+              <h3 className="db-panel-title">➕ Form a New Learning Cell</h3>
+              <div className="form-steps">
+                {['Identify Students','Confirm Consent','Assign Facilitator','Submit for Approval'].map((s,i)=>(
+                  <div key={s} className={`form-step-dot ${formStep===i+1?'active':formStep>i+1?'done':''}`}>
+                    <span>{formStep>i+1?'✓':i+1}</span><p>{s}</p>
+                  </div>
+                ))}
+              </div>
+
+              {formStep === 1 && (
+                <div className="session-builder">
+                  <p style={{ color: 'var(--text-soft)', fontSize: '0.88rem', marginBottom: '1rem' }}>A Learning Cell requires exactly 5 students. Add their details below. Student identities are kept private — only parents can link identities.</p>
+                  {[1,2,3,4,5].map(n => (
+                    <div key={n} className="sb-field">
+                      <label>Student {n} — Avatar Name</label>
+                      <input className="sb-input" placeholder={`e.g. StarFox_0${n}`} />
+                    </div>
+                  ))}
+                  <div className="sb-field">
+                    <label>Region</label>
+                    <select className="sb-select">
+                      <option>Hanoi, Vietnam</option><option>Ho Chi Minh City</option><option>Da Nang</option><option>Moscow, Russia</option><option>Berlin, Germany</option>
+                    </select>
+                  </div>
+                  <button className="btn btn-primary" onClick={() => setFormStep(2)}>Next → Confirm Consent</button>
+                </div>
+              )}
+
+              {formStep === 2 && (
+                <div className="session-builder">
+                  <p style={{ color: 'var(--text-soft)', fontSize: '0.88rem', marginBottom: '1rem' }}>Each parent must confirm consent. Students are never pressured. Families owe nothing to sponsors.</p>
+                  {[1,2,3,4,5].map(n => (
+                    <div key={n} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.6rem 0', borderBottom: '1px solid var(--border-soft)' }}>
+                      <input type="checkbox" style={{ accentColor: '#4de8b0', width: 16, height: 16 }} />
+                      <span style={{ fontSize: '0.86rem' }}>Student {n} parent consent confirmed</span>
+                    </div>
+                  ))}
+                  <div className="sb-field" style={{ marginTop: '1rem' }}>
+                    <label>Registration fee status</label>
+                    <select className="sb-select">
+                      <option>Paid by families (2% = 480,000 VND × 5)</option>
+                      <option>Covered by sponsor</option>
+                      <option>Scholarship (pending approval)</option>
+                    </select>
+                  </div>
+                  <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1rem' }}>
+                    <button className="btn btn-secondary" onClick={() => setFormStep(1)}>← Back</button>
+                    <button className="btn btn-primary" onClick={() => setFormStep(3)}>Next → Assign Facilitator</button>
+                  </div>
+                </div>
+              )}
+
+              {formStep === 3 && (
+                <div className="session-builder">
+                  <p style={{ color: 'var(--text-soft)', fontSize: '0.88rem', marginBottom: '1rem' }}>Assign an approved facilitator to this cell. The cell cannot activate without one.</p>
+                  <div className="sb-field">
+                    <label>Facilitator</label>
+                    <select className="sb-select">
+                      <option>Phuong V. (approved · VN)</option>
+                      <option>Linh T. (approved · VN)</option>
+                      <option>Request new facilitator</option>
+                    </select>
+                  </div>
+                  <div className="sb-field">
+                    <label>Preferred session days</label>
+                    <div className="stream-checkboxes">
+                      {['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'].map(d => (
+                        <label key={d} className="stream-check-label"><input type="checkbox"/> {d}</label>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="sb-field">
+                    <label>Preferred session time</label>
+                    <select className="sb-select">
+                      <option>4:00 PM – 5:00 PM</option><option>5:00 PM – 6:00 PM</option><option>6:00 PM – 7:00 PM</option>
+                    </select>
+                  </div>
+                  <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1rem' }}>
+                    <button className="btn btn-secondary" onClick={() => setFormStep(2)}>← Back</button>
+                    <button className="btn btn-primary" onClick={() => setFormStep(4)}>Next → Review & Submit</button>
+                  </div>
+                </div>
+              )}
+
+              {formStep === 4 && (
+                <div className="session-builder">
+                  <div style={{ background: 'rgba(77,232,176,0.08)', border: '1px solid rgba(77,232,176,0.3)', borderRadius: 'var(--radius-sm)', padding: '1.2rem', marginBottom: '1.2rem' }}>
+                    <strong style={{ color: '#4de8b0', display: 'block', marginBottom: '0.5rem' }}>✅ Cell Ready for Submission</strong>
+                    <p style={{ fontSize: '0.85rem', color: 'var(--text-soft)', margin: 0 }}>5 students · Consent confirmed · Facilitator assigned · Registration paid</p>
+                  </div>
+                  <p style={{ fontSize: '0.85rem', color: 'var(--text-soft)', marginBottom: '1.2rem' }}>By submitting, you confirm that all families have given genuine consent and no pressure was applied. Your registration share (1,200,000 VND) will be released upon approval.</p>
+                  <div style={{ display: 'flex', gap: '0.75rem' }}>
+                    <button className="btn btn-secondary" onClick={() => setFormStep(3)}>← Back</button>
+                    <button className="btn btn-primary" onClick={() => setFormStep(1)}>Submit Cell for Approval</button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'ethics' && (
+          <div className="db-tab-content">
+            <div className="db-panel" style={{ maxWidth: 680 }}>
+              <h3 className="db-panel-title">⚖️ Connector Ethics — Non-Negotiable</h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.5rem' }}>
+                {ETHICS_RULES.map((r, i) => (
+                  <div key={i} style={{ display: 'flex', gap: '0.75rem', padding: '0.85rem', background: 'rgba(255,255,255,0.03)', border: '1px solid var(--border-soft)', borderRadius: 'var(--radius-sm)', fontSize: '0.88rem' }}>
+                    <span style={{ color: '#d2ad44', fontWeight: 700 }}>{i + 1}.</span>
+                    <span>{r}</span>
+                  </div>
+                ))}
+              </div>
+              <div style={{ background: 'rgba(210,173,68,0.08)', border: '1px solid rgba(210,173,68,0.3)', borderRadius: 'var(--radius-sm)', padding: '1.2rem' }}>
+                <strong style={{ color: 'var(--gold-300)', display: 'block', marginBottom: '0.4rem' }}>Connector Vitality Principle</strong>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-soft)', margin: 0 }}>Connectors are emotional infrastructure. Their motivation, clarity, and sense of value directly affect system stability, cell quality, and sponsor confidence. The platform protects connectors the same way it protects students.</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+      </div>
+    </div>
+  )
+}
