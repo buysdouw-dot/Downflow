@@ -1,151 +1,163 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 
 /* ─────────────────────────────────────────────────────────
-   DOWNFLOW MODEL FILM — Cinematic Video Player
-   Real videos · sequential auto-play · cinematic subtitles
-   68 clips across 10 scenes · investment slide overlays
+   DOWNFLOW MODEL FILM — Animated explainer (original)
+   10 scenes · auto-advance · cinematic subtitles
+   Pure CSS/SVG animated visuals — no video files needed
 ───────────────────────────────────────────────────────── */
 
-const V = (n) => `/model/videos/v${String(n).padStart(2,'0')}.mp4`
-
-/*
-  Scene map — each scene has multiple real video clips.
-  Videos are curated by theme from our 68-clip library.
-  voice[] lines appear as subtitles, cycling per clip.
-*/
 const SCENES = [
   {
     id: 'hook',
-    num: '01',
+    number: '01',
     label: 'HOOK',
-    timing: '0–5s',
-    color: '#7c6bff',
-    clips: [V(1), V(2), V(14)],
+    timing: '0–5 sec',
+    color: '#6c63ff',
+    accent: '#b5b0ff',
+    bg: 'linear-gradient(135deg, #0d0b1e 0%, #1a1530 100%)',
     voice: [
       "Education doesn't fail",
       "because of students…",
     ],
-    slide: null,
+    visual: <HookVisual />,
+    caption: 'Bored classroom vs. active speaking children',
   },
   {
     id: 'problem',
-    num: '02',
-    label: 'THE PROBLEM',
-    timing: '5–15s',
+    number: '02',
+    label: 'PROBLEM',
+    timing: '5–15 sec',
     color: '#e05a5a',
-    clips: [V(3), V(4), V(15)],
+    accent: '#f7b5b5',
+    bg: 'linear-gradient(135deg, #1c0a0a 0%, #2d1212 100%)',
     voice: [
       "It fails because",
       "value doesn't flow.",
     ],
-    slide: null,
+    visual: <ProblemVisual />,
+    caption: 'Passive learning, worksheets, low energy',
   },
   {
     id: 'shift',
-    num: '03',
+    number: '03',
     label: 'THE SHIFT',
-    timing: '15–25s',
+    timing: '15–25 sec',
     color: '#f5a623',
-    clips: [V(5), V(6), V(16), V(17)],
+    accent: '#ffd89b',
+    bg: 'linear-gradient(135deg, #1c1200 0%, #2e1e00 100%)',
     voice: [
       "So we redesigned the system.",
       "Students don't consume learning —",
       "they produce value.",
     ],
-    slide: null,
+    visual: <ShiftVisual />,
+    caption: 'Kids speaking, presenting, laughing, connecting',
   },
   {
     id: 'cell',
-    num: '04',
+    number: '04',
     label: 'THE CELL MODEL',
-    timing: '25–35s',
+    timing: '25–35 sec',
     color: '#27ae60',
-    clips: [V(7), V(8), V(18)],
+    accent: '#a8f0c0',
+    bg: 'linear-gradient(135deg, #011208 0%, #031f10 100%)',
     voice: [
       "Small learning cells.",
       "High engagement.",
       "Real output.",
     ],
-    slide: '/model/slides/slide-cell-model.png',
+    visual: <CellVisual />,
+    caption: '5–6 students + 1 facilitator per cell',
   },
   {
     id: 'sponsor',
-    num: '05',
+    number: '05',
     label: 'SPONSOR ENTRY',
-    timing: '35–45s',
+    timing: '35–45 sec',
     color: '#2980b9',
-    clips: [V(9), V(19), V(20)],
+    accent: '#aad4f5',
+    bg: 'linear-gradient(135deg, #020e1c 0%, #061826 100%)',
     voice: [
       "A sponsor activates one cell —",
       "fully visible,",
       "fully measurable.",
     ],
-    slide: '/model/slides/slide-platform.png',
+    visual: <SponsorVisual />,
+    caption: 'Sponsor → funds cell → class activates',
   },
   {
     id: 'guider',
-    num: '06',
-    label: 'GUIDER SYSTEM',
-    timing: '45–65s',
+    number: '06',
+    label: 'THE GUIDER SYSTEM',
+    timing: '45–65 sec',
     color: '#e67e22',
-    clips: [V(10), V(11), V(21), V(22), V(23)],
+    accent: '#f9d4a0',
+    bg: 'linear-gradient(135deg, #1c0e00 0%, #2e1800 100%)',
     voice: [
       "Then the system compounds.",
       "A student who completes — moves forward",
       "and sends value down.",
       "They become a guider.",
-      "Their results tied to those below.",
-      "Accountability across every level.",
+      "Their results are tied to those below.",
+      "This creates accountability across levels.",
     ],
-    slide: null,
+    visual: <GuiderVisual />,
+    caption: 'Student → completes → becomes guider → new cell forms',
   },
   {
     id: 'loop',
-    num: '07',
-    label: 'ACCOUNTABILITY',
-    timing: '65–75s',
+    number: '07',
+    label: 'ACCOUNTABILITY LOOP',
+    timing: '65–75 sec',
     color: '#9b59b6',
-    clips: [V(12), V(24), V(25)],
+    accent: '#dbb8f0',
+    bg: 'linear-gradient(135deg, #120820 0%, #1e1030 100%)',
     voice: [
       "Every layer influences the next.",
       "And every result flows back up.",
     ],
-    slide: '/model/slides/slide-compounding.png',
+    visual: <LoopVisual />,
+    caption: 'Student → Guider → New Student → Results → back up',
   },
   {
     id: 'value',
-    num: '08',
+    number: '08',
     label: 'VALUE SYSTEM',
-    timing: '75–85s',
+    timing: '75–85 sec',
     color: '#f1c40f',
-    clips: [V(26), V(27), V(28)],
+    accent: '#fdeea0',
+    bg: 'linear-gradient(135deg, #181200 0%, #251c00 100%)',
     voice: [
       "Performance is shared.",
       "Cells are graded together.",
       "Effort becomes visible.",
     ],
-    slide: '/model/slides/slide-money.png',
+    visual: <ValueVisual />,
+    caption: 'Coins earned, shared, redistributed — group score shown',
   },
   {
     id: 'compound',
-    num: '09',
+    number: '09',
     label: 'COMPOUNDING',
-    timing: '85–95s',
+    timing: '85–95 sec',
     color: '#1abc9c',
-    clips: [V(29), V(30), V(31), V(32)],
+    accent: '#a0f0de',
+    bg: 'linear-gradient(135deg, #001c18 0%, #002e26 100%)',
     voice: [
       "One cell becomes many.",
       "Without losing structure.",
     ],
-    slide: '/model/slides/slide-scaling.png',
+    visual: <CompoundVisual />,
+    caption: 'One cell expanding into multiple cells',
   },
   {
     id: 'close',
-    num: '10',
+    number: '10',
     label: 'CLOSE',
-    timing: '95–110s',
-    color: '#c0c8ff',
-    clips: [V(33), V(34), V(35), V(36)],
+    timing: '95–110 sec',
+    color: '#ffffff',
+    accent: '#c0c8e0',
+    bg: 'linear-gradient(135deg, #070d1c 0%, #0e1830 100%)',
     voice: [
       "This is not a donation.",
       "This is a system that produces value —",
@@ -153,248 +165,348 @@ const SCENES = [
       "Fund one cell.",
       "Watch it grow.",
     ],
-    slide: '/model/slides/slide-cta.png',
+    visual: <CloseVisual />,
+    caption: 'Confident students speaking directly to camera',
   },
 ]
 
-/* Total flat clip list for the global timeline */
-const ALL_CLIPS = SCENES.flatMap(s => s.clips.map(src => ({ src, scene: s })))
+/* ─── Scene Visuals ─── */
+function HookVisual() {
+  return (
+    <div className="dmf-visual-split">
+      <div className="dmf-split-left">
+        <div className="dmf-desk-row">
+          <span className="dmf-desk-figure dim">😶</span>
+          <span className="dmf-desk-figure dim">😑</span>
+          <span className="dmf-desk-figure dim">😔</span>
+        </div>
+        <div className="dmf-split-label muted">Traditional Classroom</div>
+      </div>
+      <div className="dmf-split-divider"><span>VS</span></div>
+      <div className="dmf-split-right">
+        <div className="dmf-desk-row spread">
+          <span className="dmf-desk-figure bright">😄</span>
+          <span className="dmf-desk-figure bright">🗣️</span>
+          <span className="dmf-desk-figure bright">✋</span>
+        </div>
+        <div className="dmf-split-label bright">Downflow Cell</div>
+      </div>
+    </div>
+  )
+}
 
-/* ─── Main component ─── */
+function ProblemVisual() {
+  return (
+    <div className="dmf-problem-vis">
+      <div className="dmf-worksheet">
+        <div className="dmf-ws-line" /><div className="dmf-ws-line short" />
+        <div className="dmf-ws-line" /><div className="dmf-ws-line short" />
+        <div className="dmf-ws-line mid" />
+      </div>
+      <div className="dmf-no-flow">
+        <span className="dmf-arrow-blocked">→</span>
+        <span className="dmf-blocked-label">Value doesn't reach students</span>
+      </div>
+    </div>
+  )
+}
+
+function ShiftVisual() {
+  const items = ['Speaking', 'Presenting', 'Laughing', 'Connecting']
+  return (
+    <div className="dmf-shift-grid">
+      {items.map((item, i) => (
+        <div key={item} className="dmf-shift-chip" style={{ animationDelay: `${i * 0.15}s` }}>
+          {item}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function CellVisual() {
+  const positions = [
+    { x: '50%', y: '18%' },
+    { x: '20%', y: '52%' },
+    { x: '36%', y: '72%' },
+    { x: '64%', y: '72%' },
+    { x: '80%', y: '52%' },
+  ]
+  return (
+    <div className="dmf-cell-vis">
+      <svg viewBox="0 0 200 120" className="dmf-cell-svg">
+        {[1,2,3,4].map(i => (
+          <line key={i} x1="100" y1="22"
+            x2={parseFloat(positions[i].x)} y2={parseFloat(positions[i].y)}
+            stroke="rgba(39,174,96,0.3)" strokeWidth="1.5" strokeDasharray="3 3" />
+        ))}
+        {[1,2,3,4].map(i => (
+          <circle key={`c${i}`}
+            cx={parseFloat(positions[i].x)} cy={parseFloat(positions[i].y)} r="10"
+            fill="rgba(39,174,96,0.15)" stroke="rgba(39,174,96,0.5)" strokeWidth="1" />
+        ))}
+        <circle cx="100" cy="22" r="14"
+          fill="rgba(39,174,96,0.2)" stroke="#27ae60" strokeWidth="1.5" />
+      </svg>
+      <div className="dmf-cell-label">5–6 Students + 1 Facilitator</div>
+    </div>
+  )
+}
+
+function SponsorVisual() {
+  return (
+    <div className="dmf-sponsor-flow">
+      <div className="dmf-sf-node sponsor">💼<span>Sponsor</span></div>
+      <div className="dmf-sf-arrow">
+        <span className="dmf-sf-money">$</span>
+        <span className="dmf-sf-arrow-line">→</span>
+      </div>
+      <div className="dmf-sf-node cell">🧩<span>Cell</span></div>
+      <div className="dmf-sf-arrow"><span className="dmf-sf-arrow-line">→</span></div>
+      <div className="dmf-sf-node active">⚡<span>Activated</span></div>
+    </div>
+  )
+}
+
+function GuiderVisual() {
+  return (
+    <div className="dmf-guider-tree">
+      <div className="dmf-gt-row top">
+        <div className="dmf-gt-node graduate">🎓<span>Graduate</span></div>
+      </div>
+      <div className="dmf-gt-arrow down">↓ becomes</div>
+      <div className="dmf-gt-row mid">
+        <div className="dmf-gt-node guider">⭐<span>Guider</span></div>
+      </div>
+      <div className="dmf-gt-arrow down">↓ mentors</div>
+      <div className="dmf-gt-row bottom">
+        <div className="dmf-gt-node student">🧒<span>New Cell</span></div>
+        <div className="dmf-gt-node student">👧<span>New Cell</span></div>
+      </div>
+      <div className="dmf-gt-feedback">
+        <span className="dmf-gt-feedback-line">results flow back ↑</span>
+      </div>
+    </div>
+  )
+}
+
+function LoopVisual() {
+  const nodes = ['Student', 'Guider', 'New Student', 'Results']
+  const colors = ['#9b59b6', '#e67e22', '#27ae60', '#f1c40f']
+  return (
+    <div className="dmf-loop-ring">
+      <svg viewBox="0 0 160 160" className="dmf-loop-svg">
+        <circle cx="80" cy="80" r="55" fill="none" stroke="rgba(155,89,182,0.15)" strokeWidth="2" strokeDasharray="6 4" />
+        {nodes.map((n, i) => {
+          const angle = (i / nodes.length) * 2 * Math.PI - Math.PI / 2
+          const x = 80 + 55 * Math.cos(angle)
+          const y = 80 + 55 * Math.sin(angle)
+          return (
+            <g key={n}>
+              <circle cx={x} cy={y} r="16" fill={colors[i] + '33'} stroke={colors[i]} strokeWidth="1.5" />
+              <text x={x} y={y + 1} textAnchor="middle" dominantBaseline="middle" fontSize="6" fill={colors[i]} fontWeight="700">
+                {n.split(' ').map((w, j) => <tspan key={j} x={x} dy={j === 0 ? '-3' : '7'}>{w}</tspan>)}
+              </text>
+            </g>
+          )
+        })}
+        {nodes.map((_, i) => {
+          const a1 = (i / nodes.length) * 2 * Math.PI - Math.PI / 2
+          const a2 = ((i + 1) / nodes.length) * 2 * Math.PI - Math.PI / 2
+          const midA = (a1 + a2) / 2
+          return (
+            <text key={`arrow${i}`} x={80 + 55 * Math.cos(midA)} y={80 + 55 * Math.sin(midA)}
+              textAnchor="middle" dominantBaseline="middle" fontSize="9" fill="rgba(255,255,255,0.4)">→</text>
+          )
+        })}
+      </svg>
+    </div>
+  )
+}
+
+function ValueVisual() {
+  const members = ['Anh', 'Ben', 'Cai', 'Dara', 'Eva']
+  const scores  = [88, 74, 91, 67, 82]
+  return (
+    <div className="dmf-value-vis">
+      {members.map((m, i) => (
+        <div key={m} className="dmf-vv-row">
+          <span className="dmf-vv-name">{m}</span>
+          <div className="dmf-vv-bar-track">
+            <div className="dmf-vv-bar" style={{ width: `${scores[i]}%`, animationDelay: `${i * 0.1}s` }} />
+          </div>
+          <span className="dmf-vv-score">{scores[i]}</span>
+        </div>
+      ))}
+      <div className="dmf-vv-total">Group Score: <strong>80.4</strong></div>
+    </div>
+  )
+}
+
+function CompoundVisual() {
+  return (
+    <div className="dmf-compound-vis">
+      <div className="dmf-cv-row row1"><div className="dmf-cv-cell seed">🧩</div></div>
+      <div className="dmf-cv-row row2">
+        <div className="dmf-cv-cell grow">🧩</div>
+        <div className="dmf-cv-cell grow">🧩</div>
+      </div>
+      <div className="dmf-cv-row row3">
+        <div className="dmf-cv-cell grow delay">🧩</div>
+        <div className="dmf-cv-cell grow delay">🧩</div>
+        <div className="dmf-cv-cell grow delay">🧩</div>
+        <div className="dmf-cv-cell grow delay">🧩</div>
+      </div>
+      <div className="dmf-cv-label">1 → 2 → 4 → ∞</div>
+    </div>
+  )
+}
+
+function CloseVisual() {
+  const students = ['🧒', '👧', '🧑', '👦', '👩']
+  return (
+    <div className="dmf-close-vis">
+      {students.map((s, i) => (
+        <div key={i} className="dmf-close-student" style={{ animationDelay: `${i * 0.12}s` }}>
+          <span className="dmf-close-avatar">{s}</span>
+        </div>
+      ))}
+      <div className="dmf-close-tagline">DOWNFLOW — School of Life</div>
+    </div>
+  )
+}
+
+/* ─── Subtitle cycling hook ─── */
+function useSubtitles(lines, active, intervalMs = 1800) {
+  const [idx, setIdx] = useState(0)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    if (!active) { setIdx(0); setVisible(false); return }
+    setIdx(0); setVisible(true)
+    const t = setInterval(() => {
+      setIdx(i => (i + 1 < lines.length ? i + 1 : i))
+    }, intervalMs)
+    return () => clearInterval(t)
+  }, [active, lines])
+
+  return { idx, visible }
+}
+
+/* ─── Single scene frame ─── */
+function SceneFrame({ scene, isActive, sceneIndex, totalScenes, onNav }) {
+  const { idx, visible } = useSubtitles(scene.voice, isActive, 1700)
+
+  return (
+    <div className="dmf-frame" style={{ background: scene.bg, '--scene-col': scene.color, '--scene-accent': scene.accent }}>
+      <div className="dmf-grain" />
+      <div className="dmf-topbar">
+        <span className="dmf-scene-num">{scene.number}</span>
+        <span className="dmf-scene-label">{scene.label}</span>
+        <span className="dmf-timing">{scene.timing}</span>
+      </div>
+      <div className="dmf-vis-area">{scene.visual}</div>
+      <div className="dmf-caption">{scene.caption}</div>
+      {visible && (
+        <div className="dmf-sub-bar">
+          <span className="dmf-sub-text" key={idx}>{scene.voice[idx]}</span>
+        </div>
+      )}
+      <div className="dmf-nav">
+        <button className="dmf-nav-btn" onClick={() => onNav(-1)} disabled={sceneIndex === 0}>‹</button>
+        <div className="dmf-dots">
+          {Array.from({ length: totalScenes }).map((_, i) => (
+            <span key={i} className={`dmf-dot${i === sceneIndex ? ' active' : ''}`}
+              style={i === sceneIndex ? { background: scene.color } : {}} />
+          ))}
+        </div>
+        <button className="dmf-nav-btn" onClick={() => onNav(1)} disabled={sceneIndex === totalScenes - 1}>›</button>
+      </div>
+    </div>
+  )
+}
+
+/* ─── Auto-play progress bar ─── */
+function ProgressBar({ active, duration, onComplete }) {
+  const [progress, setProgress] = useState(0)
+  const rafRef = useRef()
+  const startRef = useRef()
+
+  useEffect(() => {
+    if (!active) { setProgress(0); return }
+    startRef.current = performance.now()
+    const tick = (now) => {
+      const pct = Math.min(((now - startRef.current) / duration) * 100, 100)
+      setProgress(pct)
+      if (pct < 100) rafRef.current = requestAnimationFrame(tick)
+      else onComplete()
+    }
+    rafRef.current = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(rafRef.current)
+  }, [active, duration])
+
+  return (
+    <div className="dmf-progress-track">
+      <div className="dmf-progress-fill" style={{ width: `${progress}%` }} />
+    </div>
+  )
+}
+
+/* ─── Main film component ─── */
 export default function DownflowModelFilm({ compact = false }) {
-  const videoRef  = useRef(null)
-  const [clipIdx, setClipIdx]   = useState(0)   // index into ALL_CLIPS
+  const [current, setCurrent]   = useState(0)
   const [playing, setPlaying]   = useState(false)
-  const [ended,   setEnded]     = useState(false)
-  const [muted,   setMuted]     = useState(false)
-  const [subIdx,  setSubIdx]    = useState(0)
-  const subTimer  = useRef(null)
-  const [showSlide, setShowSlide] = useState(false)
+  const [completed, setCompleted] = useState(false)
 
-  const clip  = ALL_CLIPS[clipIdx]
-  const scene = clip.scene
+  const SCENE_DURATION = 4500
 
-  /* Figure out which clip-within-scene we're on, for the dot indicator */
-  const sceneClipPos = scene.clips.indexOf(clip.src)
-  const sceneIdx     = SCENES.indexOf(scene)
-
-  /* ── subtitle cycling ── */
-  const startSubs = useCallback((sc) => {
-    clearInterval(subTimer.current)
-    setSubIdx(0)
-    if (!sc || sc.voice.length <= 1) return
-    const ms = 6000 / sc.voice.length   // spread evenly across ~6s clip
-    subTimer.current = setInterval(() => {
-      setSubIdx(i => (i + 1 < sc.voice.length ? i + 1 : i))
-    }, Math.max(ms, 1400))
+  const handleProgress = useCallback(() => {
+    setCurrent(c => {
+      if (c + 1 < SCENES.length) return c + 1
+      setPlaying(false); setCompleted(true); return c
+    })
   }, [])
 
-  useEffect(() => () => clearInterval(subTimer.current), [])
-
-  /* ── play/pause control ── */
-  useEffect(() => {
-    const v = videoRef.current
-    if (!v) return
-    if (playing) { v.play().catch(() => {}); startSubs(scene) }
-    else v.pause()
-  }, [playing])
-
-  /* ── when clip changes, reload and play if was playing ── */
-  useEffect(() => {
-    const v = videoRef.current
-    if (!v) return
-    v.load()
-    if (playing) { v.play().catch(() => {}); startSubs(scene) }
-    setSubIdx(0)
-    setShowSlide(false)
-    // Show slide after 2s if scene has one and this is last clip in scene
-    if (scene.slide && sceneClipPos === scene.clips.length - 1) {
-      const t = setTimeout(() => setShowSlide(true), 2000)
-      return () => clearTimeout(t)
-    }
-  }, [clipIdx])
-
-  const handleEnded = () => {
-    const next = clipIdx + 1
-    if (next < ALL_CLIPS.length) {
-      setClipIdx(next)
-    } else {
-      setPlaying(false)
-      setEnded(true)
-    }
-  }
-
-  const jumpToScene = (si) => {
-    const firstClipOfScene = ALL_CLIPS.findIndex(c => c.scene === SCENES[si])
-    if (firstClipOfScene < 0) return
-    setClipIdx(firstClipOfScene)
-    setEnded(false)
+  const navigate = (dir) => {
+    setPlaying(false)
+    setCurrent(c => Math.max(0, Math.min(SCENES.length - 1, c + dir)))
   }
 
   const handlePlay = () => {
-    setEnded(false)
-    if (ended) { setClipIdx(0); setTimeout(() => setPlaying(true), 50); return }
+    setCompleted(false)
+    if (current === SCENES.length - 1) setCurrent(0)
     setPlaying(true)
   }
 
-  /* ── progress: fraction of all clips done ── */
-  const progress = clipIdx / ALL_CLIPS.length
-
   return (
     <section className={`dmf-root${compact ? ' compact' : ''}`}>
-      {/* Header */}
       <div className="dmf-header">
-        <p className="dmf-eyebrow">DOWNFLOW — SCHOOL OF LIFE</p>
         <h2 className="dmf-title">The Downflow Model</h2>
-        <p className="dmf-sub">A short film explaining how the system works</p>
+        <p className="dmf-subtitle">A 10-scene explainer — from problem to system</p>
       </div>
 
-      {/* Cinema viewport */}
-      <div className="dmf-cinema" style={{ '--sc': scene.color }}>
-
-        {/* ── Progress bar ── */}
-        <div className="dmf-progbar">
-          <div className="dmf-progbar-fill" style={{ width: `${progress * 100}%`, background: scene.color }} />
-          {/* Scene markers */}
-          {SCENES.map((s, si) => {
-            const idx = ALL_CLIPS.findIndex(c => c.scene === s)
-            const pct = (idx / ALL_CLIPS.length) * 100
-            return (
-              <button
-                key={s.id}
-                className="dmf-progbar-marker"
-                style={{ left: `${pct}%`, background: si <= sceneIdx ? s.color : 'rgba(255,255,255,0.2)' }}
-                onClick={() => { jumpToScene(si); setPlaying(false) }}
-                title={`${s.num} ${s.label}`}
-              />
-            )
-          })}
-        </div>
-
-        {/* ── Video ── */}
-        <div className="dmf-screen">
-          <video
-            ref={videoRef}
-            key={clip.src}
-            className="dmf-video"
-            src={clip.src}
-            muted={muted}
-            playsInline
-            preload="auto"
-            onEnded={handleEnded}
-          />
-
-          {/* Vignette */}
-          <div className="dmf-vignette" />
-
-          {/* Slide panel */}
-          {showSlide && scene.slide && (
-            <div className="dmf-slide-panel">
-              <img src={scene.slide} alt={scene.label} />
-            </div>
-          )}
-
-          {/* Scene label */}
-          <div className="dmf-scene-label">
-            <span className="dmf-sn" style={{ color: scene.color, borderColor: scene.color }}>{scene.num}</span>
-            <span className="dmf-sl">{scene.label}</span>
-          </div>
-
-          {/* Clip pips */}
-          <div className="dmf-pips">
-            {scene.clips.map((_, i) => (
-              <span key={i} className={`dmf-pip${i === sceneClipPos ? ' active' : ''}`}
-                style={i === sceneClipPos ? { background: scene.color } : {}} />
-            ))}
-          </div>
-
-          {/* Subtitles */}
-          <div className={`dmf-subs${playing ? ' visible' : ''}`}>
-            <span className="dmf-sub-line" key={`${scene.id}-${subIdx}`}>
-              {scene.voice[subIdx]}
-            </span>
-          </div>
-
-          {/* Center play button (when paused / not started) */}
-          {!playing && (
-            <button className="dmf-center-play" onClick={handlePlay}>
-              <span>{ended ? '↺' : '▶'}</span>
-            </button>
-          )}
-        </div>
-
-        {/* ── Controls bar ── */}
+      <div className="dmf-viewport">
+        <ProgressBar key={`${current}-${playing}`} active={playing} duration={SCENE_DURATION} onComplete={handleProgress} />
+        <SceneFrame scene={SCENES[current]} isActive={playing} sceneIndex={current} totalScenes={SCENES.length} onNav={navigate} />
         <div className="dmf-controls">
-          <button className="dmf-btn-icon" onClick={handlePlay} title={playing ? 'Pause' : 'Play'}>
-            {playing ? '⏸' : '▶'}
+          <button className={`dmf-play-btn${playing ? ' playing' : ''}`} onClick={() => playing ? setPlaying(false) : handlePlay()}>
+            {playing ? '⏸ Pause' : completed ? '↺ Replay' : '▶ Play Film'}
           </button>
-          <button className="dmf-btn-icon" onClick={() => setMuted(m => !m)} title={muted ? 'Unmute' : 'Mute'}>
-            {muted ? '🔇' : '🔊'}
-          </button>
-          <div className="dmf-ctrl-scene-info">
-            <span style={{ color: scene.color }}>{scene.num}</span>
-            <span>{scene.label}</span>
-            <span className="dmf-ctrl-timing">{scene.timing}</span>
-          </div>
-          <div className="dmf-ctrl-right">
-            <span className="dmf-clip-counter">{clipIdx + 1} / {ALL_CLIPS.length} clips</span>
-          </div>
+          <span className="dmf-scene-counter">{current + 1} / {SCENES.length}</span>
         </div>
       </div>
 
-      {/* ── Scene strip ── */}
       <div className="dmf-strip">
-        {SCENES.map((s, si) => (
-          <button
-            key={s.id}
-            className={`dmf-strip-btn${si === sceneIdx ? ' active' : ''}${si < sceneIdx ? ' seen' : ''}`}
-            style={si === sceneIdx ? { borderColor: s.color, color: s.color } : {}}
-            onClick={() => { jumpToScene(si); setPlaying(false) }}
+        {SCENES.map((s, i) => (
+          <button key={s.id}
+            className={`dmf-strip-btn${i === current ? ' active' : ''}`}
+            style={i === current ? { borderColor: s.color, color: s.color } : {}}
+            onClick={() => { setPlaying(false); setCurrent(i) }}
           >
-            <span className="dmf-stn">{s.num}</span>
-            <span className="dmf-stl">{s.label}</span>
+            <span className="dmf-strip-num">{s.number}</span>
+            <span className="dmf-strip-lbl">{s.label}</span>
           </button>
         ))}
-      </div>
-
-      {/* ── Current scene voice script ── */}
-      <div className="dmf-script-row" style={{ '--sc': scene.color }}>
-        <div className="dmf-script-meta">
-          <strong style={{ color: scene.color }}>{scene.num} — {scene.label}</strong>
-          <span>{scene.timing}</span>
-        </div>
-        <div className="dmf-script-voice">
-          {scene.voice.map((line, i) => (
-            <span key={i} className={`dmf-sv${i === subIdx && playing ? ' active' : ''}`}
-              style={i === subIdx && playing ? { color: scene.color } : {}}>
-              "{line}"
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* ── Slide deck ── */}
-      <div className="dmf-deck">
-        <p className="dmf-deck-head">Investment Deck — Reference Slides</p>
-        <div className="dmf-deck-grid">
-          {[
-            ['/model/slides/slide-cell-model.png',  'Cell Model'],
-            ['/model/slides/slide-compounding.png', 'Compounding'],
-            ['/model/slides/slide-different.png',   'Why Different'],
-            ['/model/slides/slide-money.png',       'Money Flow'],
-            ['/model/slides/slide-teachers.png',    'Teachers'],
-            ['/model/slides/slide-scaling.png',     'Scaling'],
-            ['/model/slides/slide-regions.png',     'Regions'],
-            ['/model/slides/slide-5year.png',       '5-Year Vision'],
-            ['/model/slides/slide-platform.png',    'Platform'],
-            ['/model/slides/slide-cta.png',         'Fund a Cell'],
-          ].map(([src, label]) => (
-            <div key={src} className="dmf-deck-slide">
-              <img src={src} alt={label} />
-              <span>{label}</span>
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   )
