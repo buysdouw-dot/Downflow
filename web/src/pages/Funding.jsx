@@ -1,28 +1,28 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
-// ─── Video snippets — add new entries here as more arrive ────────────────────
+// ─── Video snippets — original + subtitled versions ─────────────────────────
 const VIDEOS = [
-  { id: 'vid-01', src: '/sponsor/videos/vid-01.mp4', label: 'Snippet 01' },
-  { id: 'vid-02', src: '/sponsor/videos/vid-02.mp4', label: 'Snippet 02' },
-  { id: 'vid-03', src: '/sponsor/videos/vid-03.mp4', label: 'Snippet 03' },
-  { id: 'vid-04', src: '/sponsor/videos/vid-04.mp4', label: 'Snippet 04' },
-  { id: 'vid-05', src: '/sponsor/videos/vid-05.mp4', label: 'Snippet 05' },
-  { id: 'vid-06', src: '/sponsor/videos/vid-06.mp4', label: 'Snippet 06' },
-  { id: 'vid-07', src: '/sponsor/videos/vid-07.mp4', label: 'Snippet 07' },
-  { id: 'vid-08', src: '/sponsor/videos/vid-08.mp4', label: 'Snippet 08' },
-  { id: 'vid-09', src: '/sponsor/videos/vid-09.mp4', label: 'Snippet 09' },
-  { id: 'vid-10', src: '/sponsor/videos/vid-10.mp4', label: 'Snippet 10' },
-  { id: 'vid-11', src: '/sponsor/videos/vid-11.mp4', label: 'Snippet 11' },
-  { id: 'vid-12', src: '/sponsor/videos/vid-12.mp4', label: 'Snippet 12' },
-  { id: 'vid-13', src: '/sponsor/videos/vid-13.mp4', label: 'Snippet 13' },
-  { id: 'vid-14', src: '/sponsor/videos/vid-14.mp4', label: 'Snippet 14' },
-  { id: 'vid-15', src: '/sponsor/videos/vid-15.mp4', label: 'Snippet 15' },
-  { id: 'vid-16', src: '/sponsor/videos/vid-16.mp4', label: 'Snippet 16' },
-  { id: 'vid-17', src: '/sponsor/videos/vid-17.mp4', label: 'Snippet 17' },
-  { id: 'vid-18', src: '/sponsor/videos/vid-18.mp4', label: 'Snippet 18' },
-  { id: 'vid-19', src: '/sponsor/videos/vid-19.mp4', label: 'Snippet 19' },
-  { id: 'vid-20', src: '/sponsor/videos/vid-20.mp4', label: 'Snippet 20' },
+  { id: 'vid-01', src: '/sponsor/videos/vid-01.mp4', subSrc: '/sponsor/videos/subtitled/vid-01_sub.mp4', label: 'Snippet 01', transcript: '[instrumental]' },
+  { id: 'vid-02', src: '/sponsor/videos/vid-02.mp4', subSrc: '/sponsor/videos/subtitled/vid-02_sub.mp4', label: 'Snippet 02', transcript: 'I meet unique and creative — look at the colors and sounds, they manifest my beauty…' },
+  { id: 'vid-03', src: '/sponsor/videos/vid-03.mp4', subSrc: '/sponsor/videos/subtitled/vid-03_sub.mp4', label: 'Snippet 03', transcript: 'I am learning who I am.' },
+  { id: 'vid-04', src: '/sponsor/videos/vid-04.mp4', subSrc: '/sponsor/videos/subtitled/vid-04_sub.mp4', label: 'Snippet 04', transcript: "I'm so curious." },
+  { id: 'vid-05', src: '/sponsor/videos/vid-05.mp4', subSrc: '/sponsor/videos/subtitled/vid-05_sub.mp4', label: 'Snippet 05', transcript: 'I use my voice — decree language, love, and all other stuff.' },
+  { id: 'vid-06', src: '/sponsor/videos/vid-06.mp4', subSrc: '/sponsor/videos/subtitled/vid-06_sub.mp4', label: 'Snippet 06', transcript: 'Huh.' },
+  { id: 'vid-07', src: '/sponsor/videos/vid-07.mp4', subSrc: '/sponsor/videos/subtitled/vid-07_sub.mp4', label: 'Snippet 07', transcript: 'We believe in solid growth — from the first platform, value was coordinated…' },
+  { id: 'vid-08', src: '/sponsor/videos/vid-08.mp4', subSrc: '/sponsor/videos/subtitled/vid-08_sub.mp4', label: 'Snippet 08', transcript: 'Purposes to strengthen our youth — children\'s learning is so much more than a classroom.' },
+  { id: 'vid-09', src: '/sponsor/videos/vid-09.mp4', subSrc: '/sponsor/videos/subtitled/vid-09_sub.mp4', label: 'Snippet 09', transcript: 'Ah, freedom at last.' },
+  { id: 'vid-10', src: '/sponsor/videos/vid-10.mp4', subSrc: '/sponsor/videos/subtitled/vid-10_sub.mp4', label: 'Snippet 10', transcript: 'Activity comes from within — yes, act, apply it. We help make it happen.' },
+  { id: 'vid-11', src: '/sponsor/videos/vid-11.mp4', subSrc: '/sponsor/videos/subtitled/vid-11_sub.mp4', label: 'Snippet 11', transcript: 'Ladies and gentlemen — the Producing Model. Introduce to you…' },
+  { id: 'vid-12', src: '/sponsor/videos/vid-12.mp4', subSrc: '/sponsor/videos/subtitled/vid-12_sub.mp4', label: 'Snippet 12', transcript: 'The sponsorship model that keeps the system accountable — a relief from all angles.' },
+  { id: 'vid-13', src: '/sponsor/videos/vid-13.mp4', subSrc: '/sponsor/videos/subtitled/vid-13_sub.mp4', label: 'Snippet 13', transcript: 'Okay guys — no turning back now. We are in.' },
+  { id: 'vid-14', src: '/sponsor/videos/vid-14.mp4', subSrc: '/sponsor/videos/subtitled/vid-14_sub.mp4', label: 'Snippet 14', transcript: 'We have a duty and responsibility — this is really an opportunity of a lifetime.' },
+  { id: 'vid-15', src: '/sponsor/videos/vid-15.mp4', subSrc: '/sponsor/videos/subtitled/vid-15_sub.mp4', label: 'Snippet 15', transcript: "I'm afraid to say — but now I am my own reflection. Responsibility is on me." },
+  { id: 'vid-16', src: '/sponsor/videos/vid-16.mp4', subSrc: '/sponsor/videos/subtitled/vid-16_sub.mp4', label: 'Snippet 16', transcript: 'I am smart. I am strong. I am me.' },
+  { id: 'vid-17', src: '/sponsor/videos/vid-17.mp4', subSrc: '/sponsor/videos/subtitled/vid-17_sub.mp4', label: 'Snippet 17', transcript: 'I am born from above.' },
+  { id: 'vid-18', src: '/sponsor/videos/vid-18.mp4', subSrc: '/sponsor/videos/subtitled/vid-18_sub.mp4', label: 'Snippet 18', transcript: 'I must be born from above.' },
+  { id: 'vid-19', src: '/sponsor/videos/vid-19.mp4', subSrc: '/sponsor/videos/subtitled/vid-19_sub.mp4', label: 'Snippet 19', transcript: 'I am.' },
+  { id: 'vid-20', src: '/sponsor/videos/vid-20.mp4', subSrc: '/sponsor/videos/subtitled/vid-20_sub.mp4', label: 'Snippet 20', transcript: 'Me too.' },
 ]
 
 const TIERS = [
@@ -92,18 +92,21 @@ const PROBLEMS = [
 
 function VideoGallery() {
   const [active, setActive] = useState(0)
+  const [subtitled, setSubtitled] = useState(false)
   const mainRef = useRef(null)
 
-  // When active clip changes, reset + play the main player
   useEffect(() => {
     if (mainRef.current) {
       mainRef.current.load()
       mainRef.current.play().catch(() => {})
     }
-  }, [active])
+  }, [active, subtitled])
 
   const prev = () => setActive(i => (i - 1 + VIDEOS.length) % VIDEOS.length)
   const next = () => setActive(i => (i + 1) % VIDEOS.length)
+
+  const currentVideo = VIDEOS[active]
+  const activeSrc = subtitled ? currentVideo.subSrc : currentVideo.src
 
   return (
     <section className="fund-section fund-section-dark">
@@ -112,7 +115,7 @@ function VideoGallery() {
           <p className="fund-section-kicker" style={{ color: '#d2ad44' }}>MARKETING SNIPPETS</p>
           <h2 className="fund-section-title" style={{ color: '#fff' }}>See It In Action</h2>
           <p className="fund-section-lead" style={{ color: 'rgba(255,255,255,0.55)' }}>
-            20 short-form sponsor marketing clips — scroll the strip to browse all.
+            20 short-form clips — original voices transcribed and burned as subtitles.
           </p>
         </div>
 
@@ -123,13 +126,7 @@ function VideoGallery() {
             <span className="vg-reel-meta">76s · Mixed pitch + voiceover · 20 clips</span>
           </div>
           <div className="vg-reel-player">
-            <video
-              src="/sponsor/videos/marketing-reel.mp4"
-              controls
-              playsInline
-              className="vg-reel-video"
-              poster=""
-            />
+            <video src="/sponsor/videos/marketing-reel.mp4" controls playsInline className="vg-reel-video" />
           </div>
           <div className="vg-reel-desc">
             Full sponsor marketing reel — all 20 visual snippets edited to the mixed pitch audio.
@@ -137,8 +134,22 @@ function VideoGallery() {
           </div>
         </div>
 
-        <div className="vg-divider">
-          <span>RAW SNIPPETS — 20 clips</span>
+        <div className="vg-divider"><span>RAW SNIPPETS — 20 clips</span></div>
+
+        {/* Subtitle toggle */}
+        <div className="vg-sub-toggle-row">
+          <button
+            className={`vg-sub-btn${!subtitled ? ' active' : ''}`}
+            onClick={() => setSubtitled(false)}
+          >
+            🎞 Original
+          </button>
+          <button
+            className={`vg-sub-btn${subtitled ? ' active' : ''}`}
+            onClick={() => setSubtitled(true)}
+          >
+            💬 With Subtitles
+          </button>
         </div>
 
         {/* Main player */}
@@ -146,22 +157,31 @@ function VideoGallery() {
           <div className="vg-main-player">
             <video
               ref={mainRef}
-              key={VIDEOS[active].src}
-              src={VIDEOS[active].src}
+              key={activeSrc}
+              src={activeSrc}
               controls
               autoPlay
               playsInline
               className="vg-main-video"
             />
-            {/* nav arrows */}
             <button className="vg-arrow vg-arrow-left" onClick={prev} aria-label="Previous">‹</button>
             <button className="vg-arrow vg-arrow-right" onClick={next} aria-label="Next">›</button>
           </div>
+
+          {/* Transcript line */}
           <div className="vg-main-label">
             <span className="vg-counter">{active + 1} / {VIDEOS.length}</span>
-            <span className="vg-clip-label">{VIDEOS[active].label}</span>
-            <span className="vg-more-badge">+ more coming</span>
+            <span className="vg-clip-label">{currentVideo.label}</span>
+            {subtitled && (
+              <span className="vg-sub-badge">💬 Subtitled</span>
+            )}
           </div>
+          {currentVideo.transcript && (
+            <div className="vg-transcript">
+              <span className="vg-transcript-label">🗣</span>
+              <span className="vg-transcript-text">"{currentVideo.transcript}"</span>
+            </div>
+          )}
         </div>
 
         {/* Thumbnail strip */}
@@ -173,13 +193,7 @@ function VideoGallery() {
               onClick={() => setActive(i)}
               aria-label={v.label}
             >
-              <video
-                src={v.src}
-                muted
-                playsInline
-                preload="metadata"
-                className="vg-thumb-video"
-              />
+              <video src={v.src} muted playsInline preload="metadata" className="vg-thumb-video" />
               <div className="vg-thumb-overlay">
                 <span className="vg-thumb-play">{i === active ? '▶' : '▷'}</span>
                 <span className="vg-thumb-num">{i + 1}</span>
