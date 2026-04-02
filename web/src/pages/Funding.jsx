@@ -13,6 +13,16 @@ const VIDEOS = [
   { id: 'vid-08', src: '/sponsor/videos/vid-08.mp4', label: 'Snippet 08' },
   { id: 'vid-09', src: '/sponsor/videos/vid-09.mp4', label: 'Snippet 09' },
   { id: 'vid-10', src: '/sponsor/videos/vid-10.mp4', label: 'Snippet 10' },
+  { id: 'vid-11', src: '/sponsor/videos/vid-11.mp4', label: 'Snippet 11' },
+  { id: 'vid-12', src: '/sponsor/videos/vid-12.mp4', label: 'Snippet 12' },
+  { id: 'vid-13', src: '/sponsor/videos/vid-13.mp4', label: 'Snippet 13' },
+  { id: 'vid-14', src: '/sponsor/videos/vid-14.mp4', label: 'Snippet 14' },
+  { id: 'vid-15', src: '/sponsor/videos/vid-15.mp4', label: 'Snippet 15' },
+  { id: 'vid-16', src: '/sponsor/videos/vid-16.mp4', label: 'Snippet 16' },
+  { id: 'vid-17', src: '/sponsor/videos/vid-17.mp4', label: 'Snippet 17' },
+  { id: 'vid-18', src: '/sponsor/videos/vid-18.mp4', label: 'Snippet 18' },
+  { id: 'vid-19', src: '/sponsor/videos/vid-19.mp4', label: 'Snippet 19' },
+  { id: 'vid-20', src: '/sponsor/videos/vid-20.mp4', label: 'Snippet 20' },
 ]
 
 const TIERS = [
@@ -102,7 +112,7 @@ function VideoGallery() {
           <p className="fund-section-kicker" style={{ color: '#d2ad44' }}>MARKETING SNIPPETS</p>
           <h2 className="fund-section-title" style={{ color: '#fff' }}>See It In Action</h2>
           <p className="fund-section-lead" style={{ color: 'rgba(255,255,255,0.55)' }}>
-            Short-form sponsor marketing clips — more arriving soon.
+            20 short-form sponsor marketing clips — scroll the strip to browse all.
           </p>
         </div>
 
