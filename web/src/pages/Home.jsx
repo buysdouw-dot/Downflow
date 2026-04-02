@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { HexSystemRow } from '../components/HexSymbols.jsx'
+import MyVoiceStory from '../components/MyVoiceStory.jsx'
 
 const PACKS = [
   { id: 'pencil-proof', icon: '✏️', title: 'Pencil Proof Pack', tagline: 'Thinking & speaking without writing', videos: 6, coinLabel: 'reflection participation', exercises: ['Explain a picture in 60 seconds', 'Retell a story without notes', 'Describe how something works'], challenges: ['30-second explanation challenge', 'Teach an imaginary friend', 'Explain using only simple words'], coins: 40, vnd: '25,000', sponsorLabel: 'Thinking Skills Pack', color: '#72d0ff', tags: ['thinking'] },
@@ -233,6 +234,30 @@ export default function Home() {
           ))}
         </div>
         <p className="inv-caption">We don't build people to fit the system. We build the system to support the person.</p>
+      </section>
+
+      {/* MY VOICE — PRODUCING LEVELS STORY */}
+      <section style={{ background: 'var(--bg-card-alt)', padding: '0' }}>
+        <div style={{ maxWidth: 1180, margin: '0 auto', padding: '4rem 2rem 2rem' }}>
+          <div style={{ textAlign: 'center', marginBottom: '0.5rem' }}>
+            <p className="kicker">Awaken · Align · Apply · Amplify · Ascend</p>
+            <h2 style={{ fontSize: 'clamp(1.6rem,3.5vw,2.4rem)', fontWeight: 900, color: 'var(--navy)', margin: '0.25rem 0' }}>
+              <span style={{ color: 'var(--gold)' }}>"My Voice"</span>
+              <span style={{ fontWeight: 300, color: 'var(--text-soft)', marginLeft: '0.5rem' }}>— The Story We Tell</span>
+            </h2>
+            <p style={{ fontSize: '0.95rem', color: 'var(--text-soft)', margin: '0.5rem auto 0', maxWidth: 480, lineHeight: 1.65 }}>
+              Five children. Five levels. One shared language.
+              English is not about being perfect —{' '}
+              <strong style={{ color: 'var(--navy)' }}>it is about being heard.</strong>
+            </p>
+          </div>
+          <MyVoiceStory compact />
+          <div style={{ textAlign: 'center', paddingBottom: '3rem' }}>
+            <Link to="/curriculum" className="btn btn-primary">
+              See the full curriculum →
+            </Link>
+          </div>
+        </div>
       </section>
 
       {/* LEARNING STRUCTURE */}

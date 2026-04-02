@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import MyVoiceStory from '../components/MyVoiceStory.jsx'
 
 /* ─────────────────────────────────────────────────────────
    INVERTED EDUCATION MODEL DATA
@@ -513,6 +514,29 @@ export default function Curriculum() {
             <p>{desc}</p>
           </div>
         ))}
+      </section>
+
+      {/* ── MY VOICE STORY ── */}
+      <section style={{ background: 'var(--bg-card-alt)' }}>
+        <div style={{ maxWidth: 1180, margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', paddingTop: '4rem' }}>
+            <p className="kicker">Short Video Story · ~20 seconds · Cinematic</p>
+            <h2 style={{ fontSize: 'clamp(1.8rem,4vw,2.8rem)', fontWeight: 900, color: 'var(--navy)', margin: '0.25rem 0' }}>
+              <span style={{ color: 'var(--gold)' }}>"My Voice"</span>
+            </h2>
+            <p style={{ fontSize: '1.05rem', color: 'var(--text-soft)', margin: '0.75rem auto 0', maxWidth: 520, lineHeight: 1.65 }}>
+              English is not about being perfect.<br />
+              <strong style={{ color: 'var(--navy)' }}>English is about being heard.</strong>
+            </p>
+          </div>
+          <MyVoiceStory compact />
+          <div style={{ textAlign: 'center', padding: '0 2rem 3rem' }}>
+            <p style={{ fontSize: '0.88rem', color: 'var(--text-soft)', lineHeight: 1.75, margin: 0 }}>
+              <strong style={{ color: 'var(--navy)' }}>Learning → Trying → Using → Sharing → Belonging.</strong><br />
+              Parents immediately understand the value. Children can see themselves in the story.
+            </p>
+          </div>
+        </div>
       </section>
 
       {/* ── INVERTED MODEL COMPARISON ── */}
