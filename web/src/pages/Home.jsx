@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { HexSystemRow } from '../components/HexSymbols.jsx'
 
 const PACKS = [
   { id: 'pencil-proof', icon: '✏️', title: 'Pencil Proof Pack', tagline: 'Thinking & speaking without writing', videos: 6, coinLabel: 'reflection participation', exercises: ['Explain a picture in 60 seconds', 'Retell a story without notes', 'Describe how something works'], challenges: ['30-second explanation challenge', 'Teach an imaginary friend', 'Explain using only simple words'], coins: 40, vnd: '25,000', sponsorLabel: 'Thinking Skills Pack', color: '#72d0ff', tags: ['thinking'] },
@@ -279,6 +280,64 @@ export default function Home() {
             <span className="cta-icon">🧭</span><strong>Become a Facilitator</strong>
             <p>For educators who want to guide the next generation of guiders.</p>
           </Link>
+        </div>
+      </section>
+
+      {/* ── Brand Values Strip ── */}
+      <div className="brand-values-strip">
+        {[
+          ['⚡','Empowering'],
+          ['🔗','Connected'],
+          ['🛡️','Safe'],
+          ['🌱','Growing'],
+          ['🎯','Trust'],
+          ['💡','Impact'],
+          ['✨','Inspire'],
+        ].map(([icon,label])=>(
+          <div key={label} className="bv-item">
+            <span className="bv-icon">{icon}</span>
+            <span className="bv-label">{label}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* ── Symbol System ── */}
+      <section style={{padding:'4rem 2rem',textAlign:'center'}}>
+        <p className="kicker">Visual Design System</p>
+        <h2 className="section-title">The DOWNFLOW Symbol System</h2>
+        <p className="lead" style={{marginBottom:'2.5rem',maxWidth:'560px',margin:'0 auto 2.5rem'}}>
+          Seven core hex icons represent every role and concept in the DOWNFLOW ecosystem.
+        </p>
+        <HexSystemRow size={52}/>
+      </section>
+
+      {/* ── Investor / Sponsor Deck Section ── */}
+      <section className="investor-section">
+        <p className="kicker">For Investors & Sponsors</p>
+        <h2 className="section-title">Why DOWNFLOW Works</h2>
+        <p className="lead" style={{marginBottom:'0',maxWidth:'640px'}}>
+          A sponsor-funded, self-improving education model. Every cycle generates data, every student becomes a mentor, every sponsor earns a measurable return.
+        </p>
+        <div className="investor-grid">
+          {[
+            { icon:'🏫', big:'5', label:'Students per cell', desc:'Small enough for real connection. Large enough to build group dynamics.' },
+            { icon:'🔄', big:'12', label:'Sessions per cycle', desc:'One full learning cycle. Consistent, structured, measurable.' },
+            { icon:'💰', big:'15%', label:'Sponsor rebate', desc:'9% reinvested in new cells. 6% directly credited to student coin wallets.' },
+            { icon:'📈', big:'3.6M', label:'VND earned per connector', desc:'Per cell formed — registration share plus lesson share over the full cycle.' },
+            { icon:'🌍', big:'3', label:'Launch regions', desc:'Vietnam first. Germany and Russia via SEO. Global open infrastructure.' },
+            { icon:'⚡', big:'∞', label:'Self-improving flywheel', desc:'Students become facilitators. Cells spawn cells. The system grows itself.' },
+          ].map(card=>(
+            <div key={card.label} className="investor-card">
+              <span className="investor-card-icon">{card.icon}</span>
+              <span className="big-num">{card.big}</span>
+              <h3>{card.label}</h3>
+              <p>{card.desc}</p>
+            </div>
+          ))}
+        </div>
+        <div style={{textAlign:'center',marginTop:'2.5rem',display:'flex',gap:'1rem',justifyContent:'center',flexWrap:'wrap'}}>
+          <Link to="/sponsor" className="btn btn-primary" style={{fontSize:'0.95rem',padding:'0.75rem 2rem'}}>Fund a Cell →</Link>
+          <Link to="/platform" className="btn btn-secondary" style={{fontSize:'0.95rem',padding:'0.75rem 2rem'}}>View Full System</Link>
         </div>
       </section>
     </>

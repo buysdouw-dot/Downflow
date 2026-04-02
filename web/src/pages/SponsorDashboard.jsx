@@ -1,180 +1,409 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { HexIcon, HexSystemRow } from '../components/HexSymbols.jsx'
+import OnboardingBanner from '../components/OnboardingBanner.jsx'
+import { getCells, getSponsorships } from '../services/api.js'
 
+// ── Global Map ────────────────────────────────────────────────
 const CITIES = [
-  { id:'hanoi',  x:710,y:198,label:'Hanoi',    active:true  },
-  { id:'hcm',    x:720,y:225,label:'HCMC',     active:true  },
-  { id:'berlin', x:490,y:115,label:'Berlin',   active:true  },
-  { id:'hamburg',x:488,y:108,label:'Hamburg',  active:true  },
-  { id:'moscow', x:570,y:100,label:'Moscow',   active:true  },
-  { id:'cairo',  x:530,y:178,label:'Cairo',    active:false },
-  { id:'dubai',  x:610,y:185,label:'Dubai',    active:false },
-  { id:'warsaw', x:510,y:108,label:'Warsaw',   active:false },
-  { id:'danang', x:715,y:212,label:'Da Nang',  active:false },
+  { id:'hanoi',  x:710,y:198,label:'Hanoi',   active:true  },
+  { id:'hcm',    x:720,y:225,label:'HCMC',    active:true  },
+  { id:'berlin', x:490,y:115,label:'Berlin',  active:true  },
+  { id:'moscow', x:570,y:100,label:'Moscow',  active:false },
+  { id:'danang', x:715,y:212,label:'Da Nang', active:true  },
 ]
-
-const ARCS = [
-  ['berlin','hanoi'],['berlin','moscow'],['hamburg','hcm'],
-  ['moscow','hanoi'],['berlin','warsaw'],['hanoi','danang'],
-  ['dubai','cairo'],['hcm','danang'],['moscow','warsaw'],
-]
+const ARCS = [['berlin','hanoi'],['berlin','hcm'],['moscow','hanoi'],['hanoi','danang'],['hcm','danang']]
 
 function GlobalMap() {
   const svgRef = useRef(null)
-  const cityMap = Object.fromEntries(CITIES.map(c=>[c.id,c]))
+  const cm = Object.fromEntries(CITIES.map(c=>[c.id,c]))
   useEffect(()=>{
     let frame,t=0
-    const animate=()=>{ t+=0.005; svgRef.current?.querySelectorAll('.tdot').forEach((d,i)=>{const p=((Math.sin(t+i*0.6)+1)/2); d.setAttribute('opacity',0.3+p*0.7)}); frame=requestAnimationFrame(animate) }
+    const animate=()=>{
+      t+=0.005
+      svgRef.current?.querySelectorAll('.tdot').forEach((d,i)=>{
+        const p=((Math.sin(t+i*0.7)+1)/2)
+        d.setAttribute('opacity',0.25+p*0.75)
+      })
+      frame=requestAnimationFrame(animate)
+    }
     frame=requestAnimationFrame(animate); return ()=>cancelAnimationFrame(frame)
   },[])
   return (
     <div className="global-map-wrap">
-      <svg ref={svgRef} viewBox="0 0 900 320" className="global-map-svg">
-        <defs>
-          <radialGradient id="mg" cx="50%" cy="50%" r="50%"><stop offset="0%" stopColor="#1f84ff" stopOpacity="0.1"/><stop offset="100%" stopColor="#040c1f" stopOpacity="0"/></radialGradient>
-          <filter id="ng2"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-        </defs>
-        <rect width="900" height="320" fill="url(#mg)" rx="16"/>
-        <g fill="rgba(114,208,255,0.05)" stroke="rgba(114,208,255,0.12)" strokeWidth="0.8">
-          <ellipse cx="490" cy="120" rx="65" ry="40"/>
-          <ellipse cx="510" cy="210" rx="52" ry="68"/>
-          <ellipse cx="680" cy="160" rx="110" ry="70"/>
-          <ellipse cx="580" cy="100" rx="50" ry="25"/>
-        </g>
+      <svg ref={svgRef} className="global-map-svg" viewBox="350 85 430 185" preserveAspectRatio="xMidYMid meet">
+        {/* Continents outline suggestion */}
+        <rect x="350" y="85" width="430" height="185" fill="rgba(114,208,255,0.03)" rx="8"/>
+        {/* Arc paths with travel dots */}
         {ARCS.map(([a,b],i)=>{
-          const ca=cityMap[a],cb=cityMap[b]
-          const mx=(ca.x+cb.x)/2, my=Math.min(ca.y,cb.y)-35
-          const dur=2.8+(i%4)*0.6
+          const A=cm[a],B=cm[b]; if(!A||!B) return null
+          const mx=(A.x+B.x)/2,my=Math.min(A.y,B.y)-30
+          const path=`M${A.x},${A.y} Q${mx},${my} ${B.x},${B.y}`
           return (
             <g key={i}>
-              <path d={`M${ca.x},${ca.y} Q${mx},${my} ${cb.x},${cb.y}`} fill="none" stroke="rgba(114,208,255,0.15)" strokeWidth="0.9" id={`apath${i}`}/>
-              <circle r="2.5" fill="#d2ad44" className="tdot">
-                <animateMotion dur={`${dur}s`} repeatCount="indefinite" begin={`${(i*0.4)%dur}s`}><mpath href={`#apath${i}`}/></animateMotion>
+              <path d={path} fill="none" stroke="rgba(210,173,68,0.25)" strokeWidth="1.2" strokeDasharray="4 3"/>
+              <circle className="tdot" r="3" fill="#d2ad44">
+                <animateMotion dur={`${3+i*0.8}s`} repeatCount="indefinite" path={path}/>
               </circle>
             </g>
           )
         })}
-        {CITIES.map(city=>(
-          <g key={city.id} filter="url(#ng2)">
-            <circle cx={city.x} cy={city.y} r={city.active?9:5} fill={city.active?'rgba(210,173,68,0.2)':'rgba(114,208,255,0.1)'} stroke={city.active?'#d2ad44':'#72d0ff'} strokeWidth="1.2" opacity={city.active?0.9:0.45}/>
-            {city.active&&<text x={city.x+11} y={city.y+4} fontSize="8" fill="#eed998" opacity="0.85" fontFamily="Sora,sans-serif">{city.label}</text>}
+        {/* City nodes */}
+        {CITIES.map(c=>(
+          <g key={c.id} transform={`translate(${c.x},${c.y})`}>
+            <circle r="7" fill={c.active?"rgba(77,232,176,0.2)":"rgba(255,255,255,0.05)"} stroke={c.active?"#4de8b0":"rgba(255,255,255,0.2)"} strokeWidth="1.2">
+              {c.active && <animate attributeName="r" values="7;10;7" dur="2.5s" repeatCount="indefinite"/>}
+            </circle>
+            <circle r="3.5" fill={c.active?"#4de8b0":"rgba(255,255,255,0.3)"}/>
+            <text y="-12" textAnchor="middle" fontSize="8" fill={c.active?"#fff":"rgba(255,255,255,0.4)"} fontFamily="Sora,sans-serif" fontWeight="600">{c.label}</text>
           </g>
         ))}
-        <text x="20" y="308" fontSize="9" fill="var(--text-soft)" fontFamily="Sora,sans-serif">🇻🇳 Vietnam  🇩🇪 Germany  🇷🇺 Russia — DOWNFLOW Active Regions</text>
       </svg>
     </div>
   )
 }
 
-const CELLS = [
-  { id:'VN-01',region:'Hanoi, 🇻🇳',students:5,sg:'Linh T.',packs:['✏️ Pencil Proof','🗣️ Voice'],week:7,status:'active',health:92 },
-  { id:'VN-02',region:'HCMC, 🇻🇳',students:5,sg:'Minh P.',packs:['💰 Kidinomics','🧩 Systems'],week:3,status:'active',health:74 },
-  { id:'DE-01',region:'Berlin, 🇩🇪',students:5,sg:'Felix K.',packs:['🎯 Confidence','🛠️ Life Skills'],week:11,status:'completing',health:88 },
-  { id:'RU-01',region:'Moscow, 🇷🇺',students:5,sg:'Anna V.',packs:['🧠 Self-Awareness','🤝 Social'],week:1,status:'active',health:70 },
+// ── Sponsor Stats (matches wireframe: 5 key numbers) ─────────
+const SPONSOR_STATS = [
+  { hex:'sponsor', value:'3',           label:'Funded Cells',   sub:'VN-01 · VN-02 · VN-03', color:'#d2ad44' },
+  { hex:'cell',    value:'15',          label:'Students',        sub:'Across 3 cells',          color:'#4de8b0' },
+  { hex:'growth',  value:'4.8',         label:'Avg Cell Score',  sub:'out of 5.0',              color:'#72d0ff' },
+  { hex:'data',    value:'47',          label:'Video Reps',      sub:'This cycle',              color:'#b083ff' },
+  { hex:'shield',  value:'5.38%',       label:'Rebate Earned',   sub:'vs 15% max',              color:'#ff9f5a' },
+]
+
+const CELLS_DATA = [
+  { id:'VN-01', region:'Hanoi 🇻🇳',    week:7,  health:92, pack:'🗣️ Voice',      status:'active',    rebate:450000  },
+  { id:'VN-02', region:'HCMC 🇻🇳',     week:3,  health:74, pack:'💰 Kidinomics', status:'active',    rebate:250000  },
+  { id:'VN-03', region:'Da Nang 🇻🇳',  week:5,  health:58, pack:'🎯 Confidence', status:'flagged',   rebate:120000  },
+]
+
+const REBATE_FLOW = [
+  { pct:'85%', label:'Goes to cell operations', sub:'Facilitator · Connector · Platform', color:'#4de8b0' },
+  { pct:'9%',  label:'Reinvested in new cells', sub:'Compounding growth fund',            color:'#72d0ff' },
+  { pct:'6%',  label:'Credited to students',    sub:'Coin wallet recognition',            color:'#d2ad44' },
+]
+
+const GIFT_PACKS = [
+  { emoji:'✏️', name:'Pencil Proof',     ages:'8–12',  assigned:'VN-01', status:'active' },
+  { emoji:'💰', name:'Kidinomics',       ages:'10–14', assigned:'VN-02', status:'active' },
+  { emoji:'🎯', name:'Confidence Eng.',  ages:'10–15', assigned:'VN-03', status:'active' },
+  { emoji:'🗣️', name:'Voice & Presence', ages:'12–16', assigned:null,    status:'available' },
+  { emoji:'🧩', name:'Systems Thinking', ages:'13–17', assigned:null,    status:'available' },
+  { emoji:'🧠', name:'Self-Awareness',   ages:'13–18', assigned:null,    status:'available' },
 ]
 
 export default function SponsorDashboard() {
-  const [activeTab,setActiveTab]=useState('overview')
+  const [activeTab, setActiveTab] = useState('overview')
+  const [showOnboarding, setShowOnboarding] = useState(true)
+  const [cells, setCells] = useState(CELLS_DATA)
+
+  useEffect(()=>{
+    getSponsorships('user-s01').then(data=>{
+      if(data?.length) { /* map to cells */ }
+    })
+  },[])
+
   return (
     <div className="dashboard-page">
+      {/* Onboarding Banner */}
+      {showOnboarding && (
+        <div style={{padding:'2rem 2rem 0'}}>
+          <OnboardingBanner role="sponsor" onDismiss={()=>setShowOnboarding(false)}/>
+        </div>
+      )}
+
+      {/* Page Header */}
       <div className="db-page-header sponsor-header">
         <div className="db-header-inner">
-          <div><p className="kicker">Sponsor Portal — DOWNFLOW</p><h1 className="db-title">🏦 Infrastructure Dashboard</h1><p className="db-subtitle">Fund learning cells · Track global impact · Assign gift packs · Compete on outcomes</p></div>
-          <div className="db-header-actions"><button className="btn btn-primary">+ Fund New Cell</button><button className="btn btn-secondary">Download Report</button></div>
+          <div>
+            <p className="kicker">Sponsor Portal — DOWNFLOW School of Life</p>
+            <h1 className="db-title">💼 Sponsor Dashboard</h1>
+            <p className="db-subtitle">Fund cells · Track impact · Grow the network · Empowering · Connected · Safe · Growing</p>
+          </div>
+          <div className="db-header-actions">
+            <button className="btn btn-primary">+ Fund New Cell</button>
+            <button className="btn btn-secondary">Download Report</button>
+            {!showOnboarding && (
+              <button className="btn btn-secondary" onClick={()=>setShowOnboarding(true)}>? Guide</button>
+            )}
+          </div>
         </div>
-        <div className="db-stats-row">
-          {[['🏫','4','Active Cells Funded','VN · DE · RU','#d2ad44'],['👩‍🎓','20','Students Reached','This funding cycle','#72d0ff'],['🎁','6','Gift Packs Assigned','284 students unlocked','#4de8b0'],['📈','15%','Sponsor Rebate','9% reinvested · 6% to students','#ff9f5a']].map(([icon,val,label,sub,color])=>(
-            <div key={label} className="db-stat-card" style={{'--stat-color':color}}>
-              <span className="db-stat-icon">{icon}</span>
-              <div><p className="db-stat-value">{val}</p><p className="db-stat-label">{label}</p><p className="db-stat-sub">{sub}</p></div>
+
+        {/* 5-stat row — mirrors wireframe exactly */}
+        <div className="db-stats-row" style={{gridTemplateColumns:'repeat(5,1fr)'}}>
+          {SPONSOR_STATS.map(s=>(
+            <div key={s.label} className="db-stat-card" style={{'--stat-color':s.color}}>
+              <HexIcon type={s.hex} size={40}/>
+              <div>
+                <p className="db-stat-value">{s.value}</p>
+                <p className="db-stat-label">{s.label}</p>
+                <p className="db-stat-sub">{s.sub}</p>
+              </div>
             </div>
           ))}
         </div>
       </div>
+
+      {/* Tabs */}
       <div className="db-tabs">
-        {[['overview','🌍 Overview'],['cells','🏫 My Cells'],['gifts','🎁 Gift Packs'],['impact','📊 Impact']].map(([id,label])=>(
+        {[['overview','🔭 Overview'],['cells','🏫 My Cells'],['packs','🎁 Gift Packs'],['impact','📊 Impact'],['flywheel','🔄 Flywheel']].map(([id,label])=>(
           <button key={id} className={`db-tab${activeTab===id?' active':''}`} onClick={()=>setActiveTab(id)}>{label}</button>
         ))}
       </div>
+
       <div className="db-content">
+
+        {/* ── OVERVIEW ── */}
         {activeTab==='overview'&&(
           <div className="db-tab-content">
-            <div className="section-head" style={{marginBottom:'1.5rem'}}><p className="kicker">Global Reach</p><h2>Your Network Footprint</h2><p className="lead">Live cells across Vietnam, Germany, and Russia — funded by your sponsorship.</p></div>
-            <GlobalMap/>
-            <div className="two-col-grid" style={{marginTop:'2.5rem'}}>
-              <div className="db-panel">
-                <h3 className="db-panel-title">💰 How Your Funding Works</h3>
-                <div className="funding-flow">
-                  {[['🏦','You fund a learning cycle','12 weeks · 2 sessions/week · 5 students'],['🏫','A new Learning Cell activates','Facilitator + Student Guider assigned. Week 1 begins.'],['🎓','Students learn, produce, grow','Video reps submitted. Coins earned. Packs unlocked.'],['📈','15% rebate returns to network','9% creates new cells · 6% distributed to students']].map(([icon,title,desc],i)=>(
-                    <div key={i}><div className="ff-step" style={i===3?{borderColor:'var(--gold-500)'}:{}}><span className="ff-icon">{icon}</span><div><strong>{title}</strong><p>{desc}</p></div></div>{i<3&&<div className="ff-arrow">↓</div>}</div>
+            <div className="two-col-grid">
+              <div>
+                <div className="db-panel" style={{marginBottom:'1.5rem'}}>
+                  <h3 className="db-panel-title">🌍 Global Cell Map</h3>
+                  <GlobalMap/>
+                  <div style={{display:'flex',gap:'1rem',marginTop:'0.75rem',flexWrap:'wrap'}}>
+                    {[['🟢','Active Cell'],['🟡','Needs Attention'],['⭕','Pipeline']].map(([dot,lbl])=>(
+                      <span key={lbl} style={{fontSize:'0.75rem',color:'var(--text-soft)',display:'flex',alignItems:'center',gap:'0.3rem'}}>{dot} {lbl}</span>
+                    ))}
+                  </div>
+                </div>
+                <div className="db-panel">
+                  <h3 className="db-panel-title">⚡ Actions</h3>
+                  {[
+                    {urgent:true,  msg:'VN-03 participation flagged — review cell status'},
+                    {urgent:false, msg:'3 gift packs available to assign to new cells'},
+                    {urgent:false, msg:'Rebate cycle closes in 12 days — ₫820,000 pending'},
+                  ].map((a,i)=>(
+                    <div key={i} className="action-item" style={{marginBottom:'0.5rem'}}>
+                      <span>{a.urgent?'🔴':'🟡'}</span>
+                      <p style={{flex:1,margin:0,fontSize:'0.85rem'}}>{a.msg}</p>
+                      <button className="btn btn-secondary btn-sm">Review</button>
+                    </div>
                   ))}
                 </div>
               </div>
-              <div className="db-panel">
-                <h3 className="db-panel-title">📍 Your Active Regions</h3>
-                <div className="region-list">
-                  {[['🇻🇳','Vietnam','2 cells · 10 students','active'],['🇩🇪','Germany','1 cell · 5 students','completing'],['🇷🇺','Russia','1 cell · 5 students','active'],['🌍','Global expansion','Open for next cycle','pipeline']].map(([flag,name,detail,status])=>(
-                    <div key={name} className="region-row">
-                      <span className="region-flag">{flag}</span>
-                      <div className="region-info"><strong>{name}</strong><span>{detail}</span></div>
-                      <span className={`region-badge ${status}`}>{status==='active'?'● Active':status==='completing'?'◐ Completing':'→ Pipeline'}</span>
+
+              <div>
+                <div className="db-panel" style={{marginBottom:'1.5rem'}}>
+                  <h3 className="db-panel-title">💸 15% Rebate Flow</h3>
+                  <p style={{fontSize:'0.82rem',color:'var(--text-soft)',marginBottom:'1rem'}}>Every VND you invest, 15% returns and works for you.</p>
+                  {REBATE_FLOW.map(r=>(
+                    <div key={r.label} style={{display:'flex',alignItems:'center',gap:'1rem',marginBottom:'0.75rem'}}>
+                      <div style={{background:`${r.color}22`,border:`1px solid ${r.color}55`,borderRadius:'8px',padding:'0.4rem 0.75rem',minWidth:'52px',textAlign:'center'}}>
+                        <span style={{fontSize:'0.95rem',fontWeight:800,color:r.color}}>{r.pct}</span>
+                      </div>
+                      <div>
+                        <strong style={{fontSize:'0.88rem',display:'block'}}>{r.label}</strong>
+                        <span style={{fontSize:'0.75rem',color:'var(--text-soft)'}}>{r.sub}</span>
+                      </div>
                     </div>
                   ))}
+                </div>
+                <div className="db-panel">
+                  <h3 className="db-panel-title">📅 Upcoming Milestones</h3>
+                  <div className="payout-timeline">
+                    {[
+                      {done:true,  label:'Cell formation complete',    amt:'',         note:'All 3 cells active'},
+                      {done:true,  label:'Week 3 progress reviewed',   amt:'',         note:'VN-02 on track'},
+                      {active:true,label:'Week 7 performance check',   amt:'₫250,000', note:'VN-01 exceeding'},
+                      {done:false, label:'Rebate cycle close',         amt:'₫820,000', note:'Apr 15 · Automatic'},
+                      {done:false, label:'Cycle 1 completion report',  amt:'',         note:'Full impact summary'},
+                    ].map((m,i)=>(
+                      <div key={i} className={`payout-milestone${m.done?' done':m.active?' active':''}`}>
+                        <div className="pm-label"><strong>{m.label}</strong><span>{m.note}</span></div>
+                        {m.amt&&<span className="pm-amount">{m.amt}</span>}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         )}
+
+        {/* ── MY CELLS ── */}
         {activeTab==='cells'&&(
           <div className="db-tab-content">
-            <div className="db-panel">
-              <div className="db-panel-header"><h3 className="db-panel-title">🏫 Funded Learning Cells</h3><button className="btn btn-primary btn-sm">+ Fund New Cell</button></div>
+            <div className="db-panel" style={{marginBottom:'1.5rem'}}>
+              <div className="db-panel-header">
+                <h3 className="db-panel-title">🏫 Funded Cells</h3>
+                <button className="btn btn-primary btn-sm">+ Fund New Cell</button>
+              </div>
               <div className="cells-table">
-                <div className="cells-table-head"><span>Cell</span><span>Region</span><span>Students</span><span>SG</span><span>Packs</span><span>Progress</span><span>Status</span></div>
-                {CELLS.map(cell=>{
+                <div className="cells-table-head" style={{gridTemplateColumns:'80px 1fr 90px 100px 120px 90px 100px'}}>
+                  <span>Cell ID</span><span>Region</span><span>Week</span><span>Health</span><span>Pack</span><span>Status</span><span>Rebate</span>
+                </div>
+                {cells.map(cell=>{
                   const hc=cell.health>=80?'#4de8b0':cell.health>=60?'#d2ad44':'#ff6b9d'
-                  return (
-                    <div key={cell.id} className="cell-row">
+                  return(
+                    <div key={cell.id} className="cell-row" style={{gridTemplateColumns:'80px 1fr 90px 100px 120px 90px 100px'}}>
                       <span className="cell-id">{cell.id}</span>
-                      <span className="cell-region">{cell.region}</span>
-                      <span>{cell.students}</span>
-                      <span className="cell-sg">{cell.sg}</span>
-                      <div className="cell-packs">{cell.packs.map(p=><span key={p} className="pack-tag">{p}</span>)}</div>
-                      <div className="cell-progress">
-                        <div className="progress-track"><div className="progress-fill" style={{width:`${(cell.week/12)*100}%`,background:hc}}/></div>
-                        <span className="progress-label">Wk {cell.week}/12</span>
-                      </div>
-                      <span className="cell-status" style={{color:hc}}>{cell.status==='active'?'● Active':cell.status==='completing'?'◐ Completing':'○ New'}</span>
+                      <span style={{fontSize:'0.84rem'}}>{cell.region}</span>
+                      <span style={{fontSize:'0.82rem'}}>{cell.week}/12</span>
+                      <span>
+                        <span style={{color:hc,fontWeight:700,fontSize:'0.85rem'}}>{cell.health}</span>
+                        <div className="sp-bar-track" style={{marginTop:'0.2rem'}}><div className="sp-bar-fill" style={{width:`${cell.health}%`,background:hc,height:'4px'}}/></div>
+                      </span>
+                      <span style={{fontSize:'0.82rem'}}>{cell.pack}</span>
+                      <span style={{fontSize:'0.75rem',fontWeight:700,color:cell.status==='flagged'?'#ff6b9d':cell.status==='active'?'#4de8b0':'#d2ad44'}}>
+                        {cell.status==='active'?'● Active':cell.status==='flagged'?'⚠ Flagged':'◐ Completing'}
+                      </span>
+                      <span style={{fontSize:'0.82rem',color:'var(--gold-500)',fontWeight:700}}>₫{cell.rebate.toLocaleString()}</span>
                     </div>
                   )
                 })}
               </div>
             </div>
+            {/* Sponsor boundary rules */}
+            <div className="db-panel">
+              <h3 className="db-panel-title">🛡️ Your Ethical Boundaries</h3>
+              <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'0.75rem'}}>
+                {[
+                  {ok:true,  rule:'You fund cells — you never interact with students directly'},
+                  {ok:true,  rule:'Your brand may appear on sponsor acknowledgement materials'},
+                  {ok:true,  rule:'You receive weekly progress reports on your cells'},
+                  {ok:false, rule:'You cannot select, contact, or influence individual students'},
+                  {ok:false, rule:'You cannot direct facilitators on how to run sessions'},
+                  {ok:false, rule:'You cannot withdraw mid-cycle once a cell is active'},
+                ].map((r,i)=>(
+                  <div key={i} style={{display:'flex',gap:'0.6rem',padding:'0.6rem',background:'rgba(255,255,255,0.02)',borderRadius:'8px',border:'1px solid var(--border-soft)'}}>
+                    <span style={{fontSize:'1rem'}}>{r.ok?'✅':'🚫'}</span>
+                    <span style={{fontSize:'0.82rem'}}>{r.rule}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         )}
-        {activeTab==='gifts'&&(
+
+        {/* ── GIFT PACKS ── */}
+        {activeTab==='packs'&&(
           <div className="db-tab-content">
-            <p className="lead" style={{marginBottom:'1.5rem'}}>Assign content packs directly to learning cells. Students get instant access — no coins or payment needed.</p>
-            <div className="gift-pack-grid">
-              {[['✏️','Pencil Proof Pack',84,14],['💰','Kidinomics Pack',72,12],['🗣️','Voice & Presence Pack',60,10],['🎯','Confidence Pack',48,8]].map(([icon,name,students,cells])=>(
-                <div key={name} className="gift-pack-card"><span className="gift-pack-icon">{icon}</span><div className="gift-pack-info"><strong>{name}</strong><p>{students} students · {cells} cells</p></div><button className="btn btn-secondary btn-sm">Assign to Cell</button></div>
+            <p className="lead" style={{marginBottom:'1.5rem'}}>Gift a content pack to any of your cells. Each pack runs 12 weekly sessions.</p>
+            <div className="gift-pack-grid" style={{gridTemplateColumns:'repeat(3,1fr)'}}>
+              {GIFT_PACKS.map(p=>(
+                <div key={p.name} className="gift-pack-card" style={{flexDirection:'column',alignItems:'flex-start',opacity:p.status==='active'?1:0.8}}>
+                  <div style={{display:'flex',alignItems:'center',gap:'0.75rem',marginBottom:'0.75rem'}}>
+                    <span style={{fontSize:'2rem'}}>{p.emoji}</span>
+                    <div>
+                      <strong style={{display:'block'}}>{p.name}</strong>
+                      <span style={{fontSize:'0.75rem',color:'var(--text-soft)'}}>Ages {p.ages}</span>
+                    </div>
+                    <span style={{marginLeft:'auto',fontSize:'0.72rem',fontWeight:700,color:p.status==='active'?'#4de8b0':'#72d0ff',background:p.status==='active'?'rgba(77,232,176,0.1)':'rgba(114,208,255,0.1)',border:`1px solid ${p.status==='active'?'rgba(77,232,176,0.3)':'rgba(114,208,255,0.2)'}`,borderRadius:'20px',padding:'0.2rem 0.5rem'}}>
+                      {p.status==='active'?'Active':'Available'}
+                    </span>
+                  </div>
+                  {p.assigned
+                    ? <p style={{fontSize:'0.78rem',color:'var(--text-soft)',margin:'0 0 0.75rem'}}>Assigned to cell <strong>{p.assigned}</strong></p>
+                    : <p style={{fontSize:'0.78rem',color:'var(--text-soft)',margin:'0 0 0.75rem'}}>Not yet assigned to a cell</p>
+                  }
+                  <button className={`btn btn-sm ${p.status==='active'?'btn-secondary':'btn-primary'}`} style={{width:'100%'}}>
+                    {p.status==='active'?'View Cell Progress':'Assign to Cell →'}
+                  </button>
+                </div>
               ))}
             </div>
           </div>
         )}
+
+        {/* ── IMPACT ── */}
         {activeTab==='impact'&&(
           <div className="db-tab-content">
-            <div className="impact-metrics-grid">
-              {[['🎓','21','Total Students Reached','All cycles combined'],['🎬','847','Video Reps Submitted','Across all cells'],['🎁','6','Packs Gifted','284 students benefited'],['⬆️','3','Students → SG Track','From your funded cells'],['🌱','2','New Cells Spawned','Via 9% reinvestment'],['🌍','3','Countries Impacted','VN · DE · RU']].map(([icon,val,label,note])=>(
-                <div key={label} className="impact-metric-card"><span className="impact-metric-icon">{icon}</span><p className="impact-metric-value">{val}</p><p className="impact-metric-label">{label}</p><p className="impact-metric-note">{note}</p></div>
+            <div className="impact-metrics-grid" style={{gridTemplateColumns:'repeat(4,1fr)',marginBottom:'2rem'}}>
+              {[
+                ['🧑‍🎓','15','Students Reached','Across 3 cells, 3 regions'],
+                ['🎬','47','Video Reps Submitted','Real participation evidence'],
+                ['🔥','avg 7d','Avg Student Streak','Across all active cells'],
+                ['💰','₫820,000','Rebate Earned','This cycle so far'],
+              ].map(([icon,val,label,note])=>(
+                <div key={label} className="impact-metric-card">
+                  <span className="impact-metric-icon">{icon}</span>
+                  <p className="impact-metric-value">{val}</p>
+                  <p className="impact-metric-label">{label}</p>
+                  <p className="impact-metric-note">{note}</p>
+                </div>
               ))}
             </div>
-            <div className="db-panel" style={{marginTop:'2rem'}}>
-              <h3 className="db-panel-title">📊 Cycle Performance</h3>
-              <div className="cycle-bars">
-                {[['Cycle 1 · Nov 2025',95,2],['Cycle 2 · Jan 2026',78,3],['Cycle 3 · Mar 2026',42,4]].map(([c,pct,cells])=>(
-                  <div key={c} className="cycle-bar-row"><span className="cycle-bar-label">{c} · {cells} cells</span><div className="cycle-bar-track"><div className="cycle-bar-fill" style={{width:`${pct}%`}}/></div><span className="cycle-bar-pct">{pct}%</span></div>
-                ))}
+            <div className="two-col-grid">
+              <div className="db-panel">
+                <h3 className="db-panel-title">📈 Cycle Performance by Cell</h3>
+                <div className="cycle-bars">
+                  {cells.map(cell=>{
+                    const hc=cell.health>=80?'#4de8b0':cell.health>=60?'#d2ad44':'#ff6b9d'
+                    return(
+                      <div key={cell.id} className="cycle-bar-row">
+                        <span className="cycle-bar-label">{cell.id} {cell.region.split(' ')[1]}</span>
+                        <div className="cycle-bar-track"><div className="cycle-bar-fill" style={{width:`${cell.health}%`,background:hc}}/></div>
+                        <span className="cycle-bar-pct">{cell.health}</span>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+              <div className="db-panel">
+                <h3 className="db-panel-title">🌱 Your Impact Statement</h3>
+                <div style={{padding:'1.25rem',background:'linear-gradient(135deg,rgba(210,173,68,0.08),rgba(77,232,176,0.04))',borderRadius:'12px',border:'1px solid rgba(210,173,68,0.2)'}}>
+                  <p style={{fontSize:'1rem',lineHeight:1.7,fontStyle:'italic',color:'var(--text-main)',margin:0}}>
+                    "Through your sponsorship, <strong>15 young people</strong> in Vietnam have completed <strong>47 video reps</strong>, run <strong>21 structured sessions</strong>, and developed real-world communication skills — without a single classroom or textbook."
+                  </p>
+                  <p style={{fontSize:'0.78rem',color:'var(--text-soft)',marginTop:'0.75rem',marginBottom:0}}>Auto-generated from your cell performance data · Cycle 1, 2026</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── FLYWHEEL ── */}
+        {activeTab==='flywheel'&&(
+          <div className="db-tab-content">
+            <div className="two-col-grid">
+              <div className="db-panel">
+                <h3 className="db-panel-title">🔄 The Self-Improving Flywheel</h3>
+                <p style={{fontSize:'0.85rem',color:'var(--text-soft)',marginBottom:'1.5rem'}}>
+                  Based on the investor deck model. Each cycle compounds the next.
+                </p>
+                <div className="flywheel-steps">
+                  {[
+                    {n:'1',icon:'💼',label:'Sponsor funds cell',   detail:'5,000,000 VND → 12-week cycle for 5 students'},
+                    {n:'2',icon:'🧑‍🎓',label:'Students participate', detail:'Video reps, sessions, micro-challenges, streaks'},
+                    {n:'3',icon:'📊',label:'Data proves value',    detail:'Attendance, speaking scores, GPA, rep counts'},
+                    {n:'4',icon:'💰',label:'Rebate returns',       detail:'15% back: 9% reinvest · 6% student coins'},
+                    {n:'5',icon:'🌱',label:'Network expands',      detail:'TAs become facilitators · Cells spawn new cells'},
+                    {n:'6',icon:'🏆',label:'Sponsor renews',       detail:'Proven ROI → same sponsor funds 2nd cycle'},
+                  ].map((s,i)=>(
+                    <div key={i} className="flywheel-step">
+                      <div className="flywheel-num" style={{background:`rgba(210,173,68,${0.15+i*0.05})`}}>{s.n}</div>
+                      <div>
+                        <strong style={{fontSize:'0.9rem'}}>{s.icon} {s.label}</strong>
+                        <p style={{margin:'0.2rem 0 0',fontSize:'0.78rem',color:'var(--text-soft)'}}>{s.detail}</p>
+                      </div>
+                      {i<5&&<div className="flywheel-arrow">↓</div>}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <div className="db-panel" style={{marginBottom:'1.5rem'}}>
+                  <h3 className="db-panel-title">📐 Symbol System</h3>
+                  <p style={{fontSize:'0.8rem',color:'var(--text-soft)',marginBottom:'1.25rem'}}>The DOWNFLOW visual language — 7 core hex icons representing the full ecosystem.</p>
+                  <HexSystemRow size={40}/>
+                </div>
+                <div className="db-panel">
+                  <h3 className="db-panel-title">📋 Financial Summary</h3>
+                  {[
+                    ['Total invested',       '₫15,000,000','3 cells × 5,000,000'],
+                    ['Platform fee (2%)',    '₫300,000',   'One-time registration'],
+                    ['Rebate pool (15%)',    '₫2,250,000', 'Over full cycle'],
+                    ['Reinvested (9%)',      '₫1,350,000', 'Back into growth fund'],
+                    ['Student coins (6%)',   '₫900,000',   'Coin wallet credits'],
+                    ['Net cost per student', '₫823,333',   'Over 12 weeks'],
+                  ].map(([lbl,val,note])=>(
+                    <div key={lbl} style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',padding:'0.5rem 0',borderBottom:'1px solid rgba(255,255,255,0.04)'}}>
+                      <div><span style={{fontSize:'0.85rem'}}>{lbl}</span><p style={{margin:0,fontSize:'0.72rem',color:'var(--text-soft)'}}>{note}</p></div>
+                      <strong style={{color:'var(--gold-500)',fontSize:'0.9rem'}}>{val}</strong>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

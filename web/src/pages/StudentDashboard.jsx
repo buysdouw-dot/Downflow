@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import OnboardingBanner from '../components/OnboardingBanner.jsx'
+import { HexIcon } from '../components/HexSymbols.jsx'
 
 function CoinRing({coins,goal,color}){const r=44,circ=2*Math.PI*r,fill=Math.min(coins/goal,1);return(<svg width="110" height="110" viewBox="0 0 110 110"><circle cx="55" cy="55" r={r} fill="none" stroke="rgba(114,208,255,0.12)" strokeWidth="8"/><circle cx="55" cy="55" r={r} fill="none" stroke={color} strokeWidth="8" strokeDasharray={`${fill*circ} ${circ}`} strokeDashoffset={circ*0.25} strokeLinecap="round"/><text x="55" y="52" textAnchor="middle" fontSize="18" fontWeight="700" fill={color} fontFamily="Sora,sans-serif">{coins}</text><text x="55" y="66" textAnchor="middle" fontSize="9" fill="rgba(255,255,255,0.5)" fontFamily="Sora,sans-serif">coins</text></svg>)}
 
@@ -13,8 +15,14 @@ const PACKS=[
 export default function StudentDashboard(){
   const [activeTab,setActiveTab]=useState('home')
   const [done,setDone]=useState(false)
+  const [showOnboarding,setShowOnboarding]=useState(true)
   return(
     <div className="dashboard-page">
+      {showOnboarding&&(
+        <div style={{padding:'2rem 2rem 0'}}>
+          <OnboardingBanner role="student" onDismiss={()=>setShowOnboarding(false)}/>
+        </div>
+      )}
       <div className="db-page-header student-header">
         <div className="db-header-inner">
           <div><p className="kicker">Student Portal — DOWNFLOW School of Life</p><h1 className="db-title">🎓 My Learning Dashboard</h1><p className="db-subtitle">Cell VN-01 · Week 7 of 12 · Student Guider: Minh P. · 🇻🇳 Hanoi</p></div>

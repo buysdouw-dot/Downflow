@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { getCells, getProgressLogs, getPromotions } from '../services/api.js'
 import AIAssistant from '../components/AIAssistant.jsx'
+import OnboardingBanner from '../components/OnboardingBanner.jsx'
+import { HexIcon } from '../components/HexSymbols.jsx'
 
 const CELLS = [
   { id:'VN-01', region:'Hanoi 🇻🇳', sg:'Minh P.', students:5, week:7, health:92, streak:7, packs:['✏️ Pencil Proof','🗣️ Voice'], status:'active' },
@@ -37,6 +39,7 @@ export default function FacilitatorDashboard() {
   const [sessionCell, setSessionCell]   = useState('')
   const [cells, setCells]           = useState(CELLS)
   const [loading, setLoading]       = useState(false)
+  const [showOnboarding, setShowOnboarding] = useState(true)
 
   useEffect(() => {
     setLoading(true)
@@ -47,6 +50,11 @@ export default function FacilitatorDashboard() {
 
   return (
     <div className="dashboard-page">
+      {showOnboarding && (
+        <div style={{padding:'2rem 2rem 0'}}>
+          <OnboardingBanner role="facilitator" onDismiss={()=>setShowOnboarding(false)}/>
+        </div>
+      )}
       <div className="db-page-header facilitator-header">
         <div className="db-header-inner">
           <div>

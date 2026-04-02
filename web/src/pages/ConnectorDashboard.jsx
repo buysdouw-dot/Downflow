@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import OnboardingBanner from '../components/OnboardingBanner.jsx'
+import { HexIcon } from '../components/HexSymbols.jsx'
 
 const MY_CELLS = [
   { id: 'VN-01', region: 'Hanoi, Vietnam', students: 5, facilitator: 'Phuong V.', week: 7, health: 92, status: 'active', regPaid: true, lessonShare: 1200000, regShare: 1200000 },
@@ -29,12 +31,18 @@ function CellStatusBadge({ status }) {
 export default function ConnectorDashboard() {
   const [activeTab, setActiveTab] = useState('overview')
   const [formStep, setFormStep] = useState(1)
+  const [showOnboarding, setShowOnboarding] = useState(true)
 
   const totalEarned = MY_CELLS.filter(c => c.status === 'active').reduce((sum, c) => sum + c.lessonShare + c.regShare, 0)
   const pendingEarn = 3600000 // VN-05 potential
 
   return (
     <div className="dashboard-page">
+      {showOnboarding && (
+        <div style={{padding:'2rem 2rem 0'}}>
+          <OnboardingBanner role="connector" onDismiss={()=>setShowOnboarding(false)}/>
+        </div>
+      )}
       <div className="db-page-header connector-header">
         <div className="db-header-inner">
           <div>
