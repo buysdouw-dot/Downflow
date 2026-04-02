@@ -109,6 +109,9 @@ export default function Layout() {
           ))}
         </nav>
 
+        {/* Pay / Sponsor CTA */}
+        <Link to="/funding" className="topbar-pay-btn">Sponsor Now</Link>
+
         <div className="topbar-right">
           {/* Live Firebase user badge */}
           {isConfigured && user && (

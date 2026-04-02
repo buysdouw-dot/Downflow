@@ -5480,6 +5480,34 @@ a:hover { color: var(--navy); }
 .topbar-login-btn { padding: 0.35rem 0.9rem; border-radius: 999px; background: var(--blue-pale); border: 1.5px solid var(--blue); color: var(--blue); font-size: 0.75rem; font-weight: 700; text-decoration: none; transition: all 0.15s; }
 .topbar-login-btn:hover { background: var(--blue); color: #fff; }
 
+/* Topbar pay / sponsor CTA */
+.topbar-pay-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.42rem 1.1rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #d4a017 0%, #f0c040 100%);
+  color: #0f1b2d;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  text-transform: uppercase;
+  border: none;
+  box-shadow: 0 2px 12px rgba(212,160,23,0.35);
+  transition: all 0.18s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.topbar-pay-btn:hover {
+  background: linear-gradient(135deg, #e8b820 0%, #ffd44a 100%);
+  box-shadow: 0 4px 20px rgba(212,160,23,0.55);
+  transform: translateY(-1px);
+}
+@media (max-width: 600px) {
+  .topbar-pay-btn { font-size: 0.7rem; padding: 0.38rem 0.85rem; }
+}
+
 /* Setup guide */
 .login-setup-guide { width: 100%; max-width: 640px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 2rem 1.8rem; box-shadow: var(--shadow-sm); }
 .login-sg-title { font-size: 1.2rem; font-weight: 900; margin: 0 0 1.5rem; color: var(--navy); }
