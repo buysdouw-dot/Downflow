@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const FLOW_ITEMS = [
   { from: 'Sponsor', to: 'Learning Cell', amount: '72,000,000 VND', pct: '100%', color: '#4de8b0', note: 'Full cycle funding — 12 weeks, 6 students' },
@@ -75,6 +76,7 @@ export default function Payments() {
       <div className="db-tabs">
         {[
           ['overview', '📊 Flow Overview'],
+          ['per-lesson', '🧮 Per-Lesson Split'],
           ['transactions', '📋 Transactions'],
           ['tiers', '🌿 Sponsor Tiers'],
           ['rules', '⚖️ Money Rules'],
