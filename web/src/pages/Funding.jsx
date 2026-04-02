@@ -1,28 +1,28 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
-// ─── Video snippets — original + subtitled versions ─────────────────────────
+// ─── Video snippets — original + voice-subtitled + narrated versions ─────────
 const VIDEOS = [
-  { id: 'vid-01', src: '/sponsor/videos/vid-01.mp4', subSrc: '/sponsor/videos/subtitled/vid-01_sub.mp4', label: 'Snippet 01', transcript: '[instrumental]' },
-  { id: 'vid-02', src: '/sponsor/videos/vid-02.mp4', subSrc: '/sponsor/videos/subtitled/vid-02_sub.mp4', label: 'Snippet 02', transcript: 'I meet unique and creative — look at the colors and sounds, they manifest my beauty…' },
-  { id: 'vid-03', src: '/sponsor/videos/vid-03.mp4', subSrc: '/sponsor/videos/subtitled/vid-03_sub.mp4', label: 'Snippet 03', transcript: 'I am learning who I am.' },
-  { id: 'vid-04', src: '/sponsor/videos/vid-04.mp4', subSrc: '/sponsor/videos/subtitled/vid-04_sub.mp4', label: 'Snippet 04', transcript: "I'm so curious." },
-  { id: 'vid-05', src: '/sponsor/videos/vid-05.mp4', subSrc: '/sponsor/videos/subtitled/vid-05_sub.mp4', label: 'Snippet 05', transcript: 'I use my voice — decree language, love, and all other stuff.' },
-  { id: 'vid-06', src: '/sponsor/videos/vid-06.mp4', subSrc: '/sponsor/videos/subtitled/vid-06_sub.mp4', label: 'Snippet 06', transcript: 'Huh.' },
-  { id: 'vid-07', src: '/sponsor/videos/vid-07.mp4', subSrc: '/sponsor/videos/subtitled/vid-07_sub.mp4', label: 'Snippet 07', transcript: 'We believe in solid growth — from the first platform, value was coordinated…' },
-  { id: 'vid-08', src: '/sponsor/videos/vid-08.mp4', subSrc: '/sponsor/videos/subtitled/vid-08_sub.mp4', label: 'Snippet 08', transcript: 'Purposes to strengthen our youth — children\'s learning is so much more than a classroom.' },
-  { id: 'vid-09', src: '/sponsor/videos/vid-09.mp4', subSrc: '/sponsor/videos/subtitled/vid-09_sub.mp4', label: 'Snippet 09', transcript: 'Ah, freedom at last.' },
-  { id: 'vid-10', src: '/sponsor/videos/vid-10.mp4', subSrc: '/sponsor/videos/subtitled/vid-10_sub.mp4', label: 'Snippet 10', transcript: 'Activity comes from within — yes, act, apply it. We help make it happen.' },
-  { id: 'vid-11', src: '/sponsor/videos/vid-11.mp4', subSrc: '/sponsor/videos/subtitled/vid-11_sub.mp4', label: 'Snippet 11', transcript: 'Ladies and gentlemen — the Producing Model. Introduce to you…' },
-  { id: 'vid-12', src: '/sponsor/videos/vid-12.mp4', subSrc: '/sponsor/videos/subtitled/vid-12_sub.mp4', label: 'Snippet 12', transcript: 'The sponsorship model that keeps the system accountable — a relief from all angles.' },
-  { id: 'vid-13', src: '/sponsor/videos/vid-13.mp4', subSrc: '/sponsor/videos/subtitled/vid-13_sub.mp4', label: 'Snippet 13', transcript: 'Okay guys — no turning back now. We are in.' },
-  { id: 'vid-14', src: '/sponsor/videos/vid-14.mp4', subSrc: '/sponsor/videos/subtitled/vid-14_sub.mp4', label: 'Snippet 14', transcript: 'We have a duty and responsibility — this is really an opportunity of a lifetime.' },
-  { id: 'vid-15', src: '/sponsor/videos/vid-15.mp4', subSrc: '/sponsor/videos/subtitled/vid-15_sub.mp4', label: 'Snippet 15', transcript: "I'm afraid to say — but now I am my own reflection. Responsibility is on me." },
-  { id: 'vid-16', src: '/sponsor/videos/vid-16.mp4', subSrc: '/sponsor/videos/subtitled/vid-16_sub.mp4', label: 'Snippet 16', transcript: 'I am smart. I am strong. I am me.' },
-  { id: 'vid-17', src: '/sponsor/videos/vid-17.mp4', subSrc: '/sponsor/videos/subtitled/vid-17_sub.mp4', label: 'Snippet 17', transcript: 'I am born from above.' },
-  { id: 'vid-18', src: '/sponsor/videos/vid-18.mp4', subSrc: '/sponsor/videos/subtitled/vid-18_sub.mp4', label: 'Snippet 18', transcript: 'I must be born from above.' },
-  { id: 'vid-19', src: '/sponsor/videos/vid-19.mp4', subSrc: '/sponsor/videos/subtitled/vid-19_sub.mp4', label: 'Snippet 19', transcript: 'I am.' },
-  { id: 'vid-20', src: '/sponsor/videos/vid-20.mp4', subSrc: '/sponsor/videos/subtitled/vid-20_sub.mp4', label: 'Snippet 20', transcript: 'Me too.' },
+  { id: 'vid-01', src: '/sponsor/videos/vid-01.mp4', subSrc: '/sponsor/videos/subtitled/vid-01_sub.mp4', narSrc: '/sponsor/videos/narrated/vid-01_narrated.mp4', label: 'Snippet 01', scene: 'Scene 1 · Hook', narration: "Education doesn't fail because of students…", transcript: '[instrumental]' },
+  { id: 'vid-02', src: '/sponsor/videos/vid-02.mp4', subSrc: '/sponsor/videos/subtitled/vid-02_sub.mp4', narSrc: '/sponsor/videos/narrated/vid-02_narrated.mp4', label: 'Snippet 02', scene: 'Scene 1 · Hook', narration: "Education doesn't fail because of students…", transcript: 'I meet unique and creative — look at the colors and sounds…' },
+  { id: 'vid-03', src: '/sponsor/videos/vid-03.mp4', subSrc: '/sponsor/videos/subtitled/vid-03_sub.mp4', narSrc: '/sponsor/videos/narrated/vid-03_narrated.mp4', label: 'Snippet 03', scene: 'Scene 2 · Problem', narration: "It fails because value doesn't flow.", transcript: 'I am learning who I am.' },
+  { id: 'vid-04', src: '/sponsor/videos/vid-04.mp4', subSrc: '/sponsor/videos/subtitled/vid-04_sub.mp4', narSrc: '/sponsor/videos/narrated/vid-04_narrated.mp4', label: 'Snippet 04', scene: 'Scene 2 · Problem', narration: "It fails because value doesn't flow.", transcript: "I'm so curious." },
+  { id: 'vid-05', src: '/sponsor/videos/vid-05.mp4', subSrc: '/sponsor/videos/subtitled/vid-05_sub.mp4', narSrc: '/sponsor/videos/narrated/vid-05_narrated.mp4', label: 'Snippet 05', scene: 'Scene 3 · The Shift', narration: 'So we redesigned the system.', transcript: 'I use my voice — decree language, love, and all other stuff.' },
+  { id: 'vid-06', src: '/sponsor/videos/vid-06.mp4', subSrc: '/sponsor/videos/subtitled/vid-06_sub.mp4', narSrc: '/sponsor/videos/narrated/vid-06_narrated.mp4', label: 'Snippet 06', scene: 'Scene 3 · The Shift', narration: "Students don't consume learning — they produce value.", transcript: 'Huh.' },
+  { id: 'vid-07', src: '/sponsor/videos/vid-07.mp4', subSrc: '/sponsor/videos/subtitled/vid-07_sub.mp4', narSrc: '/sponsor/videos/narrated/vid-07_narrated.mp4', label: 'Snippet 07', scene: 'Scene 4 · The Cell', narration: 'Small learning cells.', transcript: 'We believe in solid growth…' },
+  { id: 'vid-08', src: '/sponsor/videos/vid-08.mp4', subSrc: '/sponsor/videos/subtitled/vid-08_sub.mp4', narSrc: '/sponsor/videos/narrated/vid-08_narrated.mp4', label: 'Snippet 08', scene: 'Scene 4 · The Cell', narration: 'High engagement. Real output.', transcript: "Purposes to strengthen our youth…" },
+  { id: 'vid-09', src: '/sponsor/videos/vid-09.mp4', subSrc: '/sponsor/videos/subtitled/vid-09_sub.mp4', narSrc: '/sponsor/videos/narrated/vid-09_narrated.mp4', label: 'Snippet 09', scene: 'Scene 5 · Sponsor', narration: 'A sponsor activates one cell —', transcript: 'Ah, freedom at last.' },
+  { id: 'vid-10', src: '/sponsor/videos/vid-10.mp4', subSrc: '/sponsor/videos/subtitled/vid-10_sub.mp4', narSrc: '/sponsor/videos/narrated/vid-10_narrated.mp4', label: 'Snippet 10', scene: 'Scene 5 · Sponsor', narration: 'Fully visible. Fully measurable.', transcript: 'Activity comes from within — yes, act, apply it.' },
+  { id: 'vid-11', src: '/sponsor/videos/vid-11.mp4', subSrc: '/sponsor/videos/subtitled/vid-11_sub.mp4', narSrc: '/sponsor/videos/narrated/vid-11_narrated.mp4', label: 'Snippet 11', scene: 'Scene 6 · Guider System', narration: 'Then the system compounds.', transcript: 'Ladies and gentlemen — the Producing Model.' },
+  { id: 'vid-12', src: '/sponsor/videos/vid-12.mp4', subSrc: '/sponsor/videos/subtitled/vid-12_sub.mp4', narSrc: '/sponsor/videos/narrated/vid-12_narrated.mp4', label: 'Snippet 12', scene: 'Scene 6 · Guider System', narration: 'A student who completes becomes a guider.', transcript: 'The sponsorship model that keeps the system accountable.' },
+  { id: 'vid-13', src: '/sponsor/videos/vid-13.mp4', subSrc: '/sponsor/videos/subtitled/vid-13_sub.mp4', narSrc: '/sponsor/videos/narrated/vid-13_narrated.mp4', label: 'Snippet 13', scene: 'Scene 6 · Guider System', narration: 'Their results are tied to the students below them.', transcript: "Okay guys — no turning back now. We are in." },
+  { id: 'vid-14', src: '/sponsor/videos/vid-14.mp4', subSrc: '/sponsor/videos/subtitled/vid-14_sub.mp4', narSrc: '/sponsor/videos/narrated/vid-14_narrated.mp4', label: 'Snippet 14', scene: 'Scene 6 · Guider System', narration: 'Students are responsible for outcomes.', transcript: 'This is really an opportunity of a lifetime.' },
+  { id: 'vid-15', src: '/sponsor/videos/vid-15.mp4', subSrc: '/sponsor/videos/subtitled/vid-15_sub.mp4', narSrc: '/sponsor/videos/narrated/vid-15_narrated.mp4', label: 'Snippet 15', scene: 'Scene 7 · Accountability', narration: 'Every layer influences the next.', transcript: "I'm afraid to say — but now I am my own reflection." },
+  { id: 'vid-16', src: '/sponsor/videos/vid-16.mp4', subSrc: '/sponsor/videos/subtitled/vid-16_sub.mp4', narSrc: '/sponsor/videos/narrated/vid-16_narrated.mp4', label: 'Snippet 16', scene: 'Scene 7 · Accountability', narration: 'Every result flows back up.', transcript: 'I am smart. I am strong. I am me.' },
+  { id: 'vid-17', src: '/sponsor/videos/vid-17.mp4', subSrc: '/sponsor/videos/subtitled/vid-17_sub.mp4', narSrc: '/sponsor/videos/narrated/vid-17_narrated.mp4', label: 'Snippet 17', scene: 'Scene 8 · Value System', narration: 'Performance is shared. Cells are graded together.', transcript: 'I am born from above.' },
+  { id: 'vid-18', src: '/sponsor/videos/vid-18.mp4', subSrc: '/sponsor/videos/subtitled/vid-18_sub.mp4', narSrc: '/sponsor/videos/narrated/vid-18_narrated.mp4', label: 'Snippet 18', scene: 'Scene 8 · Value System', narration: 'Value is distributed. Effort becomes visible.', transcript: 'I must be born from above.' },
+  { id: 'vid-19', src: '/sponsor/videos/vid-19.mp4', subSrc: '/sponsor/videos/subtitled/vid-19_sub.mp4', narSrc: '/sponsor/videos/narrated/vid-19_narrated.mp4', label: 'Snippet 19', scene: 'Scene 9 · Compounding', narration: 'One cell becomes many. Without losing structure.', transcript: 'I am.' },
+  { id: 'vid-20', src: '/sponsor/videos/vid-20.mp4', subSrc: '/sponsor/videos/subtitled/vid-20_sub.mp4', narSrc: '/sponsor/videos/narrated/vid-20_narrated.mp4', label: 'Snippet 20', scene: 'Scene 10 · Close', narration: 'Fund one cell. Watch it grow.', transcript: 'Me too.' },
 ]
 
 const TIERS = [
@@ -90,9 +90,16 @@ const PROBLEMS = [
   'Capital rarely compounds inside education — it disappears',
 ]
 
+// mode: 'original' | 'voiced' | 'narrated'
+const MODES = [
+  { id: 'original', icon: '🎞', label: 'Original',        desc: 'Raw clip, original audio' },
+  { id: 'voiced',   icon: '💬', label: 'Voice Subtitled', desc: "What's spoken in the clip" },
+  { id: 'narrated', icon: '📖', label: 'Narrated',        desc: 'Presentation script overlay' },
+]
+
 function VideoGallery() {
   const [active, setActive] = useState(0)
-  const [subtitled, setSubtitled] = useState(false)
+  const [mode, setMode] = useState('narrated')
   const mainRef = useRef(null)
 
   useEffect(() => {
@@ -100,13 +107,22 @@ function VideoGallery() {
       mainRef.current.load()
       mainRef.current.play().catch(() => {})
     }
-  }, [active, subtitled])
+  }, [active, mode])
 
   const prev = () => setActive(i => (i - 1 + VIDEOS.length) % VIDEOS.length)
   const next = () => setActive(i => (i + 1) % VIDEOS.length)
 
-  const currentVideo = VIDEOS[active]
-  const activeSrc = subtitled ? currentVideo.subSrc : currentVideo.src
+  const cv = VIDEOS[active]
+  const activeSrc = mode === 'narrated' ? cv.narSrc : mode === 'voiced' ? cv.subSrc : cv.src
+
+  const infoText = mode === 'narrated'
+    ? cv.narration
+    : mode === 'voiced'
+      ? cv.transcript
+      : null
+
+  const infoLabel = mode === 'narrated' ? '📖 Narration' : mode === 'voiced' ? '🗣 Voice' : null
+  const infoColor = mode === 'narrated' ? '#4de8b0' : '#d2ad44'
 
   return (
     <section className="fund-section fund-section-dark">
@@ -115,7 +131,7 @@ function VideoGallery() {
           <p className="fund-section-kicker" style={{ color: '#d2ad44' }}>MARKETING SNIPPETS</p>
           <h2 className="fund-section-title" style={{ color: '#fff' }}>See It In Action</h2>
           <p className="fund-section-lead" style={{ color: 'rgba(255,255,255,0.55)' }}>
-            20 short-form clips — original voices transcribed and burned as subtitles.
+            20 six-second clips · 3 viewing modes · 10-scene DOWNFLOW model breakdown
           </p>
         </div>
 
@@ -130,26 +146,25 @@ function VideoGallery() {
           </div>
           <div className="vg-reel-desc">
             Full sponsor marketing reel — all 20 visual snippets edited to the mixed pitch audio.
-            Portrait format (9:16) optimised for social media, presentations, and mobile viewing.
+            Portrait 9:16 · optimised for social media, presentations, and mobile viewing.
           </div>
         </div>
 
-        <div className="vg-divider"><span>RAW SNIPPETS — 20 clips</span></div>
+        <div className="vg-divider"><span>INDIVIDUAL CLIPS — 20 snippets · 3 modes</span></div>
 
-        {/* Subtitle toggle */}
-        <div className="vg-sub-toggle-row">
-          <button
-            className={`vg-sub-btn${!subtitled ? ' active' : ''}`}
-            onClick={() => setSubtitled(false)}
-          >
-            🎞 Original
-          </button>
-          <button
-            className={`vg-sub-btn${subtitled ? ' active' : ''}`}
-            onClick={() => setSubtitled(true)}
-          >
-            💬 With Subtitles
-          </button>
+        {/* 3-mode selector */}
+        <div className="vg-mode-row">
+          {MODES.map(m => (
+            <button
+              key={m.id}
+              className={`vg-mode-btn${mode === m.id ? ' active' : ''}`}
+              onClick={() => setMode(m.id)}
+            >
+              <span className="vg-mode-icon">{m.icon}</span>
+              <span className="vg-mode-label">{m.label}</span>
+              <span className="vg-mode-desc">{m.desc}</span>
+            </button>
+          ))}
         </div>
 
         {/* Main player */}
@@ -168,18 +183,18 @@ function VideoGallery() {
             <button className="vg-arrow vg-arrow-right" onClick={next} aria-label="Next">›</button>
           </div>
 
-          {/* Transcript line */}
+          {/* Clip info row */}
           <div className="vg-main-label">
             <span className="vg-counter">{active + 1} / {VIDEOS.length}</span>
-            <span className="vg-clip-label">{currentVideo.label}</span>
-            {subtitled && (
-              <span className="vg-sub-badge">💬 Subtitled</span>
-            )}
+            <span className="vg-clip-scene" style={{ color: infoColor }}>{cv.scene}</span>
+            <span className="vg-clip-label">{cv.label}</span>
           </div>
-          {currentVideo.transcript && (
-            <div className="vg-transcript">
-              <span className="vg-transcript-label">🗣</span>
-              <span className="vg-transcript-text">"{currentVideo.transcript}"</span>
+
+          {/* Info text (narration or voice transcript) */}
+          {infoText && (
+            <div className="vg-transcript" style={{ borderColor: infoColor + '44' }}>
+              <span className="vg-transcript-label" style={{ color: infoColor }}>{infoLabel}</span>
+              <span className="vg-transcript-text">"{infoText}"</span>
             </div>
           )}
         </div>
@@ -191,7 +206,7 @@ function VideoGallery() {
               key={v.id}
               className={`vg-thumb${i === active ? ' active' : ''}`}
               onClick={() => setActive(i)}
-              aria-label={v.label}
+              title={`${v.scene} — ${v.label}`}
             >
               <video src={v.src} muted playsInline preload="metadata" className="vg-thumb-video" />
               <div className="vg-thumb-overlay">

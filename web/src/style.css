@@ -4932,3 +4932,57 @@ a:hover { color: var(--navy); }
   font-style: italic;
   line-height: 1.55;
 }
+
+/* ── 3-mode video selector ── */
+.vg-mode-row {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 1.75rem;
+  flex-wrap: wrap;
+}
+.vg-mode-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 14px;
+  border: 1.5px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.04);
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 130px;
+}
+.vg-mode-btn:hover {
+  border-color: rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.07);
+}
+.vg-mode-btn.active {
+  border-color: #4de8b0;
+  background: #4de8b011;
+}
+.vg-mode-icon { font-size: 1.3rem; }
+.vg-mode-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.8);
+}
+.vg-mode-btn.active .vg-mode-label { color: #4de8b0; }
+.vg-mode-desc {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.3);
+  text-align: center;
+}
+
+/* Clip scene tag in label row */
+.vg-clip-scene {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+/* Update transcript border to be dynamic */
+.vg-transcript {
+  border: 1px solid rgba(77,232,176,0.25);
+}
