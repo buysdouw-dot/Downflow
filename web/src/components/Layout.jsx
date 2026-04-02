@@ -8,6 +8,7 @@ const NAV = [
   { to: '/curriculum', label: 'Curriculum' },
   { to: '/content', label: 'Content' },
   { to: '/news', label: 'News' },
+  { to: '/funding', label: '★ Invest' },
   { to: '/sponsor', label: 'Sponsors' },
   { to: '/student', label: 'Students' },
   { to: '/facilitator', label: 'Facilitators' },

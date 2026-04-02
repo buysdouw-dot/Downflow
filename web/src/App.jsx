@@ -12,12 +12,14 @@ import Payments from './pages/Payments.jsx'
 import News from './pages/News.jsx'
 import TeacherAssistants from './pages/TeacherAssistants.jsx'
 import PaymentEngine from './pages/PaymentEngine.jsx'
+import FundingProposal from './pages/FundingProposal.jsx'
 
 export default function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
+        <Route path="/funding" element={<FundingProposal />} />
         <Route path="/sponsor" element={<SponsorDashboard />} />
         <Route path="/student" element={<StudentDashboard />} />
         <Route path="/facilitator" element={<FacilitatorDashboard />} />
