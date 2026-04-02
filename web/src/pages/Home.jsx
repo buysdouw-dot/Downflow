@@ -271,20 +271,70 @@ export default function Home() {
 
       {/* SPONSOR MODEL */}
       <section className="section" id="sponsor-section">
-        <div className="section-head"><p className="kicker">Sponsor Infrastructure</p><h2>Fund Cells. Compete on Impact.</h2></div>
-        <p className="lead">Sponsors fund Learning Cells — not individuals. They compete publicly on growth, participation, output quality, and succession strength. Recognition is real. Exploitation is impossible.</p>
-        <div className="funding-wrap">
-          <div className="funding-node"><strong>15% Sponsor Rebate Loop</strong><p>Returned by system performance back into the ecosystem.</p></div>
-          <div className="funding-node split">
-            <div><strong>9%</strong><p>Reinvested to create new cells</p></div>
-            <div><strong>6%</strong><p>Distributed to student accounts</p></div>
-          </div>
+        <div className="section-head">
+          <p className="kicker">Sponsor Infrastructure</p>
+          <h2>Fund Cells. Compete on Impact.</h2>
+          <p className="lead" style={{maxWidth:640,margin:'0.75rem auto 0'}}>
+            "Sponsors enable protected learning cells, compete publicly on impact, and help scale access — without ever entering the classroom."
+          </p>
         </div>
-        <div className="sponsor-rules">
-          {[['✅','Sponsors visible on public leaderboard'],['✅','Sponsors see cell-level impact data'],['🚫','Sponsors never enter classrooms'],['🚫','No student-level data ever exposed'],['🚫','No gratitude required from families']].map(([icon,text])=>(
-            <div key={text} className="sponsor-rule"><span>{icon}</span><span>{text}</span></div>
+
+        {/* Three principles */}
+        <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'1rem',marginBottom:'2rem'}}>
+          {[
+            {color:'#4de8b0',icon:'🛡️',title:'Students owe nothing',   desc:'No gratitude. No appearances. No data. They simply enter a space that already exists.'},
+            {color:'#72d0ff',icon:'🏫',title:'Cells are protected',     desc:'Sponsor branding never appears inside a lesson, classroom, or student video. Absolute boundary.'},
+            {color:'#d2ad44',icon:'🏆',title:'Compete on impact',       desc:'Recognition is earned through cell performance — not bought. Responsibility, not ownership.'},
+          ].map(p=>(
+            <div key={p.title} style={{background:'var(--bg-card)',border:`2px solid ${p.color}40`,borderRadius:'var(--radius-sm)',padding:'1.25rem',textAlign:'center'}}>
+              <span style={{fontSize:'1.75rem',display:'block',marginBottom:'0.5rem'}}>{p.icon}</span>
+              <strong style={{display:'block',fontSize:'0.9rem',color:'var(--navy)',marginBottom:'0.4rem'}}>{p.title}</strong>
+              <p style={{fontSize:'0.8rem',color:'var(--text-soft)',margin:0,lineHeight:1.55}}>{p.desc}</p>
+            </div>
           ))}
         </div>
+
+        {/* Boundary: what sponsors see vs don't */}
+        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1rem',maxWidth:720,margin:'0 auto 2rem'}}>
+          <div style={{background:'var(--bg-card)',border:'1.5px solid var(--green)',borderRadius:'var(--radius-sm)',padding:'1.1rem'}}>
+            <p style={{fontWeight:800,fontSize:'0.78rem',color:'var(--green)',textTransform:'uppercase',letterSpacing:'0.07em',margin:'0 0 0.6rem'}}>✅ Sponsors are visible</p>
+            {['On the website','On public reports','On live ranking pages','In sponsor decks'].map(i=>(
+              <span key={i} style={{display:'block',fontSize:'0.8rem',color:'var(--text-soft)',padding:'0.15rem 0'}}>→ {i}</span>
+            ))}
+          </div>
+          <div style={{background:'var(--bg-card)',border:'1.5px solid rgba(255,107,107,0.4)',borderRadius:'var(--radius-sm)',padding:'1.1rem'}}>
+            <p style={{fontWeight:800,fontSize:'0.78rem',color:'#e05c5c',textTransform:'uppercase',letterSpacing:'0.07em',margin:'0 0 0.6rem'}}>🚫 Never inside education</p>
+            {['Inside lessons','In classrooms','In student content','In learning videos'].map(i=>(
+              <span key={i} style={{display:'block',fontSize:'0.8rem',color:'var(--text-soft)',padding:'0.15rem 0'}}>✗ {i}</span>
+            ))}
+          </div>
+        </div>
+
+        {/* Rebate + tiers */}
+        <div style={{display:'grid',gridTemplateColumns:'1fr 2fr',gap:'1rem',marginBottom:'2rem'}}>
+          <div style={{background:'var(--bg-card)',border:'1.5px solid var(--border)',borderRadius:'var(--radius-sm)',padding:'1.25rem'}}>
+            <strong style={{display:'block',fontSize:'0.88rem',color:'var(--navy)',marginBottom:'1rem'}}>💸 15% Rebate Loop</strong>
+            {[['85%','Cell operations','#4de8b0'],['9%','New cells','#72d0ff'],['6%','Student coins','#d2ad44']].map(([p,l,c])=>(
+              <div key={l} style={{display:'flex',alignItems:'center',gap:'0.6rem',marginBottom:'0.5rem'}}>
+                <span style={{fontWeight:800,fontSize:'0.9rem',color:c,minWidth:'36px'}}>{p}</span>
+                <span style={{fontSize:'0.8rem',color:'var(--text-soft)'}}>{l}</span>
+              </div>
+            ))}
+          </div>
+          <div style={{background:'var(--bg-card)',border:'1.5px solid var(--border)',borderRadius:'var(--radius-sm)',padding:'1.25rem'}}>
+            <strong style={{display:'block',fontSize:'0.88rem',color:'var(--navy)',marginBottom:'0.75rem'}}>🌿 Partner Tiers — Based on Cells, Not Spend</strong>
+            <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'0.5rem'}}>
+              {[['🌱','Learning Cell Partner','1 cell · 5 students','#72d0ff'],['🌿','Growth Partner','3 cells · 15 students','#d2ad44'],['🌳','Impact Partner','10 cells · 50 students','#4de8b0']].map(([icon,name,nums,color])=>(
+                <div key={name} style={{textAlign:'center',padding:'0.75rem',background:color+'0f',border:`1px solid ${color}40`,borderRadius:'8px'}}>
+                  <span style={{fontSize:'1.4rem',display:'block'}}>{icon}</span>
+                  <strong style={{fontSize:'0.75rem',display:'block',color:'var(--navy)',marginTop:'0.25rem'}}>{name}</strong>
+                  <span style={{fontSize:'0.7rem',color:'var(--text-soft)'}}>{nums}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         <div style={{textAlign:'center',marginTop:'2rem'}}>
           <Link to="/sponsor" className="btn btn-primary">Open Sponsor Portal →</Link>
         </div>

@@ -158,7 +158,7 @@ export default function SponsorDashboard() {
 
       {/* Tabs */}
       <div className="db-tabs">
-        {[['overview','🔭 Overview'],['cells','🏫 My Cells'],['packs','🎁 Gift Packs'],['impact','📊 Impact'],['flywheel','🔄 Flywheel'],['rankings','🏆 Rankings']].map(([id,label])=>(
+        {[['overview','🔭 Overview'],['cells','🏫 My Cells'],['packs','🎁 Gift Packs'],['impact','📊 Impact'],['flywheel','🔄 Flywheel'],['rankings','🏆 Rankings'],['model','📖 Sponsor Model']].map(([id,label])=>(
           <button key={id} className={`db-tab${activeTab===id?' active':''}`} onClick={()=>setActiveTab(id)}>{label}</button>
         ))}
       </div>
@@ -236,6 +236,26 @@ export default function SponsorDashboard() {
         {/* ── MY CELLS ── */}
         {activeTab==='cells'&&(
           <div className="db-tab-content">
+
+            {/* Tier status */}
+            <div className="smodel-tiers-row" style={{marginBottom:'1.5rem'}}>
+              {[
+                {tier:'Learning Cell Partner',cells:1,  students:5,  color:'#72d0ff',icon:'🌱',current:false},
+                {tier:'Growth Partner',        cells:3,  students:15, color:'#d2ad44',icon:'🌿',current:true, note:'YOU ARE HERE'},
+                {tier:'Impact Partner',        cells:10, students:50, color:'#4de8b0',icon:'🌳',current:false},
+              ].map(t=>(
+                <div key={t.tier} className="smodel-tier-card" style={{'--tier-color':t.color,outline:t.current?`2.5px solid ${t.color}`:'none',boxShadow:t.current?`0 0 0 4px ${t.color}20`:'none'}}>
+                  <span className="smodel-tier-icon">{t.icon}</span>
+                  <strong className="smodel-tier-name">{t.tier}</strong>
+                  {t.current && <span style={{fontSize:'0.68rem',fontWeight:800,color:t.color,background:`${t.color}18`,borderRadius:'20px',padding:'0.1rem 0.6rem',marginTop:'0.1rem'}}>{t.note}</span>}
+                  <div className="smodel-tier-numbers">
+                    <span><strong>{t.cells}</strong> cell{t.cells>1?'s':''}</span>
+                    <span><strong>{t.students}</strong> students</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
             <div className="db-panel" style={{marginBottom:'1.5rem'}}>
               <div className="db-panel-header">
                 <h3 className="db-panel-title">🏫 Funded Cells</h3>
@@ -420,6 +440,172 @@ export default function SponsorDashboard() {
             </div>
           </div>
         )}
+        {/* ── SPONSOR MODEL ── */}
+        {activeTab==='model'&&(
+          <div className="db-tab-content">
+
+            {/* Definition hero */}
+            <div className="smodel-definition">
+              <p className="kicker">One-Sentence Definition</p>
+              <blockquote className="smodel-quote">
+                "Sponsors enable protected learning cells, compete publicly on impact, and help scale access — without ever entering the classroom."
+              </blockquote>
+            </div>
+
+            {/* Three non-negotiable principles */}
+            <div className="smodel-section">
+              <h3 className="smodel-section-title">⚡ Three Non-Negotiable Principles</h3>
+              <div className="smodel-principles-row">
+                {[
+                  { n:'1', color:'#4de8b0', label:'Students & families owe nothing', desc:'No gratitude. No appearances. No data. No expectations. They simply enter a learning space that already exists.' },
+                  { n:'2', color:'#72d0ff', label:'Learning spaces are protected', desc:'Sponsor branding never appears inside a lesson, classroom, or student video. The boundary is absolute.' },
+                  { n:'3', color:'#d2ad44', label:'Sponsors compete on impact, not access', desc:'Recognition is earned through cell performance — not bought. Sponsorship is responsibility, not ownership.' },
+                ].map(p=>(
+                  <div key={p.n} className="smodel-principle-card" style={{'--sm-color':p.color}}>
+                    <span className="smodel-principle-num">{p.n}</span>
+                    <strong>{p.label}</strong>
+                    <p>{p.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Cell structure */}
+            <div className="smodel-two-col">
+              <div className="smodel-section">
+                <h3 className="smodel-section-title">🏫 The Learning Cell (Foundational Unit)</h3>
+                <div className="smodel-cell-visual">
+                  <div className="smodel-cell-box">
+                    <span className="smodel-cell-icon">🏫</span>
+                    <strong>1 Learning Cell</strong>
+                    {['5 students','1 facilitator','Fixed learning cycle (6–8 weeks)','Protected, non-commercial space'].map(i=>(
+                      <span key={i} className="smodel-cell-item">→ {i}</span>
+                    ))}
+                  </div>
+                  <div className="smodel-cell-note">
+                    <p><strong>Sponsors do not sponsor individuals.</strong><br/>They sponsor Learning Cells.</p>
+                    <p>This prevents: stigma · hierarchy · power imbalance · emotional debt</p>
+                  </div>
+                </div>
+                <div className="smodel-zero-oblig">
+                  <p className="smodel-zo-head">Zero Obligation — Locked Rule</p>
+                  <p className="smodel-zo-message">
+                    The only message families may receive:<br/>
+                    <em>"This learning space is made possible by people who believe education should be accessible."</em><br/>
+                    That is the end of their involvement.
+                  </p>
+                  <div className="smodel-zo-grid">
+                    {['do NOT thank sponsors','do NOT appear in sponsor content','do NOT perform gratitude','do NOT give data','do NOT carry expectations'].map(r=>(
+                      <span key={r} className="smodel-zo-item">🚫 Students {r}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="smodel-section">
+                <h3 className="smodel-section-title">🏆 Recognition Boundary</h3>
+                <p className="smodel-body-text">Recognition is allowed — extraction is not. This single rule protects everything.</p>
+                <div className="smodel-boundary-grid">
+                  <div className="smodel-boundary-col never">
+                    <p className="smodel-boundary-head">🚫 Sponsors are NEVER visible</p>
+                    {['inside lessons','in classrooms','in student content','in facilitator language','in learning videos'].map(r=>(
+                      <span key={r} className="smodel-boundary-item">✗ {r}</span>
+                    ))}
+                  </div>
+                  <div className="smodel-boundary-col allowed">
+                    <p className="smodel-boundary-head">✅ Sponsors ARE visible</p>
+                    {['on the website','on public reports','on live ranking pages','in sponsor decks','in public communications'].map(r=>(
+                      <span key={r} className="smodel-boundary-item">✓ {r}</span>
+                    ))}
+                  </div>
+                </div>
+                <div className="smodel-recognition-loop">
+                  <p className="smodel-section-title" style={{marginBottom:'0.75rem'}}>💡 Why Recognition Exists</p>
+                  <div className="smodel-loop-row">
+                    {['visibility','traffic','business growth','more learning cells'].map((step,i,arr)=>(
+                      <div key={step} className="smodel-loop-item">
+                        <span>{step}</span>
+                        {i<arr.length-1 && <span className="smodel-loop-arrow">→</span>}
+                      </div>
+                    ))}
+                  </div>
+                  <p className="smodel-loop-note">This creates ethical circulation — not charity, not CSR theater.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Sponsor tiers */}
+            <div className="smodel-section">
+              <h3 className="smodel-section-title">📊 Sponsor Partner Tiers — Cell-Based, Not Money-Based</h3>
+              <p className="smodel-body-text">Impact, not spend, defines status.</p>
+              <div className="smodel-tiers-row">
+                {[
+                  { tier:'Learning Cell Partner', cells:1,  students:5,   color:'#72d0ff', icon:'🌱', desc:'Fund one complete learning environment. A full group of 5 students, 12 weeks, one facilitator.' },
+                  { tier:'Growth Partner',         cells:3,  students:15,  color:'#d2ad44', icon:'🌿', desc:'Three active cells running simultaneously. Your impact spans three communities.' },
+                  { tier:'Impact Partner',         cells:10, students:50,  color:'#4de8b0', icon:'🌳', desc:'Ten cells. Fifty students. Your name leads the public leaderboard.' },
+                ].map(t=>(
+                  <div key={t.tier} className="smodel-tier-card" style={{'--tier-color':t.color}}>
+                    <span className="smodel-tier-icon">{t.icon}</span>
+                    <strong className="smodel-tier-name">{t.tier}</strong>
+                    <div className="smodel-tier-numbers">
+                      <span><strong>{t.cells}</strong> cell{t.cells>1?'s':''}</span>
+                      <span><strong>{t.students}</strong> students</span>
+                    </div>
+                    <p className="smodel-tier-desc">{t.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* 4 ranking dimensions */}
+            <div className="smodel-section">
+              <h3 className="smodel-section-title">📐 The Four Ranking Dimensions</h3>
+              <p className="smodel-body-text">Cells compete. Humans are protected. Each cell is evaluated equally across four dimensions.</p>
+              <div className="smodel-dimensions-grid">
+                {[
+                  { n:'01', label:'Growth',             color:'#4de8b0', measures:['Increased speaking confidence','Longer voluntary participation','Reduced fear signals'] },
+                  { n:'02', label:'Participation Health',color:'#72d0ff', measures:['Balanced voices in session','Low withdrawal rate','Full group engagement'] },
+                  { n:'03', label:'Output Quality',      color:'#d2ad44', measures:['Clarity of shared ideas','Reusability of content produced','Contribution to the system'] },
+                  { n:'04', label:'Succession Strength', color:'#b083ff', measures:['Learners helping newcomers','Assistant facilitators emerging','Content reused by other cells'] },
+                ].map(d=>(
+                  <div key={d.label} className="smodel-dimension-card" style={{'--dim-color':d.color}}>
+                    <span className="smodel-dim-num">{d.n}</span>
+                    <strong className="smodel-dim-label">{d.label}</strong>
+                    <ul className="smodel-dim-measures">
+                      {d.measures.map(m=><li key={m}>{m}</li>)}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+              <div className="smodel-dimensions-note">
+                <strong>The strongest cell is the one that creates more cells.</strong>
+                <p>Rankings never show individual students, children's performance, names, faces, or personal data.</p>
+              </div>
+            </div>
+
+            {/* Governance */}
+            <div className="smodel-section">
+              <h3 className="smodel-section-title">⚖️ Governance Rules</h3>
+              <div className="smodel-governance-grid">
+                {[
+                  'Rankings update after learning cycles — not in real time',
+                  'Facilitators never reference rankings in class',
+                  'Students are never told they are ranked',
+                  'Sponsors cannot influence scoring',
+                  'Any pressure signal → rankings paused or adjusted',
+                  'If advertising harms learning, advertising stops.',
+                ].map((r,i)=>(
+                  <div key={i} className="smodel-gov-rule">
+                    <span className="smodel-gov-num">{i+1}</span>
+                    <span>{r}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
+        )}
+
         {/* ── RANKINGS ── */}
         {activeTab==='rankings'&&(
           <div className="db-tab-content">
@@ -480,33 +666,46 @@ export default function SponsorDashboard() {
               {/* Live sidebar */}
               <div className="rankings-sidebar">
                 <div className="db-panel" style={{marginBottom:'1rem'}}>
-                  <h3 className="db-panel-title">🏆 Top Sponsors (LIVE)</h3>
-                  {RANKINGS.slice(0,4).map((r,i)=>(
-                    <div key={r.name} className="top-sponsor-row">
-                      <span className="ts-rank">{i===0?'🥇':i===1?'🥈':i===2?'🥉':`#${i+1}`}</span>
-                      <span className="ts-logo">{r.logo}</span>
-                      <span className="ts-name">{r.name}</span>
-                      <span className="ts-score" style={{color:i===0?'#4de8b0':'#d2ad44'}}>{r.overall}</span>
+                  <h3 className="db-panel-title">📐 How Scores Are Calculated</h3>
+                  <p style={{fontSize:'0.75rem',color:'var(--text-soft)',marginBottom:'0.75rem'}}>Four equal dimensions. No self-reporting.</p>
+                  {[
+                    {icon:'🌱',label:'Growth',     desc:'Speaking confidence, voluntary participation, fear reduction'},
+                    {icon:'🤝',label:'Participation',desc:'Balanced voices, low withdrawal, full group engagement'},
+                    {icon:'🎬',label:'Output',      desc:'Clarity of shared ideas, content reusability, system contribution'},
+                    {icon:'⬆️',label:'Succession', desc:'Learners helping others, new SGs emerging, content reuse'},
+                  ].map(d=>(
+                    <div key={d.label} style={{display:'flex',gap:'0.6rem',padding:'0.5rem 0',borderBottom:'1px solid var(--bg-card-alt)'}}>
+                      <span style={{fontSize:'1rem',flexShrink:0}}>{d.icon}</span>
+                      <div>
+                        <strong style={{fontSize:'0.82rem',display:'block',color:'var(--navy)'}}>{d.label}</strong>
+                        <span style={{fontSize:'0.72rem',color:'var(--text-soft)',lineHeight:1.4}}>{d.desc}</span>
+                      </div>
                     </div>
                   ))}
                 </div>
+
                 <div className="db-panel" style={{marginBottom:'1rem'}}>
-                  <h3 className="db-panel-title">📈 Top Sponsors (LIVE)</h3>
-                  <p style={{fontSize:'0.75rem',color:'var(--text-soft)',marginBottom:'0.75rem'}}>Top performers this cycle by growth metric.</p>
-                  {[{name:'Corex',tier:'GOLD',score:9.0},{name:'Cresto',tier:'SILVER',score:8.8},{name:'Lytica',tier:'BRONZE',score:8.6}].map(s=>(
-                    <div key={s.name} className="top-sponsor-row">
-                      <span className="ts-logo">{s.name[0]}</span>
-                      <span className="ts-name">{s.name}</span>
-                      <span className="ts-tier" style={{color:s.tier==='GOLD'?'#d2ad44':s.tier==='SILVER'?'#b4c8e6':'#cd7f32'}}>{s.tier}</span>
-                      <span className="ts-score">{s.score}</span>
-                    </div>
-                  ))}
+                  <h3 className="db-panel-title">🌐 Public Live Page</h3>
+                  <p style={{fontSize:'0.75rem',color:'var(--text-soft)',marginBottom:'0.75rem'}}>This ranking is visible to anyone on the web — it functions as your ethical advertising engine.</p>
+                  <div style={{background:'var(--blue-pale)',border:'1.5px solid var(--blue)',borderRadius:'10px',padding:'0.85rem',marginBottom:'0.75rem'}}>
+                    <p style={{margin:'0 0 0.4rem',fontSize:'0.78rem',fontWeight:700,color:'var(--navy)'}}>The public page shows:</p>
+                    {['Live Learning Cell rankings','Sponsor impact leaderboard','Growth, participation, output, succession','Which sponsors support which cells'].map(i=>(
+                      <span key={i} style={{display:'block',fontSize:'0.75rem',color:'var(--text-soft)',padding:'0.15rem 0'}}>✓ {i}</span>
+                    ))}
+                  </div>
+                  <div style={{background:'rgba(255,107,107,0.06)',border:'1px solid rgba(255,107,107,0.2)',borderRadius:'10px',padding:'0.85rem'}}>
+                    <p style={{margin:'0 0 0.4rem',fontSize:'0.78rem',fontWeight:700,color:'var(--navy)'}}>The public page never shows:</p>
+                    {['Student identities','Personal data','Classroom footage','Live lesson content'].map(i=>(
+                      <span key={i} style={{display:'block',fontSize:'0.75rem',color:'var(--text-soft)',padding:'0.15rem 0'}}>🚫 {i}</span>
+                    ))}
+                  </div>
                 </div>
+
                 <div className="db-panel">
                   <div style={{textAlign:'center',padding:'0.5rem 0'}}>
                     <p style={{fontSize:'0.78rem',color:'var(--text-soft)',marginBottom:'1rem'}}>Want a higher ranking?</p>
                     <button className="btn btn-primary" style={{width:'100%'}}>+ Fund More Cells</button>
-                    <p style={{fontSize:'0.7rem',color:'var(--text-soft)',marginTop:'0.5rem',marginBottom:0}}>Rankings update every Monday at 00:00 UTC</p>
+                    <p style={{fontSize:'0.7rem',color:'var(--text-soft)',marginTop:'0.5rem',marginBottom:0}}>Rankings update after every learning cycle, not in real time</p>
                   </div>
                 </div>
               </div>

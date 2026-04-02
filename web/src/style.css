@@ -1894,6 +1894,174 @@ a:hover { color: var(--navy); }
 }
 
 /* ═══════════════════════════════════════════
+   SPONSOR MODEL TAB
+   ═══════════════════════════════════════════ */
+
+/* Definition hero */
+.smodel-definition {
+  text-align: center; padding: 2rem 1.5rem 2.5rem;
+  background: linear-gradient(135deg, var(--blue-pale), var(--gold-pale));
+  border: 1.5px solid var(--border); border-radius: var(--radius);
+  margin-bottom: 2rem;
+}
+.smodel-quote {
+  font-size: clamp(1rem, 2.2vw, 1.3rem); font-style: italic;
+  font-weight: 700; color: var(--navy); margin: 0.5rem 0 0;
+  max-width: 720px; margin-inline: auto; line-height: 1.65;
+  border: none; padding: 0;
+}
+
+/* Sections */
+.smodel-section { margin-bottom: 2rem; }
+.smodel-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+.smodel-section-title {
+  font-size: 0.88rem; font-weight: 800; color: var(--navy);
+  text-transform: uppercase; letter-spacing: 0.05em;
+  margin: 0 0 1rem; display: flex; align-items: center; gap: 0.4rem;
+}
+.smodel-body-text { font-size: 0.86rem; color: var(--text-soft); margin: 0 0 1rem; line-height: 1.65; }
+
+/* Three principles row */
+.smodel-principles-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.smodel-principle-card {
+  background: var(--bg-card); border: 2px solid color-mix(in srgb, var(--sm-color) 30%, var(--border));
+  border-radius: var(--radius-sm); padding: 1.25rem;
+  position: relative; overflow: hidden;
+}
+.smodel-principle-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--sm-color);
+}
+.smodel-principle-num {
+  font-size: 1.5rem; font-weight: 900; color: var(--sm-color);
+  display: block; margin-bottom: 0.4rem; line-height: 1;
+}
+.smodel-principle-card strong { display: block; font-size: 0.88rem; color: var(--navy); margin-bottom: 0.5rem; }
+.smodel-principle-card p { font-size: 0.8rem; color: var(--text-soft); margin: 0; line-height: 1.6; }
+
+/* Cell visual */
+.smodel-cell-visual { display: flex; gap: 1rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+.smodel-cell-box {
+  background: var(--blue-pale); border: 1.5px solid var(--blue);
+  border-radius: var(--radius-sm); padding: 1rem 1.25rem;
+  display: flex; flex-direction: column; gap: 0.3rem; min-width: 180px;
+}
+.smodel-cell-icon { font-size: 1.6rem; margin-bottom: 0.25rem; }
+.smodel-cell-box strong { font-size: 0.88rem; color: var(--navy); }
+.smodel-cell-item { font-size: 0.8rem; color: var(--text-soft); }
+.smodel-cell-note { flex: 1; padding: 0.5rem 0; }
+.smodel-cell-note p { font-size: 0.84rem; color: var(--text-soft); margin: 0 0 0.5rem; line-height: 1.6; }
+.smodel-cell-note strong { color: var(--navy); }
+
+/* Zero obligation */
+.smodel-zero-oblig {
+  background: rgba(255,107,107,0.04); border: 1.5px solid rgba(255,107,107,0.25);
+  border-radius: var(--radius-sm); padding: 1.1rem;
+}
+.smodel-zo-head { font-size: 0.78rem; font-weight: 800; color: var(--navy); margin: 0 0 0.6rem; }
+.smodel-zo-message {
+  font-size: 0.82rem; color: var(--text-soft); line-height: 1.65; margin: 0 0 0.75rem;
+}
+.smodel-zo-message em { font-style: italic; color: var(--navy); font-weight: 500; }
+.smodel-zo-grid { display: flex; flex-direction: column; gap: 0.25rem; }
+.smodel-zo-item { font-size: 0.78rem; color: var(--text-soft); }
+
+/* Recognition boundary */
+.smodel-boundary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1.25rem; }
+.smodel-boundary-col { border-radius: var(--radius-sm); padding: 0.9rem; }
+.smodel-boundary-col.never   { background: rgba(255,107,107,0.05); border: 1.5px solid rgba(255,107,107,0.25); }
+.smodel-boundary-col.allowed { background: var(--green-pale); border: 1.5px solid color-mix(in srgb, var(--green) 35%, transparent); }
+.smodel-boundary-head {
+  font-size: 0.72rem; font-weight: 800; margin: 0 0 0.5rem;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.smodel-boundary-col.never .smodel-boundary-head   { color: #e05c5c; }
+.smodel-boundary-col.allowed .smodel-boundary-head { color: var(--green); }
+.smodel-boundary-item { display: block; font-size: 0.78rem; color: var(--text-soft); padding: 0.15rem 0; }
+
+/* Recognition loop */
+.smodel-recognition-loop {
+  background: var(--gold-pale); border: 1.5px solid var(--gold);
+  border-radius: var(--radius-sm); padding: 1rem;
+}
+.smodel-loop-row { display: flex; align-items: center; flex-wrap: wrap; gap: 0.25rem; margin-bottom: 0.5rem; }
+.smodel-loop-item { display: flex; align-items: center; gap: 0.25rem; }
+.smodel-loop-item span:first-child {
+  font-size: 0.78rem; font-weight: 700; color: var(--navy);
+  background: var(--bg-card); border-radius: 20px; padding: 0.2rem 0.6rem;
+}
+.smodel-loop-arrow { font-size: 0.9rem; color: var(--gold-dark); font-weight: 700; }
+.smodel-loop-note { font-size: 0.78rem; color: var(--text-soft); margin: 0; }
+
+/* Tiers row */
+.smodel-tiers-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.smodel-tier-card {
+  background: var(--bg-card); border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm); padding: 1.25rem;
+  text-align: center; display: flex; flex-direction: column;
+  align-items: center; gap: 0.4rem;
+  transition: all 0.2s;
+}
+.smodel-tier-card:hover { border-color: var(--tier-color); box-shadow: var(--shadow-md); }
+.smodel-tier-icon { font-size: 2rem; }
+.smodel-tier-name { font-size: 0.88rem; font-weight: 800; color: var(--navy); }
+.smodel-tier-numbers {
+  display: flex; gap: 0.75rem; justify-content: center;
+  font-size: 0.78rem; color: var(--text-soft);
+}
+.smodel-tier-numbers strong { color: var(--tier-color); font-weight: 800; }
+.smodel-tier-desc { font-size: 0.78rem; color: var(--text-soft); margin: 0; line-height: 1.55; }
+
+/* 4 ranking dimensions */
+.smodel-dimensions-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1rem; }
+.smodel-dimension-card {
+  background: var(--bg-card); border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm); padding: 1.1rem;
+  border-top: 3px solid var(--dim-color); transition: box-shadow 0.2s;
+}
+.smodel-dimension-card:hover { box-shadow: var(--shadow-md); }
+.smodel-dim-num {
+  font-size: 0.65rem; font-weight: 900; color: var(--dim-color);
+  letter-spacing: 0.08em; display: block; margin-bottom: 0.25rem;
+}
+.smodel-dim-label { font-size: 0.88rem; font-weight: 800; color: var(--navy); display: block; margin-bottom: 0.6rem; }
+.smodel-dim-measures { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.3rem; }
+.smodel-dim-measures li { font-size: 0.77rem; color: var(--text-soft); display: flex; gap: 0.4rem; line-height: 1.45; }
+.smodel-dim-measures li::before { content: '→'; color: var(--dim-color); font-weight: 700; flex-shrink: 0; }
+.smodel-dimensions-note {
+  background: var(--blue-pale); border: 1.5px solid var(--blue);
+  border-radius: var(--radius-sm); padding: 1rem 1.25rem;
+}
+.smodel-dimensions-note strong { font-size: 0.88rem; color: var(--navy); display: block; margin-bottom: 0.3rem; }
+.smodel-dimensions-note p { font-size: 0.8rem; color: var(--text-soft); margin: 0; }
+
+/* Governance */
+.smodel-governance-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+.smodel-gov-rule {
+  display: flex; align-items: flex-start; gap: 0.6rem;
+  padding: 0.85rem; background: var(--bg-card);
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  font-size: 0.82rem; color: var(--text-main); line-height: 1.5;
+}
+.smodel-gov-num {
+  font-size: 0.72rem; font-weight: 900; color: var(--text-muted);
+  min-width: 18px; padding-top: 0.1em;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .smodel-dimensions-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 900px) {
+  .smodel-two-col           { grid-template-columns: 1fr; }
+  .smodel-principles-row    { grid-template-columns: 1fr; }
+  .smodel-tiers-row         { grid-template-columns: 1fr; }
+  .smodel-dimensions-grid   { grid-template-columns: 1fr 1fr; }
+  .smodel-governance-grid   { grid-template-columns: 1fr; }
+  .smodel-boundary-grid     { grid-template-columns: 1fr; }
+}
+
+/* ═══════════════════════════════════════════
    MY VOICE STORY — CINEMATIC COMPONENT
    ═══════════════════════════════════════════ */
 
