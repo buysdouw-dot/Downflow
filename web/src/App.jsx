@@ -15,6 +15,9 @@ import PaymentEngine from './pages/PaymentEngine.jsx'
 import Funding from './pages/Funding.jsx'
 import ModelFilm from './pages/ModelFilm.jsx'
 import FacilitatorFilm from './pages/FacilitatorFilm.jsx'
+import FacilitatorApp from './pages/FacilitatorApp.jsx'
+import FacilitatorOnboarding from './pages/FacilitatorOnboarding.jsx'
+import SocialAds from './pages/SocialAds.jsx'
 
 export default function App() {
   return (
@@ -35,6 +38,9 @@ export default function App() {
         <Route path="/news" element={<News />} />
         <Route path="/assistants" element={<TeacherAssistants />} />
         <Route path="/payment-engine" element={<PaymentEngine />} />
+        <Route path="/facilitator-app" element={<FacilitatorApp />} />
+        <Route path="/facilitator-onboarding" element={<FacilitatorOnboarding />} />
+        <Route path="/social-ads" element={<SocialAds />} />
       </Route>
     </Routes>
   )
