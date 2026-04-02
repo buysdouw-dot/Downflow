@@ -247,7 +247,7 @@ export default function StudentDashboard(){
         </div>
       </div>
       <div className="db-tabs">
-        {[['home','🏠 Home'],['packs','📦 My Packs'],['cell','🏫 My Cell'],['pathway','⬆️ Pathway']].map(([id,label])=>(
+        {[['home','🏠 Home'],['packs','📦 My Packs'],['cell','🏫 My Cell'],['tools','🔗 My Tools'],['pathway','⬆️ Pathway']].map(([id,label])=>(
           <button key={id} className={`db-tab${activeTab===id?' active':''}`} onClick={()=>setActiveTab(id)}>{label}</button>
         ))}
       </div>
@@ -300,6 +300,79 @@ export default function StudentDashboard(){
         {activeTab==='cell'&&(
           <CellGroupView />
         )}
+        {activeTab==='tools'&&(
+          <div className="db-tab-content">
+            <div className="two-col-grid" style={{marginBottom:'1.5rem'}}>
+
+              {/* ClassDojo */}
+              <div className="db-panel integration-panel classdojo-panel">
+                <div className="integration-header">
+                  <div className="integration-logo classdojo-logo">CD</div>
+                  <div>
+                    <h3 className="db-panel-title" style={{margin:0}}>ClassDojo</h3>
+                    <span className="integration-status active">● Your classroom front porch</span>
+                  </div>
+                </div>
+                <p style={{fontSize:'0.84rem',color:'var(--text-soft)',lineHeight:1.6,margin:'0.75rem 0 1rem'}}>
+                  ClassDojo is where your facilitator shares daily check-ins, your parent can see updates, and the mood of your group is tracked. It is the warm, friendly part of your learning experience.
+                </p>
+                <div className="integration-flows">
+                  {['Daily mood check-ins','See parent messages','Simple session feedback','Emotional check-ins with your guider'].map(item=>(
+                    <div key={item} className="integration-flow-row"><span style={{color:'#4de8b0'}}>✓</span><span>{item}</span></div>
+                  ))}
+                </div>
+                <a href="https://www.classdojo.com" target="_blank" rel="noreferrer" className="btn btn-primary" style={{marginTop:'1.25rem',display:'inline-block'}}>
+                  Open ClassDojo →
+                </a>
+              </div>
+
+              {/* Google Meet */}
+              <div className="db-panel integration-panel meet-panel">
+                <div className="integration-header">
+                  <div className="integration-logo meet-logo">M</div>
+                  <div>
+                    <h3 className="db-panel-title" style={{margin:0}}>Google Meet</h3>
+                    <span className="integration-status active">● Your live learning room</span>
+                  </div>
+                </div>
+                <p style={{fontSize:'0.84rem',color:'var(--text-soft)',lineHeight:1.6,margin:'0.75rem 0 1rem'}}>
+                  Google Meet is where your live Learning Cell sessions happen. Your facilitator will share the link before each session. After the session, your reps and coins are recorded back here in DOWNFLOW.
+                </p>
+                <div className="integration-flows">
+                  {[
+                    {icon:'📅',step:'Session scheduled — see your Home tab'},
+                    {icon:'🔗',step:'Join button opens Google Meet'},
+                    {icon:'🎓',step:'Session runs — speak, try, participate'},
+                    {icon:'🪙',step:'Back here — coins and attendance logged'},
+                  ].map(s=>(
+                    <div key={s.step} className="integration-flow-row"><span>{s.icon}</span><span>{s.step}</span></div>
+                  ))}
+                </div>
+                <a href="https://meet.google.com" target="_blank" rel="noreferrer" className="btn btn-primary" style={{marginTop:'1.25rem',display:'inline-block'}}>
+                  Join Session →
+                </a>
+              </div>
+            </div>
+
+            <div className="db-panel" style={{background:'var(--blue-pale)',border:'1.5px solid var(--blue)'}}>
+              <h3 className="db-panel-title">💡 How Your Tools Work Together</h3>
+              <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'1rem',marginTop:'0.75rem'}}>
+                {[
+                  {icon:'🚪',label:'ClassDojo',desc:'How your teacher and parent see your daily mood and participation.'},
+                  {icon:'📹',label:'Google Meet',desc:'Where your live cell sessions happen — video, voice, activities.'},
+                  {icon:'🏙',label:'DOWNFLOW',desc:'Where your coins, reps, packs, and growth story live forever.'},
+                ].map(item=>(
+                  <div key={item.label} style={{textAlign:'center',padding:'1rem',background:'var(--bg-card)',borderRadius:'12px'}}>
+                    <span style={{fontSize:'1.75rem',display:'block',marginBottom:'0.4rem'}}>{item.icon}</span>
+                    <strong style={{display:'block',fontSize:'0.9rem',color:'var(--navy)',marginBottom:'0.3rem'}}>{item.label}</strong>
+                    <p style={{margin:0,fontSize:'0.78rem',color:'var(--text-soft)',lineHeight:1.55}}>{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
         {activeTab==='pathway'&&(
           <div className="db-tab-content">
             <div className="pathway-hero"><p className="kicker">Your Growth Path</p><h2>Student → Guider → Facilitator</h2><p className="lead">Every level teaches the level below. Progress is earned through consistency, not tests.</p></div>

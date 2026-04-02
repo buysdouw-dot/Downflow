@@ -7,6 +7,9 @@ import FacilitatorDashboard from './pages/FacilitatorDashboard.jsx'
 import ConnectorDashboard from './pages/ConnectorDashboard.jsx'
 import PlatformDashboard from './pages/PlatformDashboard.jsx'
 import Curriculum from './pages/Curriculum.jsx'
+import ContentEngine from './pages/ContentEngine.jsx'
+import Payments from './pages/Payments.jsx'
+import News from './pages/News.jsx'
 
 export default function App() {
   return (
@@ -19,6 +22,9 @@ export default function App() {
         <Route path="/connector" element={<ConnectorDashboard />} />
         <Route path="/platform" element={<PlatformDashboard />} />
         <Route path="/curriculum" element={<Curriculum />} />
+        <Route path="/content" element={<ContentEngine />} />
+        <Route path="/payments" element={<Payments />} />
+        <Route path="/news" element={<News />} />
       </Route>
     </Routes>
   )

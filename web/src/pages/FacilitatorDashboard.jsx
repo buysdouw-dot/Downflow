@@ -83,7 +83,7 @@ export default function FacilitatorDashboard() {
       </div>
 
       <div className="db-tabs">
-        {[['overview','🔭 Overview'],['cells','🏫 Cells'],['guiders','🧑‍🏫 Guiders'],['sessions','📅 Sessions'],['progress','📊 Progress'],['ai','🤖 AI Tool']].map(([id,label])=>(
+        {[['overview','🔭 Overview'],['cells','🏫 Cells'],['guiders','🧑‍🏫 Guiders'],['sessions','📅 Sessions'],['tools','🔗 ClassDojo & Meet'],['progress','📊 Progress'],['ai','🤖 AI Tool']].map(([id,label])=>(
           <button key={id} className={`db-tab${activeTab===id?' active':''}`} onClick={()=>setActiveTab(id)}>{label}</button>
         ))}
       </div>
@@ -395,6 +395,100 @@ export default function FacilitatorDashboard() {
         )}
 
       </div>
+        {activeTab==='tools'&&(
+          <div className="db-tab-content">
+
+            {/* ClassDojo */}
+            <div className="two-col-grid" style={{marginBottom:'1.5rem'}}>
+              <div className="db-panel integration-panel classdojo-panel">
+                <div className="integration-header">
+                  <div className="integration-logo classdojo-logo">CD</div>
+                  <div>
+                    <h3 className="db-panel-title" style={{margin:0}}>ClassDojo</h3>
+                    <span className="integration-status active">● Connected — Front Porch</span>
+                  </div>
+                </div>
+                <p style={{fontSize:'0.84rem',color:'var(--text-soft)',lineHeight:1.6,margin:'0.75rem 0 1rem'}}>
+                  ClassDojo handles the daily classroom heartbeat — moods, parent messages, and simple session feedback. It never touches payments, rankings, or long-term data. That all lives here.
+                </p>
+                <div className="integration-flows">
+                  <p style={{fontSize:'0.75rem',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.06em',color:'var(--text-muted)',marginBottom:'0.5rem'}}>What ClassDojo does</p>
+                  {['Daily emotional check-ins','Parent communication & trust','Simple session feedback','Moment-to-moment visibility'].map(item=>(
+                    <div key={item} className="integration-flow-row"><span style={{color:'#4de8b0'}}>✓</span><span>{item}</span></div>
+                  ))}
+                  <p style={{fontSize:'0.75rem',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.06em',color:'var(--text-muted)',margin:'0.75rem 0 0.5rem'}}>ClassDojo never handles</p>
+                  {['Payments or coins','Sponsor rankings','Long-term data storage','Video reps or content'].map(item=>(
+                    <div key={item} className="integration-flow-row"><span style={{color:'#ff9f5a'}}>✗</span><span style={{color:'var(--text-muted)'}}>{item}</span></div>
+                  ))}
+                </div>
+                <div style={{display:'flex',gap:'0.75rem',marginTop:'1.25rem',flexWrap:'wrap'}}>
+                  {CELLS.map(c=>(
+                    <a key={c.id} href="https://www.classdojo.com" target="_blank" rel="noreferrer" className="btn btn-secondary btn-sm">
+                      Open {c.id} →
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Google Meet */}
+              <div className="db-panel integration-panel meet-panel">
+                <div className="integration-header">
+                  <div className="integration-logo meet-logo">M</div>
+                  <div>
+                    <h3 className="db-panel-title" style={{margin:0}}>Google Meet</h3>
+                    <span className="integration-status active">● Connected — Live Room</span>
+                  </div>
+                </div>
+                <p style={{fontSize:'0.84rem',color:'var(--text-soft)',lineHeight:1.6,margin:'0.75rem 0 1rem'}}>
+                  Google Meet is the live learning room. It stays "dumb" — reliable, safe, and familiar. What matters is what comes out of it: recordings that feed the Content Engine.
+                </p>
+                <div className="integration-flows">
+                  <p style={{fontSize:'0.75rem',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.06em',color:'var(--text-muted)',marginBottom:'0.5rem'}}>Session lifecycle</p>
+                  {[
+                    {icon:'📅',step:'Session scheduled here in DOWNFLOW'},
+                    {icon:'🔗',step:'Join button fires — opens Google Meet'},
+                    {icon:'🎥',step:'Session runs — facilitator records'},
+                    {icon:'📤',step:'Clip trimmed & uploaded to Content Engine'},
+                    {icon:'🪙',step:'Post-session: coins awarded, attendance logged'},
+                  ].map(s=>(
+                    <div key={s.step} className="integration-flow-row"><span>{s.icon}</span><span>{s.step}</span></div>
+                  ))}
+                </div>
+                <div style={{display:'flex',gap:'0.75rem',marginTop:'1.25rem',flexWrap:'wrap'}}>
+                  {CELLS.map(c=>(
+                    <a key={c.id} href="https://meet.google.com" target="_blank" rel="noreferrer" className="btn btn-primary btn-sm">
+                      Start {c.id} →
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Architecture note */}
+            <div className="db-panel" style={{background:'linear-gradient(135deg,var(--navy),#1a2a3a)',border:'none'}}>
+              <h3 className="db-panel-title" style={{color:'#fff'}}>🏙 The App is the City</h3>
+              <p style={{color:'rgba(255,255,255,0.65)',fontSize:'0.85rem',lineHeight:1.7,marginBottom:'1rem'}}>
+                ClassDojo = the classroom heartbeat. Google Meet = the live voice. DOWNFLOW = the city where value accumulates, identity is held, and everything else feeds in.
+              </p>
+              <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'1rem'}}>
+                {[
+                  {icon:'🚪',tool:'ClassDojo',role:'Front porch',owns:'Daily interaction · Parent trust · Emotional visibility'},
+                  {icon:'📹',tool:'Google Meet',role:'Live room',owns:'Session delivery · Recording source · Reliable infrastructure'},
+                  {icon:'🏙',tool:'DOWNFLOW App',role:'The city',owns:'Value · Identity · Coins · Rankings · Content · Payments'},
+                ].map(item=>(
+                  <div key={item.tool} style={{padding:'1rem',background:'rgba(255,255,255,0.05)',borderRadius:'12px',border:'1px solid rgba(255,255,255,0.1)'}}>
+                    <span style={{fontSize:'1.5rem',display:'block',marginBottom:'0.4rem'}}>{item.icon}</span>
+                    <strong style={{display:'block',color:'#fff',fontSize:'0.9rem'}}>{item.tool}</strong>
+                    <span style={{display:'block',fontSize:'0.72rem',color:'var(--gold)',fontWeight:600,marginBottom:'0.35rem'}}>{item.role}</span>
+                    <p style={{margin:0,fontSize:'0.75rem',color:'rgba(255,255,255,0.45)',lineHeight:1.55}}>{item.owns}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
+        )}
+
         {activeTab==='ai'&&(
           <div className="db-tab-content">
             <p className="lead" style={{marginBottom:'1.5rem'}}>Generate tailored discussion prompts, feedback suggestions, and session activities for your cells using the Antigravity AI engine.</p>

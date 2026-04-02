@@ -6,10 +6,13 @@ import { useAuth, DEMO_PERSONAS } from '../context/AuthContext.jsx'
 const NAV = [
   { to: '/', label: 'Home', exact: true },
   { to: '/curriculum', label: 'Curriculum' },
+  { to: '/content', label: 'Content' },
+  { to: '/news', label: 'News' },
   { to: '/sponsor', label: 'Sponsors' },
   { to: '/student', label: 'Students' },
   { to: '/facilitator', label: 'Facilitators' },
   { to: '/connector', label: 'Connectors' },
+  { to: '/payments', label: 'Payments' },
   { to: '/platform', label: 'Platform' },
 ]
 
