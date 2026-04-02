@@ -116,6 +116,31 @@ function VideoGallery() {
           </p>
         </div>
 
+        {/* ── Compiled Marketing Reel ── */}
+        <div className="vg-reel-wrap">
+          <div className="vg-reel-label-row">
+            <span className="vg-reel-badge">🎬 COMPILED REEL</span>
+            <span className="vg-reel-meta">76s · Mixed pitch + voiceover · 20 clips</span>
+          </div>
+          <div className="vg-reel-player">
+            <video
+              src="/sponsor/videos/marketing-reel.mp4"
+              controls
+              playsInline
+              className="vg-reel-video"
+              poster=""
+            />
+          </div>
+          <div className="vg-reel-desc">
+            Full sponsor marketing reel — all 20 visual snippets edited to the mixed pitch audio.
+            Portrait format (9:16) optimised for social media, presentations, and mobile viewing.
+          </div>
+        </div>
+
+        <div className="vg-divider">
+          <span>RAW SNIPPETS — 20 clips</span>
+        </div>
+
         {/* Main player */}
         <div className="vg-main-wrap">
           <div className="vg-main-player">
