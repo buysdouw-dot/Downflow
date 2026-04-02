@@ -11,6 +11,7 @@ import ContentEngine from './pages/ContentEngine.jsx'
 import Payments from './pages/Payments.jsx'
 import News from './pages/News.jsx'
 import TeacherAssistants from './pages/TeacherAssistants.jsx'
+import PaymentEngine from './pages/PaymentEngine.jsx'
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
         <Route path="/payments" element={<Payments />} />
         <Route path="/news" element={<News />} />
         <Route path="/assistants" element={<TeacherAssistants />} />
+        <Route path="/payment-engine" element={<PaymentEngine />} />
       </Route>
     </Routes>
   )

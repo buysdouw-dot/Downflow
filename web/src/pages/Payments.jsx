@@ -87,6 +87,98 @@ export default function Payments() {
 
       <div className="db-content">
 
+        {activeTab === 'per-lesson' && (
+          <div className="db-tab-content">
+            <p className="lead" style={{ marginBottom: '1.5rem' }}>
+              Every lesson generates <strong>1,080,000 VND</strong> split automatically across 4 wallets.
+              The payer (sponsor or family) never changes the percentages — only the source changes.
+            </p>
+
+            {/* Summary table */}
+            <div className="db-panel" style={{ marginBottom: '1.5rem' }}>
+              <h3 className="db-panel-title">📊 Per-Lesson Split Table</h3>
+              <p style={{ fontSize: '0.82rem', color: 'var(--text-soft)', marginBottom: '1.25rem' }}>
+                Base: 180,000 VND × 6 students = 1,080,000 VND per lesson
+              </p>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px 160px 160px', gap: '0', borderRadius: '10px', overflow: 'hidden', border: '1.5px solid var(--border)' }}>
+                {/* Header */}
+                {['Recipient', '%', 'Per Lesson', 'Per Cycle (×24)'].map(h => (
+                  <div key={h} style={{ padding: '0.7rem 1rem', background: 'var(--navy)', color: 'rgba(255,255,255,0.6)', fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{h}</div>
+                ))}
+                {/* Rows */}
+                {[
+                  { icon: '🧭', label: 'Facilitator',            pct: '40%', lesson: '432,000',   cycle: '10,368,000', color: '#4de8b0' },
+                  { icon: '⚙️', label: 'Platform / Business',    pct: '20%', lesson: '216,000',   cycle: '5,184,000',  color: '#72d0ff' },
+                  { icon: '🌱', label: 'Sponsor Pool / Cell Fund',pct: '15%', lesson: '162,000',   cycle: '3,888,000',  color: '#b083ff' },
+                  { icon: '🔗', label: 'Connector (3 tranches)',  pct: '25%', lesson: '270,000',   cycle: '6,480,000',  color: '#d2ad44' },
+                  { icon: '∑',  label: 'TOTAL',                  pct: '100%',lesson: '1,080,000', cycle: '25,920,000', color: '#fff', bold: true },
+                ].map((row, i) => (
+                  <>
+                    <div key={row.label+'l'} style={{ padding: '0.75rem 1rem', background: row.bold ? 'var(--navy)' : i % 2 === 0 ? 'var(--bg-card)' : 'var(--bg-card-alt)', display: 'flex', alignItems: 'center', gap: '0.6rem', borderTop: row.bold ? '2px solid var(--border)' : '1px solid var(--border)' }}>
+                      <span>{row.icon}</span>
+                      <strong style={{ color: row.bold ? '#fff' : 'var(--navy)', fontSize: '0.88rem' }}>{row.label}</strong>
+                    </div>
+                    <div key={row.label+'p'} style={{ padding: '0.75rem 1rem', background: row.bold ? 'var(--navy)' : i % 2 === 0 ? 'var(--bg-card)' : 'var(--bg-card-alt)', fontWeight: 800, color: row.bold ? '#fff' : row.color, fontSize: '0.9rem', borderTop: row.bold ? '2px solid var(--border)' : '1px solid var(--border)', display: 'flex', alignItems: 'center' }}>{row.pct}</div>
+                    <div key={row.label+'a'} style={{ padding: '0.75rem 1rem', background: row.bold ? 'var(--navy)' : i % 2 === 0 ? 'var(--bg-card)' : 'var(--bg-card-alt)', fontWeight: 700, color: row.bold ? '#d2ad44' : row.color, fontSize: '0.88rem', borderTop: row.bold ? '2px solid var(--border)' : '1px solid var(--border)', display: 'flex', alignItems: 'center' }}>{row.lesson} VND</div>
+                    <div key={row.label+'c'} style={{ padding: '0.75rem 1rem', background: row.bold ? 'var(--navy)' : i % 2 === 0 ? 'var(--bg-card)' : 'var(--bg-card-alt)', fontWeight: 700, color: row.bold ? '#4de8b0' : 'var(--text-soft)', fontSize: '0.88rem', borderTop: row.bold ? '2px solid var(--border)' : '1px solid var(--border)', display: 'flex', alignItems: 'center' }}>{row.cycle} VND</div>
+                  </>
+                ))}
+              </div>
+            </div>
+
+            {/* Role explanations */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: '1.25rem', marginBottom: '1.5rem' }}>
+              {[
+                { icon: '🧭', label: 'Facilitator — 40%', color: '#4de8b0', vnd: '432,000 / lesson', cycle: '10,368,000 / cycle', items: ['Live lesson delivery', 'Psychological safety & engagement', 'Speaking facilitation', 'Content recording & upload for reuse'] },
+                { icon: '⚙️', label: 'Platform — 20%', color: '#72d0ff', vnd: '216,000 / lesson', cycle: '5,184,000 / cycle', items: ['App & server infrastructure', 'Payment processing', 'Admin & coordination', 'Lesson editing, reuse pipeline', 'System buffer & growth'] },
+                { icon: '🌱', label: 'Sponsor Pool / Cell Fund — 15%', color: '#b083ff', vnd: '162,000 / lesson', cycle: '3,888,000 / cycle', items: ['Seed new sponsored cells', 'Stabilise attendance gaps', 'Student grant ≈ 260,000 VND after programme', 'Scholarships & de-risk growth'] },
+                { icon: '🔗', label: 'Connector — 25%', color: '#d2ad44', vnd: '270,000 / lesson', cycle: '6,480,000 / cycle', items: ['33% on cell launch (2,138,400 VND)', '33% after 1-month stability confirmed', '34% after month 2 / week 8 (2,203,200 VND)', 'Prevents rushed or unethical cells'] },
+              ].map(card => (
+                <div key={card.label} style={{ background: 'var(--bg-card)', border: `1.5px solid ${card.color}33`, borderLeft: `5px solid ${card.color}`, borderRadius: '12px', padding: '1.1rem 1.25rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
+                    <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center' }}>
+                      <span style={{ fontSize: '1.3rem' }}>{card.icon}</span>
+                      <strong style={{ color: 'var(--navy)', fontSize: '0.92rem' }}>{card.label}</strong>
+                    </div>
+                    <div style={{ textAlign: 'right' }}>
+                      <strong style={{ display: 'block', color: card.color, fontSize: '0.88rem' }}>{card.vnd}</strong>
+                      <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>{card.cycle}</span>
+                    </div>
+                  </div>
+                  {card.items.map(it => (
+                    <div key={it} style={{ display: 'flex', gap: '0.5rem', fontSize: '0.81rem', color: 'var(--text-soft)', padding: '0.18rem 0' }}>
+                      <span style={{ color: card.color, flexShrink: 0 }}>→</span>{it}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+
+            {/* Immutable rule */}
+            <div style={{ padding: '1.25rem 1.5rem', background: 'var(--navy)', borderRadius: '14px', display: 'flex', gap: '1.25rem', alignItems: 'flex-start' }}>
+              <span style={{ fontSize: '1.75rem', flexShrink: 0 }}>🔒</span>
+              <div>
+                <strong style={{ color: '#fff', display: 'block', fontSize: '0.95rem', marginBottom: '0.35rem' }}>The Immutable Rule</strong>
+                <p style={{ margin: '0 0 0.75rem', color: 'rgba(255,255,255,0.6)', fontSize: '0.84rem', lineHeight: 1.7 }}>
+                  Whether a lesson is paid by a parent or a sponsor — the split is identical. The payer changes. The ethics, the wallets, and the percentages do not. This makes the system auditable, trustworthy, and scalable.
+                </p>
+                <code style={{ display: 'block', padding: '0.6rem 1rem', background: 'rgba(255,255,255,0.07)', borderRadius: '8px', fontSize: '0.82rem', color: '#4de8b0', fontFamily: 'monospace' }}>
+                  splitLesson(total=1,080,000) → 4 wallet credits, always identical
+                </code>
+              </div>
+            </div>
+
+            <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
+              <Link to="/payment-engine" className="btn btn-primary">
+                Open Full Payment Engine →
+              </Link>
+              <p style={{ fontSize: '0.78rem', color: 'var(--text-soft)', marginTop: '0.6rem' }}>
+                Wallet architecture · SQL schema · Split logic · Coin version
+              </p>
+            </div>
+          </div>
+        )}
+
         {activeTab === 'overview' && (
           <div className="db-tab-content">
 

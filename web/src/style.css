@@ -2404,3 +2404,150 @@ a:hover { color: var(--navy); }
   .ta-grid { grid-template-columns: 1fr; }
   .coins-hero-panel { flex-direction: column; text-align: center; }
 }
+
+/* ═══════════════════════════════════════════
+   PAYMENT ENGINE PAGE
+   ═══════════════════════════════════════════ */
+
+/* ── Flow diagram ── */
+.pe-flow-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding: 0.5rem 0;
+}
+.pe-payers-row {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-bottom: 0;
+}
+.pe-payer-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 1rem 1.5rem;
+  background: var(--bg-card);
+  border: 2px solid;
+  border-radius: 14px;
+  min-width: 140px;
+  text-align: center;
+}
+.pe-merge-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.pe-merge-line {
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(90deg, var(--border), var(--blue));
+}
+.pe-central-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 1.1rem 2rem;
+  background: var(--navy);
+  border-radius: 14px;
+  text-align: center;
+  margin: 1.25rem 0;
+  min-width: 240px;
+  box-shadow: 0 0 0 4px rgba(78,232,176,0.12);
+}
+.pe-lock-note {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.4);
+  margin-top: 0.2rem;
+  padding: 0.3rem 0.6rem;
+  background: rgba(255,255,255,0.06);
+  border-radius: 6px;
+}
+.pe-wallets-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  width: 100%;
+  margin-top: 0;
+}
+.pe-wallet-output {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+.pe-wallet-arrow {
+  width: 2px;
+  height: 32px;
+  opacity: 0.7;
+}
+.pe-wallet-box {
+  width: 100%;
+  background: var(--bg-card);
+  border: 2px solid;
+  border-radius: 14px;
+  padding: 1.1rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  text-align: center;
+}
+.pe-wallet-pct {
+  font-size: 1.75rem;
+  font-weight: 900;
+  line-height: 1;
+}
+.pe-wallet-icon { font-size: 1.4rem; }
+.pe-wallet-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+.pe-wallet-amount {
+  font-size: 0.8rem;
+  font-weight: 800;
+  margin-top: 0.15rem;
+}
+.pe-wallet-timing {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* ── Wallet cards ── */
+.pe-wallet-card { transition: box-shadow 0.2s; }
+.pe-wallet-card:hover { box-shadow: var(--shadow-md); }
+
+/* ── Code blocks ── */
+.pe-code-block {
+  background: #0f1a14;
+  color: #a8e6c4;
+  border: 1px solid rgba(78,232,176,0.15);
+  border-radius: 12px;
+  padding: 1.5rem;
+  font-family: 'JetBrains Mono', 'Fira Mono', 'Consolas', monospace;
+  font-size: 0.78rem;
+  line-height: 1.7;
+  overflow-x: auto;
+  white-space: pre;
+  margin: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .pe-wallets-row { grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width: 640px) {
+  .pe-wallets-row  { grid-template-columns: 1fr 1fr; }
+  .pe-payers-row   { gap: 1rem; }
+  .pe-central-box  { min-width: 180px; padding: 0.85rem 1rem; }
+  .pe-code-block   { font-size: 0.68rem; padding: 1rem; }
+}
