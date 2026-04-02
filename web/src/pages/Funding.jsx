@@ -1,5 +1,19 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+
+// ─── Video snippets — add new entries here as more arrive ────────────────────
+const VIDEOS = [
+  { id: 'vid-01', src: '/sponsor/videos/vid-01.mp4', label: 'Snippet 01' },
+  { id: 'vid-02', src: '/sponsor/videos/vid-02.mp4', label: 'Snippet 02' },
+  { id: 'vid-03', src: '/sponsor/videos/vid-03.mp4', label: 'Snippet 03' },
+  { id: 'vid-04', src: '/sponsor/videos/vid-04.mp4', label: 'Snippet 04' },
+  { id: 'vid-05', src: '/sponsor/videos/vid-05.mp4', label: 'Snippet 05' },
+  { id: 'vid-06', src: '/sponsor/videos/vid-06.mp4', label: 'Snippet 06' },
+  { id: 'vid-07', src: '/sponsor/videos/vid-07.mp4', label: 'Snippet 07' },
+  { id: 'vid-08', src: '/sponsor/videos/vid-08.mp4', label: 'Snippet 08' },
+  { id: 'vid-09', src: '/sponsor/videos/vid-09.mp4', label: 'Snippet 09' },
+  { id: 'vid-10', src: '/sponsor/videos/vid-10.mp4', label: 'Snippet 10' },
+]
 
 const TIERS = [
   {
@@ -65,6 +79,83 @@ const PROBLEMS = [
   'Institutions lack scalable, replicable funding models',
   'Capital rarely compounds inside education — it disappears',
 ]
+
+function VideoGallery() {
+  const [active, setActive] = useState(0)
+  const mainRef = useRef(null)
+
+  // When active clip changes, reset + play the main player
+  useEffect(() => {
+    if (mainRef.current) {
+      mainRef.current.load()
+      mainRef.current.play().catch(() => {})
+    }
+  }, [active])
+
+  const prev = () => setActive(i => (i - 1 + VIDEOS.length) % VIDEOS.length)
+  const next = () => setActive(i => (i + 1) % VIDEOS.length)
+
+  return (
+    <section className="fund-section fund-section-dark">
+      <div className="fund-inner">
+        <div className="fund-center-header">
+          <p className="fund-section-kicker" style={{ color: '#d2ad44' }}>MARKETING SNIPPETS</p>
+          <h2 className="fund-section-title" style={{ color: '#fff' }}>See It In Action</h2>
+          <p className="fund-section-lead" style={{ color: 'rgba(255,255,255,0.55)' }}>
+            Short-form sponsor marketing clips — more arriving soon.
+          </p>
+        </div>
+
+        {/* Main player */}
+        <div className="vg-main-wrap">
+          <div className="vg-main-player">
+            <video
+              ref={mainRef}
+              key={VIDEOS[active].src}
+              src={VIDEOS[active].src}
+              controls
+              autoPlay
+              playsInline
+              className="vg-main-video"
+            />
+            {/* nav arrows */}
+            <button className="vg-arrow vg-arrow-left" onClick={prev} aria-label="Previous">‹</button>
+            <button className="vg-arrow vg-arrow-right" onClick={next} aria-label="Next">›</button>
+          </div>
+          <div className="vg-main-label">
+            <span className="vg-counter">{active + 1} / {VIDEOS.length}</span>
+            <span className="vg-clip-label">{VIDEOS[active].label}</span>
+            <span className="vg-more-badge">+ more coming</span>
+          </div>
+        </div>
+
+        {/* Thumbnail strip */}
+        <div className="vg-thumb-strip">
+          {VIDEOS.map((v, i) => (
+            <button
+              key={v.id}
+              className={`vg-thumb${i === active ? ' active' : ''}`}
+              onClick={() => setActive(i)}
+              aria-label={v.label}
+            >
+              <video
+                src={v.src}
+                muted
+                playsInline
+                preload="metadata"
+                className="vg-thumb-video"
+              />
+              <div className="vg-thumb-overlay">
+                <span className="vg-thumb-play">{i === active ? '▶' : '▷'}</span>
+                <span className="vg-thumb-num">{i + 1}</span>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
 
 export default function Funding() {
   const [activeTier, setActiveTier] = useState(1)
@@ -194,6 +285,9 @@ export default function Funding() {
           </div>
         </div>
       </section>
+
+      {/* ── VIDEO GALLERY ── */}
+      <VideoGallery />
 
       {/* ── THE REBATE ENGINE ── */}
       <section className="fund-section fund-section-alt">
