@@ -439,6 +439,61 @@ export default function Home() {
           <Link to="/platform" className="btn btn-secondary" style={{fontSize:'0.95rem',padding:'0.75rem 2rem'}}>View Full System</Link>
         </div>
       </section>
+
+      {/* ── Tagline ── */}
+      <div className="tagline-strip">
+        <p className="tagline-text">"We rise by creating value — not just by consuming it."</p>
+      </div>
+
+      {/* ── Ethics / Protected Learning ── */}
+      <section className="section" style={{background:'var(--green-pale)',padding:'5rem 2rem'}}>
+        <div style={{maxWidth:'1200px',margin:'0 auto'}}>
+          <p className="kicker">Ethics &amp; Protection</p>
+          <h2>Protected Learning. Ethical Impact.</h2>
+          <p className="lead" style={{marginTop:'0.75rem',marginBottom:'2rem',maxWidth:'560px'}}>
+            Trust is the foundation of every learning cell. Every rule exists to protect students and maintain the integrity of the network.
+          </p>
+          <div className="ethics-grid">
+            {[
+              {shield:true,  icon:'🤝', title:'Side-by-Side Parent Presence', desc:'Parents or guardians are always informed and involved. No hidden sessions. No private contact between adults and students outside the structured cell format.'},
+              {shield:true,  icon:'🛡️', title:'No Public Comparison',         desc:'Students are never ranked or compared publicly. Progress is private. Cell health scores are visible to facilitators only — never to families or sponsors.'},
+              {shield:false, icon:'🚫', title:'No Debt-Based Pressure',       desc:'Students participate for free. No family pays anything. Sponsors fund the cells entirely. There is no obligation, no repayment, and no commercial pressure inside sessions.'},
+              {shield:false, icon:'🔒', title:'Influences Focus Cells',       desc:'The platform automatically enforces sponsor boundaries. No sponsor can contact, direct, or influence the learning that happens inside a cell. Ever.'},
+            ].map(e=>(
+              <div key={e.title} className={`ethics-item${e.shield?' shield':''}`}>
+                <span className="ethics-icon">{e.icon}</span>
+                <div><strong>{e.title}</strong><p>{e.desc}</p></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Sponsor Public Page Section ── */}
+      <section className="section">
+        <p className="kicker">For Sponsors</p>
+        <h2>Support Ethical Learning. Create Lifelong Value.</h2>
+        <p className="lead" style={{marginTop:'0.75rem',marginBottom:'0',maxWidth:'560px'}}>
+          Fund active learning spaces with direct impact. Earn recognition, performance data, and a measurable return on your social investment.
+        </p>
+        <div className="sponsor-values-row">
+          {[
+            {icon:'💛', title:'Meaningful', desc:'Your funding directly enables a cell of 5 students for a full 12-week cycle. You see every rep, every session, every milestone.'},
+            {icon:'📊', title:'Clear Impact', desc:'Weekly progress reports. Cell GPA, attendance, video submissions, and succession data. No abstractions — only verified performance.'},
+            {icon:'🏆', title:'Trusted Oversight', desc:'The platform enforces all ethical boundaries automatically. Your brand is never at risk. Your involvement is recognised on the public leaderboard.'},
+          ].map(v=>(
+            <div key={v.title} className="sponsor-value-card">
+              <span className="sv-icon">{v.icon}</span>
+              <h4>{v.title}</h4>
+              <p>{v.desc}</p>
+            </div>
+          ))}
+        </div>
+        <div style={{textAlign:'center',marginTop:'2rem',display:'flex',gap:'1rem',justifyContent:'center',flexWrap:'wrap'}}>
+          <Link to="/sponsor" className="btn btn-primary" style={{fontSize:'0.95rem',padding:'0.75rem 2rem'}}>Become a Sponsor →</Link>
+          <Link to="/platform" className="btn btn-secondary" style={{padding:'0.75rem 2rem'}}>See How It Works</Link>
+        </div>
+      </section>
     </>
   )
 }

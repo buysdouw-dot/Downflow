@@ -1,24 +1,24 @@
 import { useEffect, useRef } from 'react'
 
 const NODES = [
-  { id: 'platform', x: 540, y: 60,  label: 'Downflow', r: 24, color: '#d2ad44' },
-  { id: 'sp1',  x: 180, y: 155, label: 'Sponsor', r: 16, color: '#eed998' },
-  { id: 'sp2',  x: 900, y: 145, label: 'Sponsor', r: 16, color: '#eed998' },
-  { id: 'cn1',  x: 300, y: 245, label: 'Connector', r: 14, color: '#ff9f5a' },
-  { id: 'cn2',  x: 760, y: 240, label: 'Connector', r: 14, color: '#ff9f5a' },
-  { id: 'f1',   x: 180, y: 340, label: 'Facilitator', r: 13, color: '#72d0ff' },
-  { id: 'f2',   x: 420, y: 340, label: 'Facilitator', r: 13, color: '#72d0ff' },
-  { id: 'f3',   x: 660, y: 340, label: 'Facilitator', r: 13, color: '#72d0ff' },
-  { id: 'f4',   x: 900, y: 340, label: 'Facilitator', r: 13, color: '#72d0ff' },
-  { id: 'c1', x: 80,  y: 450, label: 'Cell', r: 9, color: '#4de8b0' },
-  { id: 'c2', x: 180, y: 460, label: 'Cell', r: 9, color: '#4de8b0' },
-  { id: 'c3', x: 300, y: 450, label: 'Cell', r: 9, color: '#4de8b0' },
-  { id: 'c4', x: 420, y: 460, label: 'Cell', r: 9, color: '#4de8b0' },
-  { id: 'c5', x: 540, y: 450, label: 'Cell', r: 9, color: '#4de8b0' },
-  { id: 'c6', x: 660, y: 460, label: 'Cell', r: 9, color: '#4de8b0' },
-  { id: 'c7', x: 780, y: 450, label: 'Cell', r: 9, color: '#4de8b0' },
-  { id: 'c8', x: 900, y: 460, label: 'Cell', r: 9, color: '#4de8b0' },
-  { id: 'c9', x: 1000,y: 450, label: 'Cell', r: 9, color: '#4de8b0' },
+  { id: 'platform', x: 540, y: 60,  label: 'Downflow', r: 24, color: '#c8a96e' },
+  { id: 'sp1',  x: 180, y: 155, label: 'Sponsor', r: 16, color: '#a8843e' },
+  { id: 'sp2',  x: 900, y: 145, label: 'Sponsor', r: 16, color: '#a8843e' },
+  { id: 'cn1',  x: 300, y: 245, label: 'Connector', r: 14, color: '#d4845a' },
+  { id: 'cn2',  x: 760, y: 240, label: 'Connector', r: 14, color: '#d4845a' },
+  { id: 'f1',   x: 180, y: 340, label: 'Facilitator', r: 13, color: '#4a6fa5' },
+  { id: 'f2',   x: 420, y: 340, label: 'Facilitator', r: 13, color: '#4a6fa5' },
+  { id: 'f3',   x: 660, y: 340, label: 'Facilitator', r: 13, color: '#4a6fa5' },
+  { id: 'f4',   x: 900, y: 340, label: 'Facilitator', r: 13, color: '#4a6fa5' },
+  { id: 'c1', x: 80,  y: 450, label: 'Cell', r: 9, color: '#4a9e7f' },
+  { id: 'c2', x: 180, y: 460, label: 'Cell', r: 9, color: '#4a9e7f' },
+  { id: 'c3', x: 300, y: 450, label: 'Cell', r: 9, color: '#4a9e7f' },
+  { id: 'c4', x: 420, y: 460, label: 'Cell', r: 9, color: '#4a9e7f' },
+  { id: 'c5', x: 540, y: 450, label: 'Cell', r: 9, color: '#4a9e7f' },
+  { id: 'c6', x: 660, y: 460, label: 'Cell', r: 9, color: '#4a9e7f' },
+  { id: 'c7', x: 780, y: 450, label: 'Cell', r: 9, color: '#4a9e7f' },
+  { id: 'c8', x: 900, y: 460, label: 'Cell', r: 9, color: '#4a9e7f' },
+  { id: 'c9', x: 1000,y: 450, label: 'Cell', r: 9, color: '#4a9e7f' },
 ]
 
 const EDGES = [
@@ -59,7 +59,7 @@ export default function NetworkBg() {
       </defs>
       {EDGES.map(([a,b],i) => {
         const na=nodeMap[a], nb=nodeMap[b]
-        return <line key={i} x1={na.x} y1={na.y} x2={nb.x} y2={nb.y} stroke="rgba(114,208,255,0.1)" strokeWidth="1"/>
+        return <line key={i} x1={na.x} y1={na.y} x2={nb.x} y2={nb.y} stroke="rgba(74,111,165,0.08)" strokeWidth="1"/>
       })}
       {EDGES.map(([a,b],i) => {
         const na=nodeMap[a], nb=nodeMap[b]
@@ -67,7 +67,7 @@ export default function NetworkBg() {
         return (
           <g key={`t${i}`}>
             <path id={`ep${i}`} d={`M${na.x},${na.y} L${nb.x},${nb.y}`} fill="none"/>
-            <circle r="2.5" fill="#d2ad44" opacity="0.6">
+            <circle r="2.5" fill="#c8a96e" opacity="0.5">
               <animateMotion dur={`${dur}s`} repeatCount="indefinite" begin={`${(i*0.3)%dur}s`}>
                 <mpath href={`#ep${i}`}/>
               </animateMotion>
