@@ -2,6 +2,18 @@ import { useState } from 'react'
 import OnboardingBanner from '../components/OnboardingBanner.jsx'
 import { HexIcon } from '../components/HexSymbols.jsx'
 
+const CONNECTOR_RANKINGS = [
+  { name:'Minh Tran',       region:'🇻🇳 VN', cells:12, placements:58, retention:94, quality:9.1, succession:8.9, overall:9.0 },
+  { name:'Jana Hoffmann',   region:'🇩🇪 DE', cells:9,  placements:43, retention:91, quality:8.8, succession:8.7, overall:8.8 },
+  { name:'Olga Petrova',    region:'🇷🇺 RU', cells:8,  placements:39, retention:89, quality:8.7, succession:8.5, overall:8.6 },
+  { name:'Duc Pham',        region:'🇻🇳 VN', cells:7,  placements:35, retention:88, quality:8.6, succession:8.4, overall:8.5 },
+  { name:'Anna Becker',     region:'🇩🇪 DE', cells:6,  placements:29, retention:90, quality:8.5, succession:8.3, overall:8.4 },
+  { name:'Lan Nguyen',      region:'🇻🇳 VN', cells:5,  placements:24, retention:86, quality:8.3, succession:8.1, overall:8.2 },
+  { name:'Ivan Volkov',     region:'🇷🇺 RU', cells:4,  placements:20, retention:84, quality:8.1, succession:7.9, overall:8.0 },
+  { name:'Bach Nguyen (You)',region:'🇻🇳 VN', cells:3, placements:14, retention:82, quality:7.9, succession:7.7, overall:7.8, isUser:true },
+  { name:'Hien Le',         region:'🇻🇳 VN', cells:2,  placements:10, retention:80, quality:7.7, succession:7.5, overall:7.6 },
+]
+
 const MY_CELLS = [
   { id: 'VN-01', region: 'Hanoi, Vietnam', students: 5, facilitator: 'Phuong V.', week: 7, health: 92, status: 'active', regPaid: true, lessonShare: 1200000, regShare: 1200000 },
   { id: 'VN-03', region: 'Ho Chi Minh City', students: 5, facilitator: 'Linh T.', week: 3, health: 74, status: 'active', regPaid: true, lessonShare: 480000, regShare: 1200000 },
@@ -75,7 +87,7 @@ export default function ConnectorDashboard() {
       </div>
 
       <div className="db-tabs">
-        {[['overview','🔭 Overview'],['cells','🏫 My Cells'],['earnings','💰 Earnings'],['form','➕ Form Cell'],['ethics','⚖️ Ethics Rules']].map(([id,label])=>(
+        {[['overview','🔭 Overview'],['cells','🏫 My Cells'],['earnings','💰 Earnings'],['rankings','🏆 Rankings'],['form','➕ Form Cell'],['ethics','⚖️ Ethics Rules']].map(([id,label])=>(
           <button key={id} className={`db-tab${activeTab===id?' active':''}`} onClick={()=>setActiveTab(id)}>{label}</button>
         ))}
       </div>
@@ -340,6 +352,118 @@ export default function ConnectorDashboard() {
                   </div>
                 </div>
               )}
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'rankings' && (
+          <div className="db-tab-content">
+            {/* Header */}
+            <div className="rankings-header" style={{marginBottom:'1.5rem'}}>
+              <div>
+                <h2 className="rankings-title">🏆 Connector Rankings</h2>
+                <p className="rankings-sub">Your placement quality and cell health determine your score — not volume alone.</p>
+              </div>
+              <div className="rankings-meta">
+                <span className="rankings-badge">🔗 87 <span>CONNECTORS ACTIVE</span></span>
+                <span className="rankings-badge">🏫 210 <span>CELLS FORMED</span></span>
+                <span className="rankings-cycle">Cycle: April – May 2026</span>
+              </div>
+            </div>
+
+            <div className="connector-rankings-layout">
+              {/* Main table */}
+              <div className="db-panel" style={{padding:0,overflow:'hidden'}}>
+                <div className="conn-rank-table-head">
+                  <span>Rank</span>
+                  <span>Connector</span>
+                  <span>Region</span>
+                  <span>Cells</span>
+                  <span title="Placements made">Placed</span>
+                  <span title="Cell retention %">Retention</span>
+                  <span>Overall</span>
+                </div>
+                {CONNECTOR_RANKINGS.map((r, i) => {
+                  const medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':null
+                  const sc = r.overall >= 9?'#4de8b0': r.overall >= 8.5?'#d2ad44': r.overall >= 8?'#72d0ff':'#b4c8e6'
+                  return (
+                    <div key={r.name} className={`conn-rank-row${r.isUser?' is-user':''}`}>
+                      <span className="rank-num">{medal || `#${i+1}`}</span>
+                      <span className="rank-sponsor">
+                        <span className="rank-sponsor-logo" style={{fontSize:'0.75rem',fontWeight:700}}>{r.name.split(' ').map(w=>w[0]).slice(0,2).join('')}</span>
+                        <span>{r.name}</span>
+                        {r.isUser && <span className="rank-you-badge">YOU</span>}
+                      </span>
+                      <span style={{fontSize:'0.82rem',color:'var(--text-soft)'}}>{r.region}</span>
+                      <span className="rank-cells">{r.cells} <small>cells</small></span>
+                      <span className="rank-score">{r.placements}</span>
+                      <span className="rank-score">{r.retention}%</span>
+                      <span className="rank-overall" style={{color:sc,background:`${sc}18`}}>{r.overall}</span>
+                    </div>
+                  )
+                })}
+                <div className="rankings-legend">
+                  <span>🏫 Cells Formed</span>
+                  <span>👥 Placements</span>
+                  <span>📈 Retention</span>
+                  <p>Rankings update every Monday. Scores are calculated from cell health, student retention, and succession rates — not self-reported.</p>
+                </div>
+              </div>
+
+              {/* Sidebar */}
+              <div style={{display:'flex',flexDirection:'column',gap:'1rem'}}>
+                <div className="db-panel">
+                  <h3 className="db-panel-title">📊 Your Performance</h3>
+                  {[
+                    ['Rank','#8 of 87','up from #12'],
+                    ['Cells Active','3','2 healthy · 1 pending'],
+                    ['Avg Retention','82%','Network avg: 88%'],
+                    ['Quality Score','7.9','Target: 8.5'],
+                    ['Succession Rate','7.7','SGs from your cells'],
+                  ].map(([k,v,note])=>(
+                    <div key={k} style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',padding:'0.5rem 0',borderBottom:'1px solid var(--bg-card-alt)'}}>
+                      <div><span style={{fontSize:'0.84rem',color:'var(--text-soft)'}}>{k}</span><p style={{margin:0,fontSize:'0.72rem',color:'var(--text-muted)'}}>{note}</p></div>
+                      <strong style={{color:'var(--navy)',fontSize:'0.9rem'}}>{v}</strong>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="db-panel">
+                  <h3 className="db-panel-title">🚀 Climb the Rankings</h3>
+                  <p style={{fontSize:'0.8rem',color:'var(--text-soft)',marginBottom:'1rem',lineHeight:1.55}}>The fastest way to move up is retention — keep your students engaged for the full 12 weeks.</p>
+                  <div style={{display:'flex',flexDirection:'column',gap:'0.5rem'}}>
+                    {[
+                      {icon:'🏫',action:'Form 1 more cell',impact:'+0.3 overall'},
+                      {icon:'📈',action:'Raise VN-03 retention above 88%',impact:'+0.2 score'},
+                      {icon:'⬆️',action:'Get 1 student to SG level',impact:'+0.4 succession'},
+                    ].map(a=>(
+                      <div key={a.action} style={{display:'flex',gap:'0.6rem',padding:'0.6rem',background:'var(--blue-pale)',borderRadius:'8px',border:'1px solid var(--border)'}}>
+                        <span style={{fontSize:'1rem'}}>{a.icon}</span>
+                        <div style={{flex:1}}>
+                          <span style={{fontSize:'0.82rem',fontWeight:600,color:'var(--navy)'}}>{a.action}</span>
+                          <p style={{margin:0,fontSize:'0.72rem',color:'var(--blue)',marginTop:'0.1rem'}}>{a.impact}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <button className="btn btn-primary" style={{width:'100%',marginTop:'1rem'}} onClick={()=>{}}>+ Form New Cell</button>
+                </div>
+
+                <div className="db-panel">
+                  <h3 className="db-panel-title">🏅 How Scores Work</h3>
+                  {[
+                    ['Cell Quality','Session health, attendance, rep counts'],
+                    ['Placements','Students enrolled and onboarded'],
+                    ['Retention','Students completing full 12-week cycle'],
+                    ['Succession','SGs developed from your cells'],
+                  ].map(([k,v])=>(
+                    <div key={k} style={{padding:'0.4rem 0',borderBottom:'1px solid var(--bg-card-alt)'}}>
+                      <strong style={{fontSize:'0.82rem',color:'var(--navy)'}}>{k}</strong>
+                      <p style={{margin:0,fontSize:'0.75rem',color:'var(--text-soft)'}}>{v}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         )}
