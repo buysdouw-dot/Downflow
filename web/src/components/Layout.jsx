@@ -9,6 +9,7 @@ const NAV = [
   { to: '/content', label: 'Content' },
   { to: '/news', label: 'News' },
   { to: '/model', label: '▶ Model Film' },
+  { to: '/facilitator-film', label: '🎬 Facilitator Film' },
   { to: '/funding', label: '★ Invest' },
   { to: '/sponsor', label: 'Sponsors' },
   { to: '/student', label: 'Students' },
