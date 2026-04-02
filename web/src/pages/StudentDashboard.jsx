@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import OnboardingBanner from '../components/OnboardingBanner.jsx'
 import { HexIcon } from '../components/HexSymbols.jsx'
+import DashboardShell from '../components/DashboardShell.jsx'
 
 const CELL_MEMBERS = [
   { av:'🧑‍🏫', name:'Minh P.',  role:'Student Guider', streak:14, isMe:false },
@@ -227,13 +228,11 @@ export default function StudentDashboard(){
   const [activeTab,setActiveTab]=useState('home')
   const [done,setDone]=useState(false)
   const [showOnboarding,setShowOnboarding]=useState(true)
-  return(
-    <div className="dashboard-page">
-      {showOnboarding&&(
-        <div style={{padding:'2rem 2rem 0'}}>
-          <OnboardingBanner role="student" onDismiss={()=>setShowOnboarding(false)}/>
-        </div>
-      )}
+  const topActions = (<><button className="btn btn-primary" onClick={()=>setActiveTab('packs')}>📹 Submit Video</button></>)
+  return (
+    <DashboardShell role="student" activeTab={activeTab} onTabChange={setActiveTab}
+      title="My Learning Dashboard" subtitle="Cell VN-01 · Week 7 of 12 · Student Guider: Minh P." actions={topActions}>
+      {showOnboarding && <OnboardingBanner role="student" onDismiss={()=>setShowOnboarding(false)}/>}
       <div className="db-page-header student-header">
         <div className="db-header-inner">
           <div><p className="kicker">Student Portal — DOWNFLOW School of Life</p><h1 className="db-title">🎓 My Learning Dashboard</h1><p className="db-subtitle">Cell VN-01 · Week 7 of 12 · Student Guider: Minh P. · 🇻🇳 Hanoi</p></div>
@@ -579,6 +578,6 @@ export default function StudentDashboard(){
           </div>
         )}
       </div>
-    </div>
+    </DashboardShell>
   )
 }

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import OnboardingBanner from '../components/OnboardingBanner.jsx'
 import { HexIcon } from '../components/HexSymbols.jsx'
+import DashboardShell from '../components/DashboardShell.jsx'
 
 const CONNECTOR_RANKINGS = [
   { name:'Minh Tran',       region:'🇻🇳 VN', cells:12, placements:58, retention:94, quality:9.1, succession:8.9, overall:9.0 },
@@ -91,13 +92,11 @@ export default function ConnectorDashboard() {
   const totalEarned = MY_CELLS.filter(c => c.status === 'active').reduce((sum, c) => sum + c.lessonShare + c.regShare, 0)
   const pendingEarn = 3600000 // VN-05 potential
 
+  const topActions = (<><button className="btn btn-primary" onClick={()=>setActiveTab('cells')}>+ Register Cell</button><button className="btn btn-secondary">Download Report</button></>)
   return (
-    <div className="dashboard-page">
-      {showOnboarding && (
-        <div style={{padding:'2rem 2rem 0'}}>
-          <OnboardingBanner role="connector" onDismiss={()=>setShowOnboarding(false)}/>
-        </div>
-      )}
+    <DashboardShell role="connector" activeTab={activeTab} onTabChange={setActiveTab}
+      title="Connector Dashboard" subtitle="Build learning groups · Earn from growth" actions={topActions}>
+      {showOnboarding && <OnboardingBanner role="connector" onDismiss={()=>setShowOnboarding(false)}/>}
       <div className="db-page-header connector-header">
         <div className="db-header-inner">
           <div>
@@ -556,6 +555,6 @@ export default function ConnectorDashboard() {
         )}
 
       </div>
-    </div>
+    </DashboardShell>
   )
 }

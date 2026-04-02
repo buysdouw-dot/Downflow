@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import DashboardShell from '../components/DashboardShell.jsx'
 import { getCells, getProgressLogs, getPromotions } from '../services/api.js'
 import AIAssistant from '../components/AIAssistant.jsx'
 import OnboardingBanner from '../components/OnboardingBanner.jsx'
@@ -48,46 +49,13 @@ export default function FacilitatorDashboard() {
       .finally(() => setLoading(false))
   }, [])
 
+    const topActions = (<><button className="btn btn-primary" onClick={()=>setActiveTab('sessions')}>+ Plan Session</button><button className="btn btn-secondary">Download Report</button></>)
+
   return (
-    <div className="dashboard-page">
-      {showOnboarding && (
-        <div style={{padding:'2rem 2rem 0'}}>
-          <OnboardingBanner role="facilitator" onDismiss={()=>setShowOnboarding(false)}/>
-        </div>
-      )}
-      <div className="db-page-header facilitator-header">
-        <div className="db-header-inner">
-          <div>
-            <p className="kicker">Facilitator Portal — DOWNFLOW School of Life</p>
-            <h1 className="db-title">🧭 Facilitator Dashboard</h1>
-            <p className="db-subtitle">Manage cells · Develop guiders · Run sessions · Track progress</p>
-          </div>
-          <div className="db-header-actions">
-            <button className="btn btn-primary">+ Plan Session</button>
-            <button className="btn btn-secondary">Download Report</button>
-          </div>
-        </div>
-        <div className="db-stats-row">
-          {[
-            ['🏫','4','Active Cells','VN-01 · VN-02 · VN-03 · DE-01','#4de8b0'],
-            ['🧑‍🏫','4','Student Guiders','3 SG · 1 ASG','#72d0ff'],
-            ['👩‍🎓','20','Students','Across 4 cells','#ff9f5a'],
-            ['🎬','47','Video Reps','This cycle','#d2ad44'],
-          ].map(([icon,val,label,sub,color])=>(
-            <div key={label} className="db-stat-card" style={{'--stat-color':color}}>
-              <span className="db-stat-icon">{icon}</span>
-              <div><p className="db-stat-value">{val}</p><p className="db-stat-label">{label}</p><p className="db-stat-sub">{sub}</p></div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="db-tabs">
-        {[['overview','🔭 Overview'],['cells','🏫 Cells'],['guiders','🧑‍🏫 Guiders'],['sessions','📅 Sessions'],['earnings','💰 My Earnings'],['tools','🔗 ClassDojo & Meet'],['progress','📊 Progress'],['ai','🤖 AI Tool']].map(([id,label])=>(
-          <button key={id} className={`db-tab${activeTab===id?' active':''}`} onClick={()=>setActiveTab(id)}>{label}</button>
-        ))}
-      </div>
-
+    <DashboardShell role="facilitator" activeTab={activeTab} onTabChange={setActiveTab}
+      title="Facilitator Dashboard" subtitle="Manage cells · Develop guiders · Run sessions"
+      actions={topActions}>
+      {showOnboarding && <OnboardingBanner role="facilitator" onDismiss={()=>setShowOnboarding(false)}/>}
       <div className="db-content">
 
         {activeTab==='overview'&&(
@@ -608,6 +576,6 @@ export default function FacilitatorDashboard() {
           </div>
         )}
 
-    </div>
+    </DashboardShell>
   )
 }

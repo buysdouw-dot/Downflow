@@ -3,29 +3,84 @@ import { useEffect, useState } from 'react'
 import NetworkBg from './NetworkBg.jsx'
 import { useAuth, DEMO_PERSONAS } from '../context/AuthContext.jsx'
 
-const NAV = [
-  { to: '/', label: 'Home', exact: true },
-  { to: '/curriculum', label: 'Curriculum' },
-  { to: '/content', label: 'Content' },
-  { to: '/news', label: 'News' },
-  { to: '/model', label: '▶ Model Film' },
-  { to: '/facilitator-film', label: '🎬 Facilitator Film' },
-  { to: '/connector-film', label: '🔗 Connector Film' },
-  { to: '/funding', label: '★ Invest' },
-  { to: '/sponsor', label: 'Sponsors' },
-  { to: '/student', label: 'Students' },
-  { to: '/facilitator', label: 'Facilitators' },
-  { to: '/facilitator-app', label: '📱 Facilitator App' },
-  { to: '/facilitator-onboarding', label: '📄 Contract' },
-  { to: '/social-ads', label: '📣 Social Ads' },
-  { to: '/join', label: '🌐 Join' },
-  { to: '/auto-funnel', label: '⚡ Funnel' },
-  { to: '/connector', label: 'Connectors' },
-  { to: '/payments', label: 'Payments' },
-  { to: '/payment-engine', label: 'Pay Engine' },
-  { to: '/assistants', label: 'Assistants' },
-  { to: '/platform', label: 'Platform' },
+// ── Top-level nav groups (keeps topbar clean) ────────────────
+const NAV_GROUPS = [
+  {
+    label: 'Explore',
+    links: [
+      { to: '/',          label: 'Home',           exact: true },
+      { to: '/curriculum', label: 'Curriculum' },
+      { to: '/content',   label: 'Content Engine' },
+      { to: '/news',      label: 'News' },
+    ]
+  },
+  {
+    label: 'Films',
+    links: [
+      { to: '/model',            label: '▶ Model Film' },
+      { to: '/facilitator-film', label: 'Facilitator Film' },
+      { to: '/connector-film',   label: 'Connector Film' },
+    ]
+  },
+  {
+    label: 'Dashboards',
+    links: [
+      { to: '/sponsor',    label: '💼 Sponsor' },
+      { to: '/student',    label: '🎓 Student' },
+      { to: '/facilitator',label: '🧭 Facilitator' },
+      { to: '/connector',  label: '🔗 Connector' },
+      { to: '/platform',   label: '⚡ Platform' },
+    ]
+  },
+  {
+    label: 'Financials',
+    links: [
+      { to: '/funding',        label: '★ Invest' },
+      { to: '/payments',       label: 'Payments' },
+      { to: '/payment-engine', label: 'Pay Engine' },
+    ]
+  },
+  {
+    label: 'Growth',
+    links: [
+      { to: '/join',                  label: '🌐 Join' },
+      { to: '/auto-funnel',           label: '⚡ Funnel' },
+      { to: '/social-ads',            label: '📣 Ads' },
+      { to: '/facilitator-app',       label: '📱 Facilitator App' },
+      { to: '/facilitator-onboarding',label: '📄 Contract' },
+      { to: '/assistants',            label: 'Assistants' },
+    ]
+  },
 ]
+
+// Flat list for footer
+const ALL_NAV = NAV_GROUPS.flatMap(g => g.links)
+
+function NavGroup({ group, currentPath }) {
+  const isActive = group.links.some(l => l.exact ? currentPath === l.to : currentPath.startsWith(l.to))
+  const [open, setOpen] = useState(false)
+
+  return (
+    <div className={`nav-group${open ? ' open' : ''}`}
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}>
+      <button className={`nav-group-btn${isActive ? ' active' : ''}`}>
+        {group.label} <span className="nav-group-caret">▾</span>
+      </button>
+      {open && (
+        <div className="nav-dropdown">
+          {group.links.map(({ to, label, exact }) => (
+            <NavLink key={to} to={to} end={exact}
+              className={({ isActive }) => `nav-dd-item${isActive ? ' active' : ''}`}
+              onClick={() => setOpen(false)}>
+              {label}
+            </NavLink>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
 
 export default function Layout() {
   const { pathname } = useLocation()
@@ -47,11 +102,10 @@ export default function Layout() {
           <span className="brand-sub"> — School of Life</span>
         </Link>
 
+        {/* Desktop grouped nav */}
         <nav className={`nav-links${menuOpen ? ' open' : ''}`}>
-          {NAV.map(({ to, label, exact }) => (
-            <NavLink key={to} to={to} end={exact} className={({ isActive }) => isActive ? 'nav-active' : undefined}>
-              {label}
-            </NavLink>
+          {NAV_GROUPS.map(g => (
+            <NavGroup key={g.label} group={g} currentPath={pathname} />
           ))}
         </nav>
 
@@ -78,7 +132,7 @@ export default function Layout() {
             <Link to="/login" className="topbar-login-btn">Sign In</Link>
           )}
 
-          {/* "Viewing as:" role switcher — demo mode only */}
+          {/* Demo mode persona switcher */}
           {!isConfigured && (
             <div className="viewer-wrap">
               <button className="viewer-btn" onClick={() => setViewerOpen(o => !o)}>
@@ -90,28 +144,45 @@ export default function Layout() {
                 <div className="viewer-dropdown">
                   <p className="viewer-dropdown-head">Switch View</p>
                   {DEMO_PERSONAS.map(p => (
-                    <button
-                      key={p.id}
+                    <button key={p.id}
                       className={`viewer-option${persona.id===p.id?' active':''}`}
-                      onClick={() => { switchPersona(p.id); setViewerOpen(false) }}
-                    >
+                      onClick={() => { switchPersona(p.id); setViewerOpen(false) }}>
                       <span>{p.icon}</span>
                       <span className="vo-label">{p.label}</span>
                       <span className="vo-name">{p.name}</span>
                     </button>
                   ))}
                   <div className="viewer-dropdown-footer">
-                    <p>🔥 Demo mode — <a href="#connect">Connect Firebase</a> for live data</p>
+                    <p>🔥 Demo mode — <Link to="/login">Connect Firebase</Link> for live data</p>
                   </div>
                 </div>
               )}
             </div>
           )}
+
           <button className="hamburger" onClick={() => setMenuOpen(o => !o)} aria-label="Menu">
             <span/><span/><span/>
           </button>
         </div>
       </header>
+
+      {/* Mobile nav drawer */}
+      {menuOpen && (
+        <nav className="mobile-nav">
+          {NAV_GROUPS.map(g => (
+            <div key={g.label} className="mobile-nav-group">
+              <p className="mobile-nav-group-label">{g.label}</p>
+              {g.links.map(({ to, label, exact }) => (
+                <NavLink key={to} to={to} end={exact}
+                  className={({ isActive }) => `mobile-nav-link${isActive ? ' active' : ''}`}
+                  onClick={() => setMenuOpen(false)}>
+                  {label}
+                </NavLink>
+              ))}
+            </div>
+          ))}
+        </nav>
+      )}
 
       <main><Outlet/></main>
 
@@ -122,9 +193,12 @@ export default function Layout() {
             <p className="footer-sub">School of Life — A sponsor-funded, globally distributed education infrastructure.<br/>Vietnam · Russia · Germany · Global</p>
           </div>
           <div className="footer-links">
-            <div><p className="footer-col-head">Portals</p>
-              {NAV.slice(1).map(n => <Link key={n.to} to={n.to}>{n.label}</Link>)}
-            </div>
+            {NAV_GROUPS.map(g => (
+              <div key={g.label}>
+                <p className="footer-col-head">{g.label}</p>
+                {g.links.map(n => <Link key={n.to} to={n.to}>{n.label}</Link>)}
+              </div>
+            ))}
             <div><p className="footer-col-head">Regions</p>
               <span>🇻🇳 Vietnam</span><span>🇷🇺 Russia</span><span>🇩🇪 Germany</span><span>🌍 Global</span>
             </div>

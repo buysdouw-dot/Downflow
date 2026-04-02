@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { HexIcon, HexSystemRow } from '../components/HexSymbols.jsx'
 import OnboardingBanner from '../components/OnboardingBanner.jsx'
 import { getCells, getSponsorships } from '../services/api.js'
+import DashboardShell from '../components/DashboardShell.jsx'
 
 // ── Global Map ────────────────────────────────────────────────
 const CITIES = [
@@ -115,51 +116,32 @@ export default function SponsorDashboard() {
     })
   },[])
 
+  const topActions = (
+    <>
+      <button className="btn btn-primary" onClick={()=>setActiveTab('cells')}>+ Fund New Cell</button>
+      <button className="btn btn-secondary" onClick={()=>setActiveTab('impact')}>Download Report</button>
+    </>
+  )
+
   return (
-    <div className="dashboard-page">
-      {/* Onboarding Banner */}
+    <DashboardShell role="sponsor" activeTab={activeTab} onTabChange={setActiveTab}
+      title="Sponsor Dashboard" subtitle="Fund cells · Track impact · Grow the network"
+      actions={topActions}>
       {showOnboarding && (
-        <div style={{padding:'2rem 2rem 0'}}>
-          <OnboardingBanner role="sponsor" onDismiss={()=>setShowOnboarding(false)}/>
-        </div>
+        <OnboardingBanner role="sponsor" onDismiss={()=>setShowOnboarding(false)}/>
       )}
 
-      {/* Page Header */}
-      <div className="db-page-header sponsor-header">
-        <div className="db-header-inner">
-          <div>
-            <p className="kicker">Sponsor Portal — DOWNFLOW School of Life</p>
-            <h1 className="db-title">💼 Sponsor Dashboard</h1>
-            <p className="db-subtitle">Fund cells · Track impact · Grow the network · Empowering · Connected · Safe · Growing</p>
-          </div>
-          <div className="db-header-actions">
-            <button className="btn btn-primary">+ Fund New Cell</button>
-            <button className="btn btn-secondary">Download Report</button>
-            {!showOnboarding && (
-              <button className="btn btn-secondary" onClick={()=>setShowOnboarding(true)}>? Guide</button>
-            )}
-          </div>
-        </div>
-
-        {/* 5-stat row — mirrors wireframe exactly */}
-        <div className="db-stats-row" style={{gridTemplateColumns:'repeat(5,1fr)'}}>
-          {SPONSOR_STATS.map(s=>(
-            <div key={s.label} className="db-stat-card" style={{'--stat-color':s.color}}>
-              <HexIcon type={s.hex} size={40}/>
-              <div>
-                <p className="db-stat-value">{s.value}</p>
-                <p className="db-stat-label">{s.label}</p>
-                <p className="db-stat-sub">{s.sub}</p>
-              </div>
+      {/* 5-stat row */}
+      <div className="db-stats-row" style={{gridTemplateColumns:'repeat(5,1fr)',marginBottom:'1.5rem'}}>
+        {SPONSOR_STATS.map(s=>(
+          <div key={s.label} className="db-stat-card" style={{'--stat-color':s.color}}>
+            <HexIcon type={s.hex} size={40}/>
+            <div>
+              <p className="db-stat-value">{s.value}</p>
+              <p className="db-stat-label">{s.label}</p>
+              <p className="db-stat-sub">{s.sub}</p>
             </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Tabs */}
-      <div className="db-tabs">
-        {[['overview','🔭 Overview'],['cells','🏫 My Cells'],['packs','🎁 Gift Packs'],['impact','📊 Impact'],['flywheel','🔄 Flywheel'],['rankings','🏆 Rankings'],['model','📖 Sponsor Model']].map(([id,label])=>(
-          <button key={id} className={`db-tab${activeTab===id?' active':''}`} onClick={()=>setActiveTab(id)}>{label}</button>
+          </div>
         ))}
       </div>
 
@@ -713,6 +695,6 @@ export default function SponsorDashboard() {
           </div>
         )}
       </div>
-    </div>
+    </DashboardShell>
   )
 }
