@@ -77,6 +77,18 @@ const CELLS_DATA = [
   { id:'VN-03', region:'Da Nang 🇻🇳',  week:5,  health:58, pack:'🎯 Confidence', status:'flagged',   rebate:120000  },
 ]
 
+const RANKINGS = [
+  { name:'Corex',            logo:'⬡', cells:18, growth:9.2, participation:8.9, output:9.1, succession:8.8, overall:9.0 },
+  { name:'Cresto',           logo:'✦', cells:12, growth:8.2, participation:8.8, output:9.4, succession:8.8, overall:8.8, isUser:false },
+  { name:'Lytica',           logo:'◈', cells:9,  growth:8.9, participation:8.7, output:8.8, succession:8.7, overall:8.8 },
+  { name:'Travos',           logo:'▲', cells:7,  growth:8.4, participation:9.3, output:8.7, succession:8.8, overall:8.8 },
+  { name:'General Chemicals',logo:'⬤', cells:6,  growth:8.4, participation:8.6, output:8.8, succession:8.6, overall:8.6 },
+  { name:'Yovigo',           logo:'◆', cells:5,  growth:8.5, participation:8.3, output:8.6, succession:8.3, overall:8.4 },
+  { name:'BrightBase',       logo:'★', cells:5,  growth:8.5, participation:8.6, output:8.6, succession:8.4, overall:8.5 },
+  { name:'Wayfair IT',       logo:'⬟', cells:4,  growth:8.0, participation:8.8, output:8.0, succession:8.5, overall:8.3 },
+  { name:'Vingroup Education',logo:'🏢',cells:3, growth:7.8, participation:8.2, output:7.9, succession:7.5, overall:7.9, isUser:true },
+]
+
 const REBATE_FLOW = [
   { pct:'85%', label:'Goes to cell operations', sub:'Facilitator · Connector · Platform', color:'#4de8b0' },
   { pct:'9%',  label:'Reinvested in new cells', sub:'Compounding growth fund',            color:'#72d0ff' },
@@ -146,7 +158,7 @@ export default function SponsorDashboard() {
 
       {/* Tabs */}
       <div className="db-tabs">
-        {[['overview','🔭 Overview'],['cells','🏫 My Cells'],['packs','🎁 Gift Packs'],['impact','📊 Impact'],['flywheel','🔄 Flywheel']].map(([id,label])=>(
+        {[['overview','🔭 Overview'],['cells','🏫 My Cells'],['packs','🎁 Gift Packs'],['impact','📊 Impact'],['flywheel','🔄 Flywheel'],['rankings','🏆 Rankings']].map(([id,label])=>(
           <button key={id} className={`db-tab${activeTab===id?' active':''}`} onClick={()=>setActiveTab(id)}>{label}</button>
         ))}
       </div>
@@ -403,6 +415,99 @@ export default function SponsorDashboard() {
                       <strong style={{color:'var(--gold-500)',fontSize:'0.9rem'}}>{val}</strong>
                     </div>
                   ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {/* ── RANKINGS ── */}
+        {activeTab==='rankings'&&(
+          <div className="db-tab-content">
+            <div className="rankings-header">
+              <div>
+                <h2 className="rankings-title">🏆 Sponsor Rankings</h2>
+                <p className="rankings-sub">Ethical competition. Impact-driven recognition.</p>
+              </div>
+              <div className="rankings-meta">
+                <span className="rankings-badge">🏫 350 <span>CELLS SUPPORTED</span></span>
+                <span className="rankings-badge">👥 360 <span>STUDENT IMPACT</span></span>
+                <span className="rankings-cycle">Cycle: April – May 2026</span>
+              </div>
+            </div>
+
+            <div className="rankings-layout">
+              {/* Main leaderboard */}
+              <div className="rankings-main">
+                <div className="rankings-table-head">
+                  <span>Rank</span>
+                  <span>Sponsor</span>
+                  <span>Cells</span>
+                  <span title="Student growth metrics">Growth</span>
+                  <span title="Session attendance">Participation</span>
+                  <span title="Video submissions">Output</span>
+                  <span title="SG progression rate">Succession</span>
+                  <span>Overall</span>
+                </div>
+                {RANKINGS.map((r,i)=>{
+                  const medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':null
+                  const scoreColor = r.overall>=9?'#4de8b0':r.overall>=8.5?'#d2ad44':r.overall>=8?'#72d0ff':'#b4c8e6'
+                  return(
+                    <div key={r.name} className={`rankings-row${r.isUser?' is-user':''}`}>
+                      <span className="rank-num">{medal||`#${i+1}`}</span>
+                      <span className="rank-sponsor">
+                        <span className="rank-sponsor-logo">{r.logo}</span>
+                        <span>{r.name}</span>
+                        {r.isUser&&<span className="rank-you-badge">YOU</span>}
+                      </span>
+                      <span className="rank-cells">{r.cells} <small>cells</small></span>
+                      <span className="rank-score">{r.growth}</span>
+                      <span className="rank-score">{r.participation}</span>
+                      <span className="rank-score">{r.output}</span>
+                      <span className="rank-score">{r.succession}</span>
+                      <span className="rank-overall" style={{color:scoreColor,background:`${scoreColor}18`}}>{r.overall}</span>
+                    </div>
+                  )
+                })}
+                <div className="rankings-legend">
+                  <span>📈 Growth</span>
+                  <span>🤝 Participation</span>
+                  <span>🎬 Output</span>
+                  <span>⬆️ Succession</span>
+                  <p>Scores are calculated weekly from verified cell performance data. No self-reporting.</p>
+                </div>
+              </div>
+
+              {/* Live sidebar */}
+              <div className="rankings-sidebar">
+                <div className="db-panel" style={{marginBottom:'1rem'}}>
+                  <h3 className="db-panel-title">🏆 Top Sponsors (LIVE)</h3>
+                  {RANKINGS.slice(0,4).map((r,i)=>(
+                    <div key={r.name} className="top-sponsor-row">
+                      <span className="ts-rank">{i===0?'🥇':i===1?'🥈':i===2?'🥉':`#${i+1}`}</span>
+                      <span className="ts-logo">{r.logo}</span>
+                      <span className="ts-name">{r.name}</span>
+                      <span className="ts-score" style={{color:i===0?'#4de8b0':'#d2ad44'}}>{r.overall}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="db-panel" style={{marginBottom:'1rem'}}>
+                  <h3 className="db-panel-title">📈 Top Sponsors (LIVE)</h3>
+                  <p style={{fontSize:'0.75rem',color:'var(--text-soft)',marginBottom:'0.75rem'}}>Top performers this cycle by growth metric.</p>
+                  {[{name:'Corex',tier:'GOLD',score:9.0},{name:'Cresto',tier:'SILVER',score:8.8},{name:'Lytica',tier:'BRONZE',score:8.6}].map(s=>(
+                    <div key={s.name} className="top-sponsor-row">
+                      <span className="ts-logo">{s.name[0]}</span>
+                      <span className="ts-name">{s.name}</span>
+                      <span className="ts-tier" style={{color:s.tier==='GOLD'?'#d2ad44':s.tier==='SILVER'?'#b4c8e6':'#cd7f32'}}>{s.tier}</span>
+                      <span className="ts-score">{s.score}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="db-panel">
+                  <div style={{textAlign:'center',padding:'0.5rem 0'}}>
+                    <p style={{fontSize:'0.78rem',color:'var(--text-soft)',marginBottom:'1rem'}}>Want a higher ranking?</p>
+                    <button className="btn btn-primary" style={{width:'100%'}}>+ Fund More Cells</button>
+                    <p style={{fontSize:'0.7rem',color:'var(--text-soft)',marginTop:'0.5rem',marginBottom:0}}>Rankings update every Monday at 00:00 UTC</p>
+                  </div>
                 </div>
               </div>
             </div>

@@ -67,37 +67,136 @@ export default function Home() {
 
   return (
     <>
-      {/* HERO */}
-      <section className="hero section">
+      {/* HERO — "Unlock Learning. Fund Futures." */}
+      <section className="hero hero-new section">
         <div className="hero-copy">
-          <p className="kicker">Global Sponsor-Funded Learning Infrastructure</p>
-          <h1><span className="brand-down">DOWN</span><span className="brand-flow">FLOW</span><br/>School of Life</h1>
+          <p className="kicker">Safe, inclusive learning spaces funded by impactful organisations</p>
+          <h1 className="hero-headline">Unlock Learning.<br/><span className="hero-headline-gold">Fund Futures.</span></h1>
           <p className="subhead">A sponsor-funded learning network where students learn, produce real value, and grow into the next generation of mentors and facilitators.</p>
           <div className="hero-actions">
-            <Link className="btn btn-primary" to="/sponsor">Fund a Learning Cell</Link>
-            <a className="btn btn-secondary" href="#model">Explore the Model</a>
+            <Link className="btn btn-primary hero-cta" to="/sponsor">SEE HOW IT WORKS</Link>
+            <a className="btn btn-secondary" href="#ecosystem">Explore the Model</a>
           </div>
-          <div className="hero-portal-row">
+          <div className="hero-portal-row" style={{marginTop:'1.25rem'}}>
             <Link to="/sponsor" className="portal-chip sponsor-chip">🏦 Sponsor Portal</Link>
             <Link to="/student" className="portal-chip student-chip">🎓 Student Portal</Link>
-            <Link to="/facilitator" className="portal-chip facilitator-chip">📊 Facilitator Dashboard</Link>
-            <Link to="/connector" className="portal-chip connector-chip">🔗 Connector Dashboard</Link>
+            <Link to="/facilitator" className="portal-chip facilitator-chip">🧭 Facilitators</Link>
+            <Link to="/connector" className="portal-chip connector-chip">🔗 Connectors</Link>
           </div>
-          <div className="hero-regions">
-            <span>🇻🇳 Vietnam</span><span>🇷🇺 Russia</span><span>🇩🇪 Germany</span><span>🌍 Global</span>
+          {/* Trusted by logos */}
+          <div className="hero-trusted">
+            <span className="trusted-label">Trusted by leading organisations</span>
+            <div className="trusted-logos">
+              {['⬡ COREX','◈ LYTICA','✦ CRESTO','▲ TRAVOS'].map(s=>(
+                <span key={s} className="trusted-logo">{s}</span>
+              ))}
+            </div>
           </div>
         </div>
-        <div className="pyramid-panel">
-          <h2>The Downflow Ecosystem</h2>
-          <ul className="flow-list">
-            <li><span>🏦 Sponsors</span></li>
-            <li><span>🔗 Connectors</span></li>
-            <li><span>🧭 Facilitators</span></li>
-            <li><span>⭐ Student Guiders (SG)</span></li>
-            <li><span>📚 Advanced SGs (ASG)</span></li>
-            <li><span>🏫 Learning Cells (5–6 students)</span></li>
-          </ul>
-          <p className="pyramid-note">Value flows <strong>downward</strong>. Pressure flows <strong>nowhere</strong>.</p>
+        {/* Right side: stacked cell visual */}
+        <div className="hero-visual">
+          <div className="hero-cell-stack">
+            {[
+              {label:'CRESTO', color:'#4de8b0', score:'9.4', delay:'0s'},
+              {label:'LYTICA', color:'#d2ad44', score:'8.8', delay:'0.15s'},
+              {label:'TRAVOS', color:'#72d0ff', score:'8.5', delay:'0.3s'},
+            ].map((c,i)=>(
+              <div key={c.label} className="hero-cell-coin" style={{
+                '--coin-color': c.color,
+                animationDelay: c.delay,
+                zIndex: 3 - i,
+                transform: `translateY(${i * 32}px) scale(${1 - i * 0.05})`,
+              }}>
+                <span className="coin-flag" style={{color: c.color}}>{c.label}</span>
+                <div className="coin-score">{c.score}</div>
+              </div>
+            ))}
+          </div>
+          <div className="hero-cell-cards">
+            {[
+              {group:'Group A', fac:'Emily Trang', score:'9.2', active:true},
+              {group:'Group B', fac:'Ali Nguyen',  score:'9.0', active:false},
+              {group:'Group C', fac:'David Pham',  score:'8.8', active:false},
+            ].map(c=>(
+              <div key={c.group} className={`hero-cell-card${c.active?' active':''}`}>
+                <span className="hcc-icon">🏫</span>
+                <div className="hcc-info">
+                  <strong>{c.group}</strong>
+                  <span>{c.fac}</span>
+                </div>
+                <span className="hcc-score" style={{color: c.active?'#4de8b0':'#d2ad44'}}>{c.score}</span>
+              </div>
+            ))}
+          </div>
+          <div className="hero-regions" style={{marginTop:'0.75rem'}}>
+            <span>🇻🇳 Vietnam</span><span>🇩🇪 Germany</span><span>🇷🇺 Russia</span><span>🌍 Global</span>
+          </div>
+        </div>
+      </section>
+
+      {/* ECOSYSTEM DIAGRAM */}
+      <section className="section ecosystem-section" id="ecosystem">
+        <div className="section-head">
+          <p className="kicker">Learning Cells · Ethical Competition · Public Impact</p>
+          <h2>The Sponsor Model Ecosystem</h2>
+        </div>
+        <div className="ecosystem-diagram">
+          {/* Top row */}
+          <div className="eco-top">
+            <div className="eco-box eco-sponsors">
+              <strong>SPONSORS</strong>
+              <p>Fund &amp; Compete<br/>Rankings &amp; Reports</p>
+            </div>
+            <div className="eco-arrows-h">
+              <span className="eco-arrow-label">← Funding &amp; Visibility →</span>
+            </div>
+            <div className="eco-box eco-connectors">
+              <strong>CONNECTORS</strong>
+              <p>Recruit &amp; Form<br/>Guide &amp; Support</p>
+            </div>
+          </div>
+          {/* Platform center */}
+          <div className="eco-mid">
+            <div className="eco-arrow-v">↑ Performance Data</div>
+            <div className="eco-box eco-platform">
+              <strong>PLATFORM</strong>
+              <p>System Hub &amp; Governance</p>
+            </div>
+            <div className="eco-arrow-v">Onboarding &amp; Incentives ↑</div>
+          </div>
+          {/* Cells row */}
+          <div className="eco-cells-row">
+            <div className="eco-box eco-cells">
+              <strong>LEARNING CELLS</strong>
+              <div className="eco-groups">
+                {['Group A','Group B','Group C'].map(g=>(
+                  <div key={g} className="eco-group">
+                    <span className="eco-group-icon">👥</span>
+                    <span>{g}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          {/* Bottom row */}
+          <div className="eco-bottom">
+            <div className="eco-bottom-item">
+              <span className="eco-bottom-icon">👨‍👩‍👧</span>
+              <strong>STUDENTS &amp; FAMILIES</strong>
+              <p>Free Participation</p>
+              <small>Awareness · Curiosity · Skills &amp; Output · Value &amp; Growth · No Cost · No Debt</small>
+            </div>
+            <div className="eco-bottom-item eco-facilitator-box">
+              <span className="eco-bottom-icon">🧭</span>
+              <strong>FACILITATORS</strong>
+              <p>Teach &amp; Guide</p>
+            </div>
+            <div className="eco-bottom-item">
+              <span className="eco-bottom-icon">🌍</span>
+              <strong>PUBLIC IMPACT</strong>
+              <p>Ethical Reports</p>
+            </div>
+          </div>
         </div>
       </section>
 

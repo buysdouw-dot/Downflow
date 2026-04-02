@@ -2,8 +2,9 @@
 > web@0.0.0 dev
 > vite --host 0.0.0.0 --port 5173
 
+Port 5173 is in use, trying another one...
 
-  VITE v7.3.1  ready in 102 ms
+  VITE v7.3.1  ready in 105 ms
 
-  ➜  Local:   http://localhost:5173/
-  ➜  Network: http://172.20.0.33:5173/
+  ➜  Local:   http://localhost:5174/
+  ➜  Network: http://172.20.0.33:5174/
