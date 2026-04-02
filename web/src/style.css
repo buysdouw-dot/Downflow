@@ -1640,3 +1640,255 @@ a:hover { color: var(--navy); }
   .conn-rank-table-head span:nth-child(n+6),
   .conn-rank-row span:nth-child(n+6) { display: none; }
 }
+
+/* ═══════════════════════════════════════════
+   INVERTED EDUCATION MODEL — CURRICULUM PAGE
+   ═══════════════════════════════════════════ */
+
+/* ── Pyramid comparison ── */
+.inverted-pyramid-compare {
+  display: grid; grid-template-columns: 1fr 60px 1fr; gap: 0;
+  align-items: start; max-width: 900px; margin: 0 auto 1rem;
+}
+.pyramid-side { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
+.pyramid-label {
+  font-size: 0.78rem; font-weight: 800; letter-spacing: 0.08em;
+  text-transform: uppercase; padding: 0.3rem 0.9rem; border-radius: 20px;
+  margin-bottom: 0.5rem;
+}
+.pyramid-label.trad { background: rgba(44,62,80,0.08); color: var(--navy); }
+.pyramid-label.down { background: rgba(74,111,165,0.12); color: var(--blue); }
+.pyramid-stack { display: flex; flex-direction: column; align-items: center; gap: 4px; width: 100%; }
+.pyramid-stack.inverted { flex-direction: column-reverse; }
+.pyramid-block {
+  display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+  padding: 0.55rem 0.75rem; border-radius: 8px; border: 1.5px solid;
+  font-size: 0.84rem; font-weight: 700; text-align: center;
+  color: var(--navy); transition: all 0.2s; cursor: default;
+  min-height: 40px;
+}
+.pyramid-block:hover { transform: scaleX(1.02); box-shadow: var(--shadow-sm); }
+.pyr-icon { font-size: 0.95rem; }
+.pyramid-caption {
+  font-size: 0.75rem; color: var(--text-soft); text-align: center;
+  line-height: 1.5; margin-top: 0.5rem;
+}
+.pyramid-divider {
+  display: flex; align-items: center; justify-content: center;
+  padding-top: 5.5rem;
+}
+.pyramid-vs {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--bg-card-alt); border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem; font-weight: 900; color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+/* ── Flow steps ── */
+.curric-flow-steps {
+  display: flex; flex-direction: column; gap: 0;
+  max-width: 780px; margin: 0 auto; position: relative;
+}
+.curric-flow-step {
+  display: grid; grid-template-columns: 48px 52px 1fr;
+  gap: 0 1.25rem; align-items: start;
+  padding: 1.5rem 1.5rem 1.5rem 0; position: relative;
+}
+.curric-flow-step::before {
+  content: ''; position: absolute;
+  left: 47px; top: 0; bottom: 0;
+  width: 2px; background: linear-gradient(to bottom, var(--flow-color,var(--blue)) 0%, transparent 100%);
+  opacity: 0.25; z-index: 0;
+}
+.curric-flow-step:last-child::before { display: none; }
+.flow-step-num {
+  font-size: 0.7rem; font-weight: 900; color: var(--text-muted);
+  letter-spacing: 0.06em; padding-top: 0.25rem; text-align: center;
+}
+.flow-step-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: color-mix(in srgb, var(--flow-color,var(--blue)) 15%, var(--bg-card));
+  border: 2px solid var(--flow-color, var(--blue));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; flex-shrink: 0; position: relative; z-index: 1;
+}
+.flow-step-body { padding-bottom: 1rem; }
+.flow-step-title {
+  font-size: 1.05rem; font-weight: 800; color: var(--navy);
+  margin: 0 0 0.25rem;
+}
+.flow-step-q {
+  font-size: 0.84rem; color: var(--flow-color, var(--blue));
+  font-style: italic; margin: 0 0 0.5rem; font-weight: 600;
+}
+.flow-step-desc {
+  font-size: 0.87rem; color: var(--text-soft); line-height: 1.65; margin: 0;
+}
+.flow-step-arrow {
+  grid-column: 2; font-size: 1.2rem; color: var(--border);
+  text-align: center; padding: 0.2rem 0; position: relative; z-index: 1;
+}
+.curric-flow-footer {
+  text-align: center; padding: 2rem 1rem 0;
+  font-size: 0.95rem; color: var(--text-soft);
+  border-top: 1.5px solid var(--border-soft); margin-top: 1rem;
+}
+.curric-flow-footer strong { color: var(--navy); }
+
+/* ── Age stages grid ── */
+.curric-stages-grid {
+  display: flex; flex-direction: column; gap: 1.5rem;
+}
+.stage-card {
+  background: var(--bg-card); border: 2px solid color-mix(in srgb, var(--stage-color) 30%, var(--border));
+  border-radius: var(--radius); overflow: hidden;
+  box-shadow: var(--shadow-sm); transition: box-shadow 0.2s;
+}
+.stage-card:hover { box-shadow: var(--shadow-md); }
+.stage-card-header {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  background: color-mix(in srgb, var(--stage-color) 8%, var(--bg-card));
+  border-bottom: 1.5px solid color-mix(in srgb, var(--stage-color) 20%, var(--border));
+  flex-wrap: wrap;
+}
+.stage-emoji { font-size: 1.6rem; line-height: 1; flex-shrink: 0; }
+.stage-title { font-size: 1.1rem; font-weight: 800; color: var(--navy); margin: 0 0 0.15rem; }
+.stage-ages  { font-size: 0.78rem; color: var(--text-soft); font-weight: 600; }
+.stage-focus-pill {
+  margin-left: auto; background: color-mix(in srgb, var(--stage-color) 18%, var(--bg-card));
+  border: 1.5px solid var(--stage-color); border-radius: 999px;
+  padding: 0.3rem 0.9rem; font-size: 0.78rem; font-weight: 700;
+  color: var(--navy); white-space: nowrap;
+}
+.stage-card-body {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+  padding: 1.5rem;
+}
+.stage-col {}
+.stage-section-head {
+  font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.07em; color: var(--text-muted); margin: 0 0 0.75rem;
+}
+.stage-list {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: 0.45rem;
+}
+.stage-list li {
+  display: flex; align-items: flex-start; gap: 0.5rem;
+  font-size: 0.86rem; color: var(--text-main); line-height: 1.5;
+}
+.stage-list li::before {
+  content: '→'; color: var(--stage-color); font-weight: 700;
+  flex-shrink: 0; margin-top: 0.05em;
+}
+.stage-list.outcomes li::before { content: '✓'; color: var(--green); }
+.stage-card-footer {
+  padding: 1rem 1.5rem; border-top: 1.5px solid var(--bg-card-alt);
+  display: flex; align-items: flex-start; gap: 1.5rem; flex-wrap: wrap;
+}
+.stage-teacher-role {
+  display: flex; flex-direction: column; gap: 0.2rem;
+}
+.stage-role-label {
+  font-size: 0.68rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--text-muted);
+}
+.stage-role-value {
+  font-size: 0.84rem; font-weight: 700; color: var(--navy);
+}
+.stage-pack-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-left: auto; }
+.stage-pack-chip {
+  padding: 0.2rem 0.65rem; border-radius: 999px;
+  border: 1.5px solid; font-size: 0.73rem; font-weight: 600; color: var(--navy);
+  background: var(--bg-card); white-space: nowrap;
+}
+
+/* ── Assessment grid ── */
+.curric-assessment-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.curric-assess-card {
+  background: var(--bg-card); border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm); padding: 1.25rem 1rem;
+  text-align: center; transition: box-shadow 0.2s;
+}
+.curric-assess-card:hover { box-shadow: var(--shadow-md); }
+.curric-assess-icon { font-size: 1.8rem; display: block; margin-bottom: 0.6rem; }
+.curric-assess-card strong {
+  display: block; font-size: 0.9rem; color: var(--navy);
+  font-weight: 800; margin-bottom: 0.5rem;
+}
+.curric-assess-card p { font-size: 0.78rem; color: var(--text-soft); margin: 0; line-height: 1.55; }
+.curric-assess-note {
+  display: flex; gap: 1rem; align-items: flex-start;
+  background: color-mix(in srgb, var(--navy) 4%, var(--bg-card));
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  padding: 1.25rem 1.5rem; max-width: 760px; margin: 0 auto;
+}
+.curric-assess-note-icon { font-size: 1.2rem; flex-shrink: 0; }
+.curric-assess-note p {
+  font-size: 0.86rem; color: var(--text-soft); margin: 0; line-height: 1.65;
+}
+.curric-assess-note em { color: var(--blue); font-style: italic; font-weight: 600; }
+
+/* ── Why this works ── */
+.curric-why-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
+  margin-bottom: 2rem;
+}
+.curric-why-item {
+  display: flex; flex-direction: column; align-items: center; gap: 0.75rem;
+  text-align: center; padding: 1.5rem 1rem;
+  background: var(--bg-card); border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm); transition: all 0.2s;
+}
+.curric-why-item:hover {
+  border-color: var(--blue); box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+.curric-why-icon { font-size: 2rem; }
+.curric-why-item p {
+  font-size: 0.88rem; font-weight: 600; color: var(--navy);
+  margin: 0; line-height: 1.5;
+}
+.curric-why-quote {
+  text-align: center; font-size: 1.2rem; font-style: italic;
+  color: var(--navy); font-weight: 700; border: none; margin: 0 auto;
+  max-width: 540px; padding: 1.5rem;
+  border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold);
+}
+
+/* ── Section background alternation ── */
+.curric-model-section     { background: var(--bg-card-alt); padding: 5rem 2rem; }
+.curric-flow-section      { padding: 5rem 2rem; }
+.curric-stages-section    { background: var(--bg-card-alt); padding: 5rem 2rem; }
+.curric-assessment-section{ padding: 5rem 2rem; }
+.curric-why-section       { background: var(--bg-card-alt); padding: 5rem 2rem; }
+.curric-model-section .section-head,
+.curric-stages-section .section-head,
+.curric-why-section .section-head { margin-bottom: 2.5rem; }
+
+/* ── Responsive ── */
+@media (max-width: 1100px) {
+  .curric-assessment-grid { grid-template-columns: repeat(3, 1fr); }
+  .curric-why-grid        { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 900px) {
+  .inverted-pyramid-compare { grid-template-columns: 1fr; gap: 1.5rem; }
+  .pyramid-divider          { padding: 0; }
+  .pyramid-vs               { width: 100%; height: auto; border-radius: 8px; padding: 0.4rem; border: none; background: none; font-size: 0.8rem; color: var(--text-muted); }
+  .stage-card-body          { grid-template-columns: 1fr; gap: 1rem; }
+  .stage-card-header        { flex-wrap: wrap; }
+  .stage-focus-pill         { margin-left: 0; }
+  .curric-flow-step         { grid-template-columns: 32px 40px 1fr; gap: 0 0.75rem; }
+  .curric-assessment-grid   { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .curric-assessment-grid { grid-template-columns: 1fr 1fr; }
+  .curric-why-grid        { grid-template-columns: 1fr; }
+  .stage-pack-chips       { margin-left: 0; }
+  .curric-flow-step::before { display: none; }
+}
