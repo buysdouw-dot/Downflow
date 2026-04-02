@@ -1,575 +1,414 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 
 /* ─────────────────────────────────────────────────────────
-   DOWNFLOW MODEL FILM — 10-Scene Explainer
-   "Education doesn't fail because of students…"
-   Hook → Problem → Shift → Cell → Sponsor → Guider → Loop → Value → Compound → Close
+   DOWNFLOW MODEL FILM — Real video cinema player
+   10 scenes · auto-advance · cinematic subtitles
+   Videos from /model/videos/, slides from /model/slides/
 ───────────────────────────────────────────────────────── */
 
+/*
+  Each scene has:
+  - clips: array of video src paths (played one after another)
+  - slide: optional slide image shown alongside or instead
+  - voice: spoken lines cycling as subtitles
+  - label / color / timing
+*/
 const SCENES = [
   {
     id: 'hook',
-    number: '01',
+    num: '01',
     label: 'HOOK',
     timing: '0–5 sec',
     color: '#6c63ff',
-    accent: '#b5b0ff',
-    bg: 'linear-gradient(135deg, #0d0b1e 0%, #1a1530 100%)',
     voice: [
-      'Education doesn\'t fail',
-      'because of students…',
+      "Education doesn't fail",
+      "because of students…",
     ],
-    visual: <HookVisual />,
-    caption: 'Bored classroom vs. active speaking children',
+    clips: ['/model/videos/v01.mp4', '/model/videos/v02.mp4'],
+    slide: null,
   },
   {
     id: 'problem',
-    number: '02',
-    label: 'PROBLEM',
+    num: '02',
+    label: 'THE PROBLEM',
     timing: '5–15 sec',
     color: '#e05a5a',
-    accent: '#f7b5b5',
-    bg: 'linear-gradient(135deg, #1c0a0a 0%, #2d1212 100%)',
     voice: [
-      'It fails because',
-      'value doesn\'t flow.',
+      "It fails because",
+      "value doesn't flow.",
     ],
-    visual: <ProblemVisual />,
-    caption: 'Passive learning, worksheets, low energy',
+    clips: ['/model/videos/v03.mp4', '/model/videos/v04.mp4'],
+    slide: null,
   },
   {
     id: 'shift',
-    number: '03',
+    num: '03',
     label: 'THE SHIFT',
     timing: '15–25 sec',
     color: '#f5a623',
-    accent: '#ffd89b',
-    bg: 'linear-gradient(135deg, #1c1200 0%, #2e1e00 100%)',
     voice: [
-      'So we redesigned the system.',
-      'Students don\'t consume learning —',
-      'they produce value.',
+      "So we redesigned the system.",
+      "Students don't consume learning —",
+      "they produce value.",
     ],
-    visual: <ShiftVisual />,
-    caption: 'Kids speaking, presenting, laughing, connecting',
+    clips: ['/model/videos/v05.mp4', '/model/videos/v06.mp4', '/model/videos/v07.mp4'],
+    slide: null,
   },
   {
     id: 'cell',
-    number: '04',
+    num: '04',
     label: 'THE CELL MODEL',
     timing: '25–35 sec',
     color: '#27ae60',
-    accent: '#a8f0c0',
-    bg: 'linear-gradient(135deg, #011208 0%, #031f10 100%)',
     voice: [
-      'Small learning cells.',
-      'High engagement.',
-      'Real output.',
+      "Small learning cells.",
+      "High engagement.",
+      "Real output.",
     ],
-    visual: <CellVisual />,
-    caption: '5–6 students + 1 facilitator per cell',
+    clips: ['/model/videos/v08.mp4'],
+    slide: '/model/slides/slide-cell-model.png',
   },
   {
     id: 'sponsor',
-    number: '05',
+    num: '05',
     label: 'SPONSOR ENTRY',
     timing: '35–45 sec',
     color: '#2980b9',
-    accent: '#aad4f5',
-    bg: 'linear-gradient(135deg, #020e1c 0%, #061826 100%)',
     voice: [
-      'A sponsor activates one cell —',
-      'fully visible,',
-      'fully measurable.',
+      "A sponsor activates one cell —",
+      "fully visible,",
+      "fully measurable.",
     ],
-    visual: <SponsorVisual />,
-    caption: 'Sponsor → funds cell → class activates',
+    clips: ['/model/videos/v09.mp4', '/model/videos/v10.mp4'],
+    slide: '/model/slides/slide-platform.png',
   },
   {
     id: 'guider',
-    number: '06',
+    num: '06',
     label: 'THE GUIDER SYSTEM',
     timing: '45–65 sec',
     color: '#e67e22',
-    accent: '#f9d4a0',
-    bg: 'linear-gradient(135deg, #1c0e00 0%, #2e1800 100%)',
     voice: [
-      'Then the system compounds.',
-      'A student who completes — moves forward',
-      'and sends value down.',
-      'They become a guider.',
-      'Their results are tied to those below.',
-      'This creates accountability across levels.',
+      "Then the system compounds.",
+      "A student who completes — moves forward",
+      "and sends value down.",
+      "They become a guider.",
+      "Their results are tied to those below.",
+      "Accountability across every level.",
     ],
-    visual: <GuiderVisual />,
-    caption: 'Student → completes → becomes guider → new cell forms',
+    clips: ['/model/videos/v11.mp4', '/model/videos/v12.mp4', '/model/videos/v13.mp4'],
+    slide: null,
   },
   {
     id: 'loop',
-    number: '07',
+    num: '07',
     label: 'ACCOUNTABILITY LOOP',
     timing: '65–75 sec',
     color: '#9b59b6',
-    accent: '#dbb8f0',
-    bg: 'linear-gradient(135deg, #120820 0%, #1e1030 100%)',
     voice: [
-      'Every layer influences the next.',
-      'And every result flows back up.',
+      "Every layer influences the next.",
+      "And every result flows back up.",
     ],
-    visual: <LoopVisual />,
-    caption: 'Student → Guider → New Student → Results → back up',
+    clips: ['/model/videos/v14.mp4', '/model/videos/v15.mp4'],
+    slide: '/model/slides/slide-compounding.png',
   },
   {
     id: 'value',
-    number: '08',
+    num: '08',
     label: 'VALUE SYSTEM',
     timing: '75–85 sec',
     color: '#f1c40f',
-    accent: '#fdeea0',
-    bg: 'linear-gradient(135deg, #181200 0%, #251c00 100%)',
     voice: [
-      'Performance is shared.',
-      'Cells are graded together.',
-      'Effort becomes visible.',
+      "Performance is shared.",
+      "Cells are graded together.",
+      "Effort becomes visible.",
     ],
-    visual: <ValueVisual />,
-    caption: 'Coins earned, shared, redistributed — group score shown',
+    clips: ['/model/videos/v16.mp4', '/model/videos/v17.mp4'],
+    slide: '/model/slides/slide-money.png',
   },
   {
     id: 'compound',
-    number: '09',
+    num: '09',
     label: 'COMPOUNDING',
     timing: '85–95 sec',
     color: '#1abc9c',
-    accent: '#a0f0de',
-    bg: 'linear-gradient(135deg, #001c18 0%, #002e26 100%)',
     voice: [
-      'One cell becomes many.',
-      'Without losing structure.',
+      "One cell becomes many.",
+      "Without losing structure.",
     ],
-    visual: <CompoundVisual />,
-    caption: 'One cell expanding into multiple cells',
+    clips: ['/model/videos/v18.mp4', '/model/videos/v19.mp4'],
+    slide: '/model/slides/slide-scaling.png',
   },
   {
     id: 'close',
-    number: '10',
+    num: '10',
     label: 'CLOSE',
     timing: '95–110 sec',
     color: '#ffffff',
-    accent: '#c0c8e0',
-    bg: 'linear-gradient(135deg, #070d1c 0%, #0e1830 100%)',
     voice: [
-      'This is not a donation.',
-      'This is a system that produces value —',
-      'and multiplies it.',
-      'Fund one cell.',
-      'Watch it grow.',
+      "This is not a donation.",
+      "This is a system that produces value —",
+      "and multiplies it.",
+      "Fund one cell.",
+      "Watch it grow.",
     ],
-    visual: <CloseVisual />,
-    caption: 'Confident students speaking directly to camera',
+    clips: ['/model/videos/v20.mp4', '/model/videos/v21.mp4', '/model/videos/v22.mp4'],
+    slide: '/model/slides/slide-cta.png',
   },
 ]
 
-/* ─── Scene Visuals ─── */
-function HookVisual() {
-  return (
-    <div className="dmf-visual-split">
-      <div className="dmf-split-left">
-        <div className="dmf-desk-row">
-          <span className="dmf-desk-figure dim">😶</span>
-          <span className="dmf-desk-figure dim">😑</span>
-          <span className="dmf-desk-figure dim">😔</span>
-        </div>
-        <div className="dmf-split-label muted">Traditional Classroom</div>
-      </div>
-      <div className="dmf-split-divider"><span>VS</span></div>
-      <div className="dmf-split-right">
-        <div className="dmf-desk-row spread">
-          <span className="dmf-desk-figure bright">😄</span>
-          <span className="dmf-desk-figure bright">🗣️</span>
-          <span className="dmf-desk-figure bright">✋</span>
-        </div>
-        <div className="dmf-split-label bright">Downflow Cell</div>
-      </div>
-    </div>
-  )
-}
-
-function ProblemVisual() {
-  return (
-    <div className="dmf-problem-vis">
-      <div className="dmf-worksheet">
-        <div className="dmf-ws-line" /><div className="dmf-ws-line short" />
-        <div className="dmf-ws-line" /><div className="dmf-ws-line short" />
-        <div className="dmf-ws-line mid" />
-      </div>
-      <div className="dmf-no-flow">
-        <span className="dmf-arrow-blocked">→</span>
-        <span className="dmf-blocked-label">Value doesn't reach students</span>
-      </div>
-    </div>
-  )
-}
-
-function ShiftVisual() {
-  const items = ['Speaking', 'Presenting', 'Laughing', 'Connecting']
-  return (
-    <div className="dmf-shift-grid">
-      {items.map((item, i) => (
-        <div key={item} className="dmf-shift-chip" style={{ animationDelay: `${i * 0.15}s` }}>
-          {item}
-        </div>
-      ))}
-    </div>
-  )
-}
-
-function CellVisual() {
-  const positions = [
-    { x: '50%', y: '18%', r: '22px', label: '🎓', sublabel: 'Facilitator', main: true },
-    { x: '20%', y: '52%', r: '18px', label: '🧒', sublabel: 'Student' },
-    { x: '36%', y: '72%', r: '18px', label: '👧', sublabel: 'Student' },
-    { x: '64%', y: '72%', r: '18px', label: '🧑', sublabel: 'Student' },
-    { x: '80%', y: '52%', r: '18px', label: '👦', sublabel: 'Student' },
-  ]
-  return (
-    <div className="dmf-cell-vis">
-      <svg viewBox="0 0 200 120" className="dmf-cell-svg">
-        {/* Connecting lines */}
-        {[1,2,3,4].map(i => (
-          <line key={i}
-            x1="100" y1="22"
-            x2={parseFloat(positions[i].x)}
-            y2={parseFloat(positions[i].y)}
-            stroke="rgba(39,174,96,0.3)" strokeWidth="1.5" strokeDasharray="3 3"
-          />
-        ))}
-        {[1,2,3,4].map(i => (
-          <circle key={`c${i}`}
-            cx={parseFloat(positions[i].x)}
-            cy={parseFloat(positions[i].y)}
-            r="10"
-            fill="rgba(39,174,96,0.15)" stroke="rgba(39,174,96,0.5)" strokeWidth="1"
-          />
-        ))}
-        <circle cx="100" cy="22" r="14"
-          fill="rgba(39,174,96,0.2)" stroke="#27ae60" strokeWidth="1.5"
-        />
-      </svg>
-      <div className="dmf-cell-label">5–6 Students + 1 Facilitator</div>
-    </div>
-  )
-}
-
-function SponsorVisual() {
-  return (
-    <div className="dmf-sponsor-flow">
-      <div className="dmf-sf-node sponsor">💼<span>Sponsor</span></div>
-      <div className="dmf-sf-arrow">
-        <span className="dmf-sf-money">$</span>
-        <span className="dmf-sf-arrow-line">→</span>
-      </div>
-      <div className="dmf-sf-node cell">🧩<span>Cell</span></div>
-      <div className="dmf-sf-arrow">
-        <span className="dmf-sf-arrow-line">→</span>
-      </div>
-      <div className="dmf-sf-node active">⚡<span>Activated</span></div>
-    </div>
-  )
-}
-
-function GuiderVisual() {
-  return (
-    <div className="dmf-guider-tree">
-      <div className="dmf-gt-row top">
-        <div className="dmf-gt-node graduate">🎓<span>Graduate</span></div>
-      </div>
-      <div className="dmf-gt-arrow down">↓ becomes</div>
-      <div className="dmf-gt-row mid">
-        <div className="dmf-gt-node guider">⭐<span>Guider</span></div>
-      </div>
-      <div className="dmf-gt-arrow down">↓ mentors</div>
-      <div className="dmf-gt-row bottom">
-        <div className="dmf-gt-node student">🧒<span>New Cell</span></div>
-        <div className="dmf-gt-node student">👧<span>New Cell</span></div>
-      </div>
-      <div className="dmf-gt-feedback">
-        <span className="dmf-gt-feedback-line">results flow back ↑</span>
-      </div>
-    </div>
-  )
-}
-
-function LoopVisual() {
-  const nodes = ['Student', 'Guider', 'New Student', 'Results']
-  const colors = ['#9b59b6', '#e67e22', '#27ae60', '#f1c40f']
-  return (
-    <div className="dmf-loop-ring">
-      <svg viewBox="0 0 160 160" className="dmf-loop-svg">
-        <circle cx="80" cy="80" r="55" fill="none" stroke="rgba(155,89,182,0.15)" strokeWidth="2" strokeDasharray="6 4" />
-        {nodes.map((n, i) => {
-          const angle = (i / nodes.length) * 2 * Math.PI - Math.PI / 2
-          const x = 80 + 55 * Math.cos(angle)
-          const y = 80 + 55 * Math.sin(angle)
-          return (
-            <g key={n}>
-              <circle cx={x} cy={y} r="16" fill={colors[i] + '33'} stroke={colors[i]} strokeWidth="1.5" />
-              <text x={x} y={y + 1} textAnchor="middle" dominantBaseline="middle"
-                fontSize="6" fill={colors[i]} fontWeight="700">{n.split(' ').map((w,j) => (
-                  <tspan key={j} x={x} dy={j === 0 ? '-3' : '7'}>{w}</tspan>
-                ))}</text>
-            </g>
-          )
-        })}
-        {/* Arrows around ring */}
-        {nodes.map((_, i) => {
-          const a1 = (i / nodes.length) * 2 * Math.PI - Math.PI / 2
-          const a2 = ((i + 1) / nodes.length) * 2 * Math.PI - Math.PI / 2
-          const midA = (a1 + a2) / 2
-          const mx = 80 + 55 * Math.cos(midA)
-          const my = 80 + 55 * Math.sin(midA)
-          return (
-            <text key={`arrow${i}`} x={mx} y={my} textAnchor="middle" dominantBaseline="middle"
-              fontSize="9" fill="rgba(255,255,255,0.4)">→</text>
-          )
-        })}
-      </svg>
-    </div>
-  )
-}
-
-function ValueVisual() {
-  const members = ['Anh', 'Ben', 'Cai', 'Dara', 'Eva']
-  const scores = [88, 74, 91, 67, 82]
-  return (
-    <div className="dmf-value-vis">
-      {members.map((m, i) => (
-        <div key={m} className="dmf-vv-row">
-          <span className="dmf-vv-name">{m}</span>
-          <div className="dmf-vv-bar-track">
-            <div className="dmf-vv-bar" style={{ width: `${scores[i]}%`, animationDelay: `${i * 0.1}s` }} />
-          </div>
-          <span className="dmf-vv-score">{scores[i]}</span>
-        </div>
-      ))}
-      <div className="dmf-vv-total">Group Score: <strong>80.4</strong></div>
-    </div>
-  )
-}
-
-function CompoundVisual() {
-  return (
-    <div className="dmf-compound-vis">
-      <div className="dmf-cv-row row1">
-        <div className="dmf-cv-cell seed">🧩</div>
-      </div>
-      <div className="dmf-cv-row row2">
-        <div className="dmf-cv-cell grow">🧩</div>
-        <div className="dmf-cv-cell grow">🧩</div>
-      </div>
-      <div className="dmf-cv-row row3">
-        <div className="dmf-cv-cell grow delay">🧩</div>
-        <div className="dmf-cv-cell grow delay">🧩</div>
-        <div className="dmf-cv-cell grow delay">🧩</div>
-        <div className="dmf-cv-cell grow delay">🧩</div>
-      </div>
-      <div className="dmf-cv-label">1 → 2 → 4 → ∞</div>
-    </div>
-  )
-}
-
-function CloseVisual() {
-  const students = ['🧒', '👧', '🧑', '👦', '👩']
-  return (
-    <div className="dmf-close-vis">
-      {students.map((s, i) => (
-        <div key={i} className="dmf-close-student" style={{ animationDelay: `${i * 0.12}s` }}>
-          <span className="dmf-close-avatar">{s}</span>
-        </div>
-      ))}
-      <div className="dmf-close-tagline">DOWNFLOW — School of Life</div>
-    </div>
-  )
-}
-
-/* ─── Subtitle cycling hook ─── */
-function useSubtitles(lines, active, intervalMs = 1800) {
+/* ─── Subtitle hook — cycles voice lines while playing ─── */
+function useSubtitles(scene, playing) {
   const [idx, setIdx] = useState(0)
-  const [visible, setVisible] = useState(false)
+  const timerRef = useRef()
 
   useEffect(() => {
-    if (!active) { setIdx(0); setVisible(false); return }
-    setIdx(0); setVisible(true)
-    const t = setInterval(() => {
-      setIdx(i => (i + 1 < lines.length ? i + 1 : i))
-    }, intervalMs)
-    return () => clearInterval(t)
-  }, [active, lines])
+    setIdx(0)
+    clearInterval(timerRef.current)
+    if (!playing || !scene) return
+    const ms = Math.max(1800, (6000 / scene.voice.length))
+    timerRef.current = setInterval(() => {
+      setIdx(i => (i + 1 < scene.voice.length ? i + 1 : i))
+    }, ms)
+    return () => clearInterval(timerRef.current)
+  }, [scene?.id, playing])
 
-  return { idx, visible }
+  return idx
 }
 
-/* ─── Single scene frame ─── */
-function SceneFrame({ scene, isActive, sceneIndex, totalScenes, onNav }) {
-  const { idx, visible } = useSubtitles(scene.voice, isActive, 1700)
+/* ─── Single scene video player ─── */
+function ScenePlayer({ scene, playing, onEnded }) {
+  const videoRef = useRef()
+  const [clipIdx, setClipIdx] = useState(0)
+  const subIdx = useSubtitles(scene, playing)
+
+  // Reset clip on scene change
+  useEffect(() => {
+    setClipIdx(0)
+  }, [scene.id])
+
+  // Play/pause
+  useEffect(() => {
+    const v = videoRef.current
+    if (!v) return
+    if (playing) {
+      v.play().catch(() => {})
+    } else {
+      v.pause()
+    }
+  }, [playing, clipIdx, scene.id])
+
+  const handleVideoEnd = () => {
+    const nextClip = clipIdx + 1
+    if (nextClip < scene.clips.length) {
+      setClipIdx(nextClip)
+    } else {
+      onEnded()
+    }
+  }
+
+  const currentClip = scene.clips[clipIdx]
 
   return (
-    <div
-      className={`dmf-frame${isActive ? ' dmf-frame-active' : ''}`}
-      style={{ background: scene.bg, '--scene-col': scene.color, '--scene-accent': scene.accent }}
-    >
-      {/* Film grain overlay */}
-      <div className="dmf-grain" />
+    <div className="dmf-player" style={{ '--sc': scene.color }}>
 
-      {/* Top bar */}
-      <div className="dmf-topbar">
-        <span className="dmf-scene-num">{scene.number}</span>
-        <span className="dmf-scene-label">{scene.label}</span>
-        <span className="dmf-timing">{scene.timing}</span>
-      </div>
+      {/* Cinematic letterbox bars */}
+      <div className="dmf-letterbox-top" />
+      <div className="dmf-letterbox-bot" />
 
-      {/* Visual content */}
-      <div className="dmf-vis-area">
-        {scene.visual}
-      </div>
+      {/* Video */}
+      <video
+        ref={videoRef}
+        key={currentClip}
+        className="dmf-video"
+        src={currentClip}
+        onEnded={handleVideoEnd}
+        playsInline
+        muted={false}
+        preload="auto"
+      />
 
-      {/* Caption bar */}
-      <div className="dmf-caption">{scene.caption}</div>
-
-      {/* Subtitle bar */}
-      {visible && (
-        <div className="dmf-sub-bar">
-          <span className="dmf-sub-text" key={idx}>
-            {scene.voice[idx]}
-          </span>
+      {/* Slide overlay — appears as side panel or full overlay when no video plays */}
+      {scene.slide && (
+        <div className="dmf-slide-overlay">
+          <img src={scene.slide} alt={scene.label} className="dmf-slide-img" />
         </div>
       )}
 
-      {/* Navigation */}
-      <div className="dmf-nav">
-        <button className="dmf-nav-btn" onClick={() => onNav(-1)} disabled={sceneIndex === 0}>‹</button>
-        <div className="dmf-dots">
-          {Array.from({ length: totalScenes }).map((_, i) => (
-            <span key={i} className={`dmf-dot${i === sceneIndex ? ' active' : ''}`}
-              style={i === sceneIndex ? { background: scene.color } : {}} />
-          ))}
-        </div>
-        <button className="dmf-nav-btn" onClick={() => onNav(1)} disabled={sceneIndex === totalScenes - 1}>›</button>
+      {/* Dark vignette */}
+      <div className="dmf-vignette" />
+
+      {/* Scene label — top left */}
+      <div className="dmf-scene-badge">
+        <span className="dmf-badge-num" style={{ color: scene.color, borderColor: scene.color }}>
+          {scene.num}
+        </span>
+        <span className="dmf-badge-label">{scene.label}</span>
+        <span className="dmf-badge-timing">{scene.timing}</span>
       </div>
-    </div>
-  )
-}
 
-/* ─── Auto-play progress bar ─── */
-function ProgressBar({ active, duration, onComplete }) {
-  const [progress, setProgress] = useState(0)
-  const rafRef = useRef()
-  const startRef = useRef()
+      {/* Clip dots — top right */}
+      <div className="dmf-clip-dots">
+        {scene.clips.map((_, i) => (
+          <span key={i} className={`dmf-clip-dot${i === clipIdx ? ' active' : ''}`}
+            style={i === clipIdx ? { background: scene.color } : {}} />
+        ))}
+      </div>
 
-  useEffect(() => {
-    if (!active) { setProgress(0); return }
-    startRef.current = performance.now()
-    const tick = (now) => {
-      const elapsed = now - startRef.current
-      const pct = Math.min((elapsed / duration) * 100, 100)
-      setProgress(pct)
-      if (pct < 100) {
-        rafRef.current = requestAnimationFrame(tick)
-      } else {
-        onComplete()
-      }
-    }
-    rafRef.current = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(rafRef.current)
-  }, [active, duration])
-
-  return (
-    <div className="dmf-progress-track">
-      <div className="dmf-progress-fill" style={{ width: `${progress}%`, background: SCENES[0].color }} />
+      {/* Subtitles */}
+      {playing && (
+        <div className="dmf-sub-bar">
+          <span className="dmf-sub-text" key={`${scene.id}-${subIdx}`}>
+            {scene.voice[subIdx]}
+          </span>
+        </div>
+      )}
     </div>
   )
 }
 
 /* ─── Main film component ─── */
 export default function DownflowModelFilm({ compact = false }) {
-  const [current, setCurrent] = useState(0)
-  const [playing, setPlaying] = useState(false)
-  const [completed, setCompleted] = useState(false)
+  const [current, setCurrent]   = useState(0)
+  const [playing, setPlaying]   = useState(false)
+  const [finished, setFinished] = useState(false)
   const containerRef = useRef()
 
-  const SCENE_DURATION = 4500 // ms per scene in auto-play
+  const scene = SCENES[current]
 
-  const handleProgress = useCallback(() => {
-    setCurrent(c => {
-      if (c + 1 < SCENES.length) return c + 1
+  const handleSceneEnd = useCallback(() => {
+    if (current + 1 < SCENES.length) {
+      setCurrent(c => c + 1)
+    } else {
       setPlaying(false)
-      setCompleted(true)
-      return c
-    })
-  }, [])
-
-  const navigate = (dir) => {
-    setPlaying(false)
-    setCurrent(c => Math.max(0, Math.min(SCENES.length - 1, c + dir)))
-  }
+      setFinished(true)
+    }
+  }, [current])
 
   const handlePlay = () => {
-    setCompleted(false)
-    if (current === SCENES.length - 1) setCurrent(0)
+    setFinished(false)
+    if (finished) setCurrent(0)
     setPlaying(true)
+  }
+
+  const jumpTo = (i) => {
+    setPlaying(false)
+    setCurrent(i)
+    setFinished(false)
+  }
+
+  const nav = (dir) => {
+    setPlaying(false)
+    setCurrent(c => Math.max(0, Math.min(SCENES.length - 1, c + dir)))
+    setFinished(false)
   }
 
   return (
     <section className={`dmf-root${compact ? ' compact' : ''}`} ref={containerRef}>
+
+      {/* Header */}
       <div className="dmf-header">
+        <div className="dmf-header-eyebrow">DOWNFLOW — SCHOOL OF LIFE</div>
         <h2 className="dmf-title">The Downflow Model</h2>
-        <p className="dmf-subtitle">A 10-scene explainer — from problem to system</p>
+        <p className="dmf-subtitle">
+          A short film — from broken education to compounding infrastructure
+        </p>
       </div>
 
-      {/* Film viewport */}
-      <div className="dmf-viewport">
-        {/* Progress bar */}
-        <ProgressBar
-          key={`${current}-${playing}`}
-          active={playing}
-          duration={SCENE_DURATION}
-          onComplete={handleProgress}
+      {/* Cinema viewport */}
+      <div className="dmf-cinema">
+
+        {/* Player */}
+        <ScenePlayer
+          scene={scene}
+          playing={playing}
+          onEnded={handleSceneEnd}
         />
 
-        {/* Scene frame */}
-        <SceneFrame
-          scene={SCENES[current]}
-          isActive={playing}
-          sceneIndex={current}
-          totalScenes={SCENES.length}
-          onNav={navigate}
-        />
+        {/* Controls bar */}
+        <div className="dmf-controls-bar" style={{ '--sc': scene.color }}>
+          {/* Left nav */}
+          <button className="dmf-ctrl-btn" onClick={() => nav(-1)} disabled={current === 0}>‹</button>
 
-        {/* Play controls */}
-        <div className="dmf-controls">
-          <button
-            className={`dmf-play-btn${playing ? ' playing' : ''}`}
-            onClick={() => playing ? setPlaying(false) : handlePlay()}
-          >
-            {playing ? '⏸ Pause' : completed ? '↺ Replay' : '▶ Play Film'}
+          {/* Play / Pause / Replay */}
+          <button className="dmf-play-pill" onClick={playing ? () => setPlaying(false) : handlePlay}>
+            {playing
+              ? <><span className="dmf-play-icon">⏸</span> Pause</>
+              : finished
+                ? <><span className="dmf-play-icon">↺</span> Replay</>
+                : <><span className="dmf-play-icon">▶</span> Play Film</>
+            }
           </button>
-          <span className="dmf-scene-counter">{current + 1} / {SCENES.length}</span>
+
+          {/* Progress dots */}
+          <div className="dmf-progress-dots">
+            {SCENES.map((s, i) => (
+              <button
+                key={s.id}
+                className={`dmf-prog-dot${i === current ? ' active' : ''} ${i < current ? 'seen' : ''}`}
+                style={i === current ? { background: s.color, boxShadow: `0 0 6px ${s.color}88` } : {}}
+                onClick={() => jumpTo(i)}
+                title={`${s.num} ${s.label}`}
+              />
+            ))}
+          </div>
+
+          {/* Right nav */}
+          <button className="dmf-ctrl-btn" onClick={() => nav(1)} disabled={current === SCENES.length - 1}>›</button>
         </div>
       </div>
 
-      {/* Scene strip — clickable timeline */}
-      <div className="dmf-strip">
+      {/* Scene strip — timeline */}
+      <div className="dmf-scene-strip">
         {SCENES.map((s, i) => (
           <button
             key={s.id}
-            className={`dmf-strip-btn${i === current ? ' active' : ''}`}
+            className={`dmf-strip-scene${i === current ? ' active' : ''}${i < current ? ' seen' : ''}`}
             style={i === current ? { borderColor: s.color, color: s.color } : {}}
-            onClick={() => { setPlaying(false); setCurrent(i) }}
+            onClick={() => jumpTo(i)}
           >
-            <span className="dmf-strip-num">{s.number}</span>
-            <span className="dmf-strip-lbl">{s.label}</span>
+            <span className="dmf-ss-num">{s.num}</span>
+            <span className="dmf-ss-lbl">{s.label}</span>
+            <span className="dmf-ss-time">{s.timing}</span>
           </button>
         ))}
+      </div>
+
+      {/* Current scene voice — shown below player */}
+      <div className="dmf-voice-panel" style={{ '--sc': scene.color }}>
+        <div className="dmf-voice-left">
+          <span className="dmf-voice-num" style={{ color: scene.color }}>{scene.num}</span>
+          <strong className="dmf-voice-label">{scene.label}</strong>
+        </div>
+        <div className="dmf-voice-lines">
+          {scene.voice.map((line, i) => (
+            <span key={i} className="dmf-voice-line">"{line}"</span>
+          ))}
+        </div>
+      </div>
+
+      {/* Slide gallery row */}
+      <div className="dmf-slides-row">
+        <p className="dmf-slides-heading">Investment Deck · Reference Slides</p>
+        <div className="dmf-slides-grid">
+          {[
+            { src: '/model/slides/slide-cell-model.png',  label: 'Cell Model' },
+            { src: '/model/slides/slide-compounding.png', label: 'Compounding Loop' },
+            { src: '/model/slides/slide-different.png',   label: 'Why Different' },
+            { src: '/model/slides/slide-money.png',       label: 'Money Flow' },
+            { src: '/model/slides/slide-teachers.png',    label: 'Teacher Experience' },
+            { src: '/model/slides/slide-scaling.png',     label: 'Scaling Potential' },
+            { src: '/model/slides/slide-regions.png',     label: 'Target Regions' },
+            { src: '/model/slides/slide-5year.png',       label: '5-Year Vision' },
+            { src: '/model/slides/slide-platform.png',    label: 'Platform Transparency' },
+            { src: '/model/slides/slide-cta.png',         label: 'Partner CTA' },
+          ].map(sl => (
+            <div key={sl.src} className="dmf-slide-thumb">
+              <img src={sl.src} alt={sl.label} />
+              <span>{sl.label}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )
