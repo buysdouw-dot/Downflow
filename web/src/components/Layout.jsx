@@ -17,6 +17,8 @@ const NAV = [
   { to: '/facilitator-app', label: '📱 Facilitator App' },
   { to: '/facilitator-onboarding', label: '📄 Contract' },
   { to: '/social-ads', label: '📣 Social Ads' },
+  { to: '/join', label: '🌐 Join' },
+  { to: '/auto-funnel', label: '⚡ Funnel' },
   { to: '/connector', label: 'Connectors' },
   { to: '/payments', label: 'Payments' },
   { to: '/payment-engine', label: 'Pay Engine' },

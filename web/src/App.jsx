@@ -18,6 +18,8 @@ import FacilitatorFilm from './pages/FacilitatorFilm.jsx'
 import FacilitatorApp from './pages/FacilitatorApp.jsx'
 import FacilitatorOnboarding from './pages/FacilitatorOnboarding.jsx'
 import SocialAds from './pages/SocialAds.jsx'
+import RoleLanding from './pages/RoleLanding.jsx'
+import AutoFunnel from './pages/AutoFunnel.jsx'
 
 export default function App() {
   return (
@@ -41,6 +43,8 @@ export default function App() {
         <Route path="/facilitator-app" element={<FacilitatorApp />} />
         <Route path="/facilitator-onboarding" element={<FacilitatorOnboarding />} />
         <Route path="/social-ads" element={<SocialAds />} />
+        <Route path="/join" element={<RoleLanding />} />
+        <Route path="/auto-funnel" element={<AutoFunnel />} />
       </Route>
     </Routes>
   )
