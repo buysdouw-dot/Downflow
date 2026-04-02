@@ -187,6 +187,36 @@ function useInView(threshold = 0.2) {
   return [ref, inView]
 }
 
+/* ─── Subtitle overlay — cycles through spoken lines when active ─── */
+function SubtitleOverlay({ scene, active }) {
+  const lines = scene.spoken.filter(s => s.type === 'line')
+  const [subIndex, setSubIndex] = useState(0)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    if (!active) { setSubIndex(0); setVisible(false); return }
+    setSubIndex(0)
+    setVisible(true)
+    const interval = setInterval(() => {
+      setSubIndex(i => {
+        const next = i + 1
+        if (next >= lines.length) { clearInterval(interval); return i }
+        return next
+      })
+    }, 520)
+    return () => clearInterval(interval)
+  }, [active, scene])
+
+  if (!active || !visible || lines.length === 0) return null
+  return (
+    <div className="mvs-subtitle-bar">
+      <span className="mvs-subtitle-text" key={subIndex}>
+        {lines[subIndex]?.text}
+      </span>
+    </div>
+  )
+}
+
 /* ─── Scene card (compact timeline view) ─── */
 function SceneCard({ scene, index, active, onClick }) {
   const isActive = active === index
@@ -207,6 +237,7 @@ function SceneCard({ scene, index, active, onClick }) {
           "{scene.spoken.find(s => s.type === 'line' && scene.spoken.indexOf(s) > 1)?.text}"
         </p>
       </div>
+      <SubtitleOverlay scene={scene} active={isActive} />
       <div className="mvs-scene-tag">{scene.tag}</div>
     </button>
   )
