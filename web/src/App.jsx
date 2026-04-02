@@ -14,6 +14,7 @@ import TeacherAssistants from './pages/TeacherAssistants.jsx'
 import PaymentEngine from './pages/PaymentEngine.jsx'
 import Funding from './pages/Funding.jsx'
 import ModelFilm from './pages/ModelFilm.jsx'
+import FacilitatorFilm from './pages/FacilitatorFilm.jsx'
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/model" element={<ModelFilm />} />
+        <Route path="/facilitator-film" element={<FacilitatorFilm />} />
         <Route path="/funding" element={<Funding />} />
         <Route path="/sponsor" element={<SponsorDashboard />} />
         <Route path="/student" element={<StudentDashboard />} />

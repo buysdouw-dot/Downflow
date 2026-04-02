@@ -83,7 +83,7 @@ export default function FacilitatorDashboard() {
       </div>
 
       <div className="db-tabs">
-        {[['overview','🔭 Overview'],['cells','🏫 Cells'],['guiders','🧑‍🏫 Guiders'],['sessions','📅 Sessions'],['tools','🔗 ClassDojo & Meet'],['progress','📊 Progress'],['ai','🤖 AI Tool']].map(([id,label])=>(
+        {[['overview','🔭 Overview'],['cells','🏫 Cells'],['guiders','🧑‍🏫 Guiders'],['sessions','📅 Sessions'],['earnings','💰 My Earnings'],['tools','🔗 ClassDojo & Meet'],['progress','📊 Progress'],['ai','🤖 AI Tool']].map(([id,label])=>(
           <button key={id} className={`db-tab${activeTab===id?' active':''}`} onClick={()=>setActiveTab(id)}>{label}</button>
         ))}
       </div>
@@ -258,6 +258,118 @@ export default function FacilitatorDashboard() {
                     <span className="gi-icon">{icon}</span><strong>{title}</strong><p>{desc}</p>
                   </div>
                 ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab==='earnings'&&(
+          <div className="db-tab-content">
+            <p className="lead" style={{marginBottom:'1.5rem'}}>
+              Weekly payouts · 3-phase progression · Grows as you grow the system
+            </p>
+
+            {/* Phase progression */}
+            <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'1.25rem',marginBottom:'1.5rem'}}>
+              {[
+                {phase:'Phase 1',label:'Starting Facilitator',pct:35,vnd:378000,cycle:9072000,color:'#72d0ff',trigger:'New facilitator, first cell',current:false},
+                {phase:'Phase 2',label:'Consistent Performance',pct:40,vnd:432000,cycle:10368000,color:'#4de8b0',trigger:'Stability ≥4 weeks, attendance ≥80%',current:true},
+                {phase:'Phase 3',label:'System Builder',pct:45,vnd:486000,cycle:11664000,color:'#d2ad44',trigger:'Introduce 1st new facilitator (schedule full)',badge:'⭐ MAX',current:false},
+              ].map(ph=>(
+                <div key={ph.phase} style={{padding:'1.25rem',background:'var(--bg-card)',border:`2px solid ${ph.current?ph.color:ph.color+'44'}`,borderTop:`5px solid ${ph.color}`,borderRadius:'14px',position:'relative'}}>
+                  {ph.current&&<span style={{position:'absolute',top:'0.75rem',right:'0.75rem',fontSize:'0.65rem',fontWeight:800,padding:'0.2rem 0.5rem',borderRadius:'10px',background:ph.color+'22',color:ph.color,border:`1px solid ${ph.color}44`}}>● CURRENT</span>}
+                  {ph.badge&&!ph.current&&<span style={{position:'absolute',top:'0.75rem',right:'0.75rem',fontSize:'0.65rem',fontWeight:800,padding:'0.2rem 0.5rem',borderRadius:'10px',background:ph.color+'22',color:ph.color,border:`1px solid ${ph.color}44`}}>{ph.badge}</span>}
+                  <p style={{margin:'0 0 0.25rem',fontSize:'0.7rem',fontWeight:800,letterSpacing:'0.1em',color:ph.color,textTransform:'uppercase'}}>{ph.phase}</p>
+                  <strong style={{display:'block',fontSize:'2.2rem',fontWeight:900,color:ph.color,lineHeight:1}}>{ph.pct}%</strong>
+                  <p style={{margin:'0.25rem 0 0.75rem',fontSize:'0.82rem',color:'var(--navy)',fontWeight:700}}>{ph.label}</p>
+                  <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'0.4rem',marginBottom:'0.75rem'}}>
+                    {[['Per lesson',`${ph.vnd.toLocaleString()} VND`],['Per cycle (×24)',`${ph.cycle.toLocaleString()} VND`]].map(([k,v])=>(
+                      <div key={k} style={{padding:'0.5rem 0.6rem',background:'var(--bg-card-alt)',borderRadius:'8px'}}>
+                        <span style={{display:'block',fontSize:'0.65rem',color:'var(--text-muted)',textTransform:'uppercase',letterSpacing:'0.05em',marginBottom:'0.1rem'}}>{k}</span>
+                        <strong style={{fontSize:'0.82rem',color:ph.color}}>{v}</strong>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{padding:'0.6rem 0.75rem',background:ph.color+'11',borderRadius:'8px',borderLeft:`3px solid ${ph.color}`,fontSize:'0.75rem',color:'var(--text-soft)'}}>
+                    <strong style={{color:'var(--navy)',display:'block',marginBottom:'0.15rem'}}>Unlock trigger</strong>
+                    {ph.trigger}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Recruitment mechanic */}
+            <div className="db-panel" style={{marginBottom:'1.5rem'}}>
+              <h3 className="db-panel-title">🌱 The Recruitment Mechanic — How to Reach 45%</h3>
+              <p style={{fontSize:'0.84rem',color:'var(--text-soft)',marginBottom:'1.25rem'}}>
+                When your schedule is full, you don't stop — you grow the system. Each facilitator you introduce earns you +5%, up to the 45% ceiling.
+              </p>
+              <div style={{display:'flex',gap:'1rem',alignItems:'center',flexWrap:'wrap',marginBottom:'1.25rem'}}>
+                {[
+                  {num:'1',title:'Schedule Full at 40%',desc:'Fully booked, stable, consistent. You\'ve earned Phase 2.',color:'#72d0ff'},
+                  {num:'→',title:'',desc:'',color:'transparent',arrow:true},
+                  {num:'2',title:'Introduce New Facilitator',desc:'Refer, onboard, and vouch for a new facilitator entering the system.',color:'#4de8b0'},
+                  {num:'→',title:'',desc:'',color:'transparent',arrow:true},
+                  {num:'3',title:'Unlock 45%',desc:'+5% added to your rate permanently. Max tier reached.',color:'#d2ad44'},
+                ].map((s,i)=>s.arrow?(
+                  <span key={i} style={{fontSize:'1.5rem',color:'var(--text-muted)',flexShrink:0}}>→</span>
+                ):(
+                  <div key={i} style={{flex:1,minWidth:'160px',padding:'1rem',background:'var(--bg-card-alt)',borderRadius:'12px',borderTop:`4px solid ${s.color}`}}>
+                    <div style={{width:'28px',height:'28px',borderRadius:'50%',background:s.color+'22',border:`2px solid ${s.color}55`,display:'flex',alignItems:'center',justifyContent:'center',color:s.color,fontWeight:800,fontSize:'0.8rem',marginBottom:'0.5rem'}}>{s.num}</div>
+                    <strong style={{display:'block',color:s.color,fontSize:'0.88rem',marginBottom:'0.25rem'}}>{s.title}</strong>
+                    <p style={{margin:0,fontSize:'0.78rem',color:'var(--text-soft)',lineHeight:1.5}}>{s.desc}</p>
+                  </div>
+                ))}
+              </div>
+              <div style={{padding:'1rem 1.25rem',background:'var(--navy)',borderRadius:'12px',display:'flex',gap:'0.75rem',alignItems:'flex-start'}}>
+                <span style={{fontSize:'1.2rem',flexShrink:0}}>📋</span>
+                <p style={{margin:0,fontSize:'0.82rem',color:'rgba(255,255,255,0.6)',lineHeight:1.65}}>
+                  Each new facilitator you introduce earns you <strong style={{color:'#d2ad44'}}>+5%</strong>, up to a maximum of <strong style={{color:'#d2ad44'}}>45%</strong>.
+                  This keeps top facilitators motivated to build the system — not just their own cells.
+                  Your first recruit: <strong style={{color:'#4de8b0'}}>40% → 45%</strong>.
+                </p>
+              </div>
+            </div>
+
+            {/* Weekly payout calc */}
+            <div className="two-col-grid">
+              <div className="db-panel">
+                <h3 className="db-panel-title">⏰ Weekly Payout Calculator</h3>
+                <p style={{fontSize:'0.82rem',color:'var(--text-soft)',marginBottom:'1rem'}}>Earnings are paid weekly — every week of delivery is rewarded immediately.</p>
+                {[
+                  {label:'1 session/week · Phase 1 (35%)',vnd:378000,color:'#72d0ff'},
+                  {label:'2 sessions/week · Phase 1 (35%)',vnd:756000,color:'#72d0ff'},
+                  {label:'2 sessions/week · Phase 2 (40%)',vnd:864000,color:'#4de8b0',current:true},
+                  {label:'3 sessions/week · Phase 2 (40%)',vnd:1296000,color:'#4de8b0'},
+                  {label:'2 sessions/week · Phase 3 (45%)',vnd:972000,color:'#d2ad44'},
+                  {label:'3 sessions/week · Phase 3 (45%)',vnd:1458000,color:'#d2ad44'},
+                ].map(row=>(
+                  <div key={row.label} style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'0.6rem 0',borderBottom:'1px solid var(--bg-card-alt)',position:'relative'}}>
+                    {row.current&&<span style={{position:'absolute',left:'-0.5rem',top:'50%',transform:'translateY(-50%)',color:'#4de8b0',fontSize:'0.6rem'}}>▶</span>}
+                    <span style={{fontSize:'0.8rem',color:'var(--text-soft)'}}>{row.label}</span>
+                    <strong style={{color:row.color,fontSize:'0.88rem'}}>{row.vnd.toLocaleString()} VND</strong>
+                  </div>
+                ))}
+              </div>
+
+              <div className="db-panel" style={{background:'var(--navy)',border:'none'}}>
+                <h3 className="db-panel-title" style={{color:'#fff'}}>🎬 Facilitator Recruitment Video</h3>
+                <p style={{fontSize:'0.82rem',color:'rgba(255,255,255,0.55)',marginBottom:'1rem'}}>Full 9-scene production pack — storyboard, voiceover scripts, camera directions, AI prompts, and music guide.</p>
+                <div style={{display:'flex',flexDirection:'column',gap:'0.5rem',marginBottom:'1.25rem'}}>
+                  {[
+                    'Scene 01 — Opening Hook: "This is not a normal teaching role"',
+                    'Scene 06 — Payment: Animated 35% → 40% → 45% bars',
+                    'Scene 07 — Growth: "Bring another facilitator — your earnings increase"',
+                    'Scene 09 — Close: "You belong here"',
+                  ].map(line=>(
+                    <div key={line} style={{display:'flex',gap:'0.5rem',fontSize:'0.78rem',color:'rgba(255,255,255,0.45)'}}>
+                      <span style={{color:'#4de8b0',flexShrink:0}}>→</span>{line}
+                    </div>
+                  ))}
+                </div>
+                <a href="/facilitator-film" style={{display:'block',textAlign:'center'}} className="btn btn-primary">
+                  Open Full Production Pack →
+                </a>
               </div>
             </div>
           </div>
