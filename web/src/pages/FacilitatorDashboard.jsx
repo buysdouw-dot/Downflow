@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { getCells, getProgressLogs, getPromotions } from '../services/api.js'
+import AIAssistant from '../components/AIAssistant.jsx'
 
 const CELLS = [
   { id:'VN-01', region:'Hanoi 🇻🇳', sg:'Minh P.', students:5, week:7, health:92, streak:7, packs:['✏️ Pencil Proof','🗣️ Voice'], status:'active' },
@@ -29,10 +31,19 @@ function HealthRing({ score }) {
 }
 
 export default function FacilitatorDashboard() {
-  const [activeTab, setActiveTab] = useState('overview')
+  const [activeTab, setActiveTab]   = useState('overview')
   const [sessionTheme, setSessionTheme] = useState('')
-  const [sessionPack, setSessionPack] = useState('')
-  const [sessionCell, setSessionCell] = useState('')
+  const [sessionPack, setSessionPack]   = useState('')
+  const [sessionCell, setSessionCell]   = useState('')
+  const [cells, setCells]           = useState(CELLS)
+  const [loading, setLoading]       = useState(false)
+
+  useEffect(() => {
+    setLoading(true)
+    getCells({ facilitatorId: 'user-f01' })
+      .then(data => { if (data?.length) setCells(data) })
+      .finally(() => setLoading(false))
+  }, [])
 
   return (
     <div className="dashboard-page">
@@ -64,7 +75,7 @@ export default function FacilitatorDashboard() {
       </div>
 
       <div className="db-tabs">
-        {[['overview','🔭 Overview'],['cells','🏫 Cells'],['guiders','🧑‍🏫 Guiders'],['sessions','📅 Sessions'],['progress','📊 Progress']].map(([id,label])=>(
+        {[['overview','🔭 Overview'],['cells','🏫 Cells'],['guiders','🧑‍🏫 Guiders'],['sessions','📅 Sessions'],['progress','📊 Progress'],['ai','🤖 AI Tool']].map(([id,label])=>(
           <button key={id} className={`db-tab${activeTab===id?' active':''}`} onClick={()=>setActiveTab(id)}>{label}</button>
         ))}
       </div>
@@ -376,6 +387,13 @@ export default function FacilitatorDashboard() {
         )}
 
       </div>
+        {activeTab==='ai'&&(
+          <div className="db-tab-content">
+            <p className="lead" style={{marginBottom:'1.5rem'}}>Generate tailored discussion prompts, feedback suggestions, and session activities for your cells using the Antigravity AI engine.</p>
+            <AIAssistant defaultTopic="Voice & Confidence"/>
+          </div>
+        )}
+
     </div>
   )
 }

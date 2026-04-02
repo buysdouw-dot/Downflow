@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { getCells, getSystemStats, getAllSponsorships } from '../services/api.js'
+import AIAssistant from '../components/AIAssistant.jsx'
 
 const SYSTEM_STATS = [
   { icon: '🏫', value: '7', label: 'Active Cells', sub: '3 VN · 3 DE · 1 RU', color: '#4de8b0' },
@@ -61,7 +63,7 @@ export default function PlatformDashboard() {
       </div>
 
       <div className="db-tabs">
-        {[['overview','🔭 Overview'],['cells','🏫 All Cells'],['sponsors','🏦 Sponsors'],['connectors','🔗 Connectors'],['ethics','🛡️ Ethics Engine'],['regions','🌍 Regions']].map(([id,label])=>(
+        {[['overview','🔭 Overview'],['cells','🏫 All Cells'],['sponsors','🏦 Sponsors'],['connectors','🔗 Connectors'],['ethics','🛡️ Ethics Engine'],['regions','🌍 Regions'],['ai','🤖 AI Tool']].map(([id,label])=>(
           <button key={id} className={`db-tab${activeTab===id?' active':''}`} onClick={()=>setActiveTab(id)}>{label}</button>
         ))}
       </div>
@@ -351,6 +353,13 @@ export default function PlatformDashboard() {
                 </div>
               ))}
             </div>
+          </div>
+        )}
+
+        {activeTab === 'ai' && (
+          <div className="db-tab-content">
+            <p className="lead" style={{marginBottom:'1.5rem'}}>Generate session content, feedback prompts, and learning activities for any cell across all regions using the Antigravity AI engine.</p>
+            <AIAssistant defaultTopic="Systems Thinking"/>
           </div>
         )}
 

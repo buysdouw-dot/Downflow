@@ -1,6 +1,7 @@
 import { Outlet, NavLink, Link, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import NetworkBg from './NetworkBg.jsx'
+import { useAuth, DEMO_PERSONAS } from '../context/AuthContext.jsx'
 
 const NAV = [
   { to: '/', label: 'Home', exact: true },
@@ -13,9 +14,11 @@ const NAV = [
 
 export default function Layout() {
   const { pathname } = useLocation()
-  const [menuOpen, setMenuOpen] = useState(false)
+  const { persona, switchPersona, isConfigured } = useAuth()
+  const [menuOpen, setMenuOpen]     = useState(false)
+  const [viewerOpen, setViewerOpen] = useState(false)
 
-  useEffect(() => { window.scrollTo(0, 0); setMenuOpen(false) }, [pathname])
+  useEffect(() => { window.scrollTo(0, 0); setMenuOpen(false); setViewerOpen(false) }, [pathname])
 
   return (
     <div className="site-shell">
@@ -27,6 +30,7 @@ export default function Layout() {
           <span className="brand-down">DOWN</span><span className="brand-flow">FLOW</span>
           <span className="brand-sub"> — School of Life</span>
         </Link>
+
         <nav className={`nav-links${menuOpen ? ' open' : ''}`}>
           {NAV.map(({ to, label, exact }) => (
             <NavLink key={to} to={to} end={exact} className={({ isActive }) => isActive ? 'nav-active' : undefined}>
@@ -34,9 +38,41 @@ export default function Layout() {
             </NavLink>
           ))}
         </nav>
-        <button className="hamburger" onClick={() => setMenuOpen(o => !o)} aria-label="Menu">
-          <span/><span/><span/>
-        </button>
+
+        <div className="topbar-right">
+          {/* "Viewing as:" role switcher — mirrors Antigravity's dropdown */}
+          {!isConfigured && (
+            <div className="viewer-wrap">
+              <button className="viewer-btn" onClick={() => setViewerOpen(o => !o)}>
+                <span className="viewer-icon">{persona.icon}</span>
+                <span className="viewer-label">Viewing as: <strong>{persona.label}</strong></span>
+                <span className="viewer-caret">▾</span>
+              </button>
+              {viewerOpen && (
+                <div className="viewer-dropdown">
+                  <p className="viewer-dropdown-head">Switch View</p>
+                  {DEMO_PERSONAS.map(p => (
+                    <button
+                      key={p.id}
+                      className={`viewer-option${persona.id===p.id?' active':''}`}
+                      onClick={() => { switchPersona(p.id); setViewerOpen(false) }}
+                    >
+                      <span>{p.icon}</span>
+                      <span className="vo-label">{p.label}</span>
+                      <span className="vo-name">{p.name}</span>
+                    </button>
+                  ))}
+                  <div className="viewer-dropdown-footer">
+                    <p>🔥 Demo mode — <a href="#connect">Connect Firebase</a> for live data</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+          <button className="hamburger" onClick={() => setMenuOpen(o => !o)} aria-label="Menu">
+            <span/><span/><span/>
+          </button>
+        </div>
       </header>
 
       <main><Outlet/></main>
