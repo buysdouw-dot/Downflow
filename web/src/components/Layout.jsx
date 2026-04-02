@@ -10,6 +10,7 @@ const NAV = [
   { to: '/news', label: 'News' },
   { to: '/model', label: '▶ Model Film' },
   { to: '/facilitator-film', label: '🎬 Facilitator Film' },
+  { to: '/connector-film', label: '🔗 Connector Film' },
   { to: '/funding', label: '★ Invest' },
   { to: '/sponsor', label: 'Sponsors' },
   { to: '/student', label: 'Students' },

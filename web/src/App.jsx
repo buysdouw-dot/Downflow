@@ -15,6 +15,7 @@ import PaymentEngine from './pages/PaymentEngine.jsx'
 import Funding from './pages/Funding.jsx'
 import ModelFilm from './pages/ModelFilm.jsx'
 import FacilitatorFilm from './pages/FacilitatorFilm.jsx'
+import ConnectorFilm from './pages/ConnectorFilm.jsx'
 import FacilitatorApp from './pages/FacilitatorApp.jsx'
 import FacilitatorOnboarding from './pages/FacilitatorOnboarding.jsx'
 import SocialAds from './pages/SocialAds.jsx'
@@ -28,6 +29,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/model" element={<ModelFilm />} />
         <Route path="/facilitator-film" element={<FacilitatorFilm />} />
+        <Route path="/connector-film" element={<ConnectorFilm />} />
         <Route path="/funding" element={<Funding />} />
         <Route path="/sponsor" element={<SponsorDashboard />} />
         <Route path="/student" element={<StudentDashboard />} />
