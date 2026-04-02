@@ -21,10 +21,12 @@ import FacilitatorOnboarding from './pages/FacilitatorOnboarding.jsx'
 import SocialAds from './pages/SocialAds.jsx'
 import RoleLanding from './pages/RoleLanding.jsx'
 import AutoFunnel from './pages/AutoFunnel.jsx'
+import Login from './pages/Login.jsx'
 
 export default function App() {
   return (
     <Routes>
+      <Route path="/login" element={<Login />} />
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/model" element={<ModelFilm />} />

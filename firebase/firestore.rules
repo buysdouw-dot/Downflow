@@ -1,0 +1,94 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── helpers ──────────────────────────────────────────────
+    function isAuth()       { return request.auth != null; }
+    function uid()          { return request.auth.uid; }
+    function userDoc()      { return get(/databases/$(database)/documents/users/$(uid())).data; }
+    function role()         { return userDoc().role; }
+    function isPlatform()   { return isAuth() && role() == 'platform'; }
+    function isFacilitator(){ return isAuth() && role() == 'facilitator'; }
+    function isConnector()  { return isAuth() && role() == 'connector'; }
+    function isSponsor()    { return isAuth() && role() == 'sponsor'; }
+    function isStudent()    { return isAuth() && role() == 'student'; }
+
+    // ── /users ───────────────────────────────────────────────
+    match /users/{userId} {
+      // Anyone authenticated can read their own profile
+      // Platform admin can read all
+      allow read:  if isAuth() && (uid() == userId || isPlatform());
+      allow write: if isPlatform();
+      // Users can update their own non-role fields
+      allow update: if uid() == userId
+                    && !request.resource.data.diff(resource.data).affectedKeys()
+                       .hasAny(['role','cells','cellId']);
+    }
+
+    // ── /cells ───────────────────────────────────────────────
+    match /cells/{cellId} {
+      // Sponsors see their own cells; facilitators/connectors see assigned cells
+      allow read: if isAuth() && (
+        isPlatform() ||
+        isFacilitator() && resource.data.facilitatorId == uid() ||
+        isConnector()   && resource.data.connectorId   == uid() ||
+        isSponsor()     && resource.data.sponsorId     == uid() ||
+        isStudent()     && uid() in resource.data.studentIds
+      );
+      allow write: if isPlatform();
+      allow update: if isFacilitator() && resource.data.facilitatorId == uid();
+
+      // ── /cells/{id}/progressLogs ───────────────────────────
+      match /progressLogs/{logId} {
+        allow read:   if isAuth();
+        allow create: if isFacilitator() && get(/databases/$(database)/documents/cells/$(cellId)).data.facilitatorId == uid();
+        allow write:  if isPlatform();
+      }
+
+      // ── /cells/{id}/attendance ─────────────────────────────
+      match /attendance/{attId} {
+        allow read:   if isAuth();
+        allow create: if isFacilitator() && get(/databases/$(database)/documents/cells/$(cellId)).data.facilitatorId == uid();
+        allow write:  if isPlatform();
+      }
+    }
+
+    // ── /sponsorships ─────────────────────────────────────────
+    match /sponsorships/{spId} {
+      allow read:  if isAuth() && (isPlatform() || isSponsor() && resource.data.sponsorId == uid());
+      allow write: if isPlatform();
+    }
+
+    // ── /videoReviews ─────────────────────────────────────────
+    match /videoReviews/{vrId} {
+      allow read:  if isAuth();
+      allow create: if isStudent() && request.resource.data.studentId == uid();
+      allow update: if isFacilitator() || isPlatform();
+      allow delete: if isPlatform();
+    }
+
+    // ── /promotions ───────────────────────────────────────────
+    match /promotions/{prId} {
+      allow read:  if isAuth();
+      allow write: if isFacilitator() || isPlatform();
+    }
+
+    // ── /packs ────────────────────────────────────────────────
+    match /packs/{packId} {
+      allow read:  if isAuth();
+      allow write: if isPlatform();
+    }
+
+    // ── /regions ──────────────────────────────────────────────
+    match /regions/{regionId} {
+      allow read:  if isAuth();
+      allow write: if isPlatform();
+    }
+
+    // ── /system ───────────────────────────────────────────────
+    match /system/{docId} {
+      allow read:  if isAuth();
+      allow write: if isPlatform();
+    }
+  }
+}

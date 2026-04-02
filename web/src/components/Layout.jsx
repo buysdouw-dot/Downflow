@@ -1,4 +1,4 @@
-import { Outlet, NavLink, Link, useLocation } from 'react-router-dom'
+import { Outlet, NavLink, Link, useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import NetworkBg from './NetworkBg.jsx'
 import { useAuth, DEMO_PERSONAS } from '../context/AuthContext.jsx'
@@ -29,7 +29,8 @@ const NAV = [
 
 export default function Layout() {
   const { pathname } = useLocation()
-  const { persona, switchPersona, isConfigured } = useAuth()
+  const navigate = useNavigate()
+  const { user, persona, switchPersona, isConfigured, logout, role, displayName, avatar } = useAuth()
   const [menuOpen, setMenuOpen]     = useState(false)
   const [viewerOpen, setViewerOpen] = useState(false)
 
@@ -55,7 +56,29 @@ export default function Layout() {
         </nav>
 
         <div className="topbar-right">
-          {/* "Viewing as:" role switcher — mirrors Antigravity's dropdown */}
+          {/* Live Firebase user badge */}
+          {isConfigured && user && (
+            <div className="viewer-wrap">
+              <button className="viewer-btn" onClick={() => setViewerOpen(o => !o)}>
+                <span className="viewer-icon">{avatar || '👤'}</span>
+                <span className="viewer-label"><strong>{displayName}</strong></span>
+                <span className="viewer-caret">▾</span>
+              </button>
+              {viewerOpen && (
+                <div className="viewer-dropdown">
+                  <p className="viewer-dropdown-head">{role?.toUpperCase()}</p>
+                  <button className="viewer-option" onClick={() => { logout(); navigate('/login'); setViewerOpen(false) }}>
+                    <span>🚪</span><span className="vo-label">Sign Out</span>
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+          {isConfigured && !user && (
+            <Link to="/login" className="topbar-login-btn">Sign In</Link>
+          )}
+
+          {/* "Viewing as:" role switcher — demo mode only */}
           {!isConfigured && (
             <div className="viewer-wrap">
               <button className="viewer-btn" onClick={() => setViewerOpen(o => !o)}>

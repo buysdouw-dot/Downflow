@@ -1,6 +1,6 @@
 {
   "startupCommands": [
-    "cd web && npm install; cd web && node_modules/.bin/vite --port 3000 --host 0.0.0.0"
+    "npm install; node_modules/.bin/vite --port 3000 --host 0.0.0.0"
   ],
   "projectId": "32de3547-9463-4dbd-91e8-462de51a076b",
   "templateId": "any"
