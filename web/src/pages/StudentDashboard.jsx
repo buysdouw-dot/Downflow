@@ -233,21 +233,16 @@ export default function StudentDashboard(){
     <DashboardShell role="student" activeTab={activeTab} onTabChange={setActiveTab}
       title="My Learning Dashboard" subtitle="Cell VN-01 · Week 7 of 12 · Student Guider: Minh P." actions={topActions}>
       {showOnboarding && <OnboardingBanner role="student" onDismiss={()=>setShowOnboarding(false)}/>}
-      <div className="db-page-header student-header">
-        <div className="db-header-inner">
-          <div><p className="kicker">Student Portal — DOWNFLOW School of Life</p><h1 className="db-title">🎓 My Learning Dashboard</h1><p className="db-subtitle">Cell VN-01 · Week 7 of 12 · Student Guider: Minh P. · 🇻🇳 Hanoi</p></div>
-          <div className="db-header-actions"><button className="btn btn-primary">📹 Submit Video Rep</button></div>
+      <div className="db-stats-row" style={{gridTemplateColumns:'repeat(4,1fr)',marginBottom:'1.5rem'}}>
+        <div className="db-stat-card" style={{'--stat-color':'#d2ad44'}}>
+          <CoinRing coins={145} goal={200} color="#d2ad44"/>
+          <div><p className="db-stat-label">Coin Balance</p><p className="db-stat-sub">145 / 200 to unlock</p></div>
         </div>
-        <div className="db-stats-row">
-          <div className="db-stat-card" style={{'--stat-color':'#d2ad44'}}><CoinRing coins={145} goal={200} color="#d2ad44"/><div><p className="db-stat-label">My Coin Balance</p><p className="db-stat-sub">200 = next pack unlock</p></div></div>
-          {[['🔥','7','Day Streak','Keep it up!','#4de8b0'],['🎬','23','Videos Done','Across 3 packs','#72d0ff'],['⬆️','SG Track','Pathway','On track','#ff9f5a']].map(([icon,val,label,sub,color])=>(
-            <div key={label} className="db-stat-card" style={{'--stat-color':color}}><span className="db-stat-icon">{icon}</span><div><p className="db-stat-value">{val}</p><p className="db-stat-label">{label}</p><p className="db-stat-sub">{sub}</p></div></div>
-          ))}
-        </div>
-      </div>
-      <div className="db-tabs">
-        {[['home','🏠 Home'],['packs','📦 My Packs'],['coins','🪙 My Coins'],['cell','🏫 My Cell'],['tools','🔗 My Tools'],['parents','👨‍👩‍👧 Parents'],['pathway','⬆️ Pathway']].map(([id,label])=>(
-          <button key={id} className={`db-tab${activeTab===id?' active':''}`} onClick={()=>setActiveTab(id)}>{label}</button>
+        {[['🔥','7','Day Streak','Keep it up!','#4de8b0'],['🎬','23','Videos Done','Across 3 packs','#72d0ff'],['⬆️','SG Track','Pathway','On track','#ff9f5a']].map(([icon,val,label,sub,color])=>(
+          <div key={label} className="db-stat-card" style={{'--stat-color':color}}>
+            <span className="db-stat-icon">{icon}</span>
+            <div><p className="db-stat-value">{val}</p><p className="db-stat-label">{label}</p><p className="db-stat-sub">{sub}</p></div>
+          </div>
         ))}
       </div>
       <div className="db-content">

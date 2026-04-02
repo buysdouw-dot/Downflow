@@ -38,36 +38,17 @@ export default function PlatformDashboard() {
 
   const togglePause = (id) => setPaused(p => p.includes(id) ? p.filter(x => x !== id) : [...p, id])
 
+  const topActions = (
+    <>
+      <button className="btn btn-primary" onClick={()=>setActiveTab('sponsors')}>+ Approve Sponsor</button>
+      <button className="btn btn-secondary" onClick={()=>setActiveTab('regions')}>System Report</button>
+    </>
+  )
+
   return (
-    <div className="dashboard-page">
-      <div className="db-page-header platform-header">
-        <div className="db-header-inner">
-          <div>
-            <p className="kicker">Downflow Platform</p>
-            <h1 className="db-title">⚙️ Platform Command Centre</h1>
-            <p className="db-subtitle">System governance · Sponsor approval · Ethics enforcement · Global oversight</p>
-          </div>
-          <div className="db-header-actions">
-            <button className="btn btn-primary">+ Approve Sponsor</button>
-            <button className="btn btn-secondary">System Report</button>
-          </div>
-        </div>
-        <div className="db-stats-row" style={{ gridTemplateColumns: 'repeat(6,1fr)' }}>
-          {SYSTEM_STATS.map(s => (
-            <div key={s.label} className="db-stat-card" style={{ '--stat-color': s.color }}>
-              <span className="db-stat-icon">{s.icon}</span>
-              <div><p className="db-stat-value">{s.value}</p><p className="db-stat-label">{s.label}</p><p className="db-stat-sub">{s.sub}</p></div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="db-tabs">
-        {[['overview','🔭 Overview'],['cells','🏫 All Cells'],['sponsors','🏦 Sponsors'],['connectors','🔗 Connectors'],['ethics','🛡️ Ethics Engine'],['regions','🌍 Regions'],['ai','🤖 AI Tool']].map(([id,label])=>(
-          <button key={id} className={`db-tab${activeTab===id?' active':''}`} onClick={()=>setActiveTab(id)}>{label}</button>
-        ))}
-      </div>
-
+    <DashboardShell role="platform" activeTab={activeTab} onTabChange={setActiveTab}
+      title="Platform Command Centre" subtitle="System governance · Ethics enforcement · Global oversight"
+      actions={topActions}>
       <div className="db-content">
 
         {activeTab === 'overview' && (
@@ -364,6 +345,6 @@ export default function PlatformDashboard() {
         )}
 
       </div>
-    </div>
+    </DashboardShell>
   )
 }

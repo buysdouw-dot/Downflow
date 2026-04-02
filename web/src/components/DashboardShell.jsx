@@ -10,18 +10,18 @@ const SIDEBAR_CONFIG = {
     icon:  '💼',
     label: 'Sponsor',
     sections: [
-      { heading: 'Overview',  items: [
+      { heading: 'Overview', items: [
         { icon: '🏠', label: 'Dashboard',    tab: 'overview' },
-        { icon: '📊', label: 'Cell Reports', tab: 'cells' },
+        { icon: '🏫', label: 'My Cells',     tab: 'cells' },
+        { icon: '🎁', label: 'Gift Packs',   tab: 'packs' },
+      ]},
+      { heading: 'Performance', items: [
+        { icon: '📊', label: 'Impact',       tab: 'impact' },
+        { icon: '🔄', label: 'Flywheel',     tab: 'flywheel' },
         { icon: '🏆', label: 'Rankings',     tab: 'rankings' },
       ]},
-      { heading: 'Financials', items: [
-        { icon: '💸', label: 'Rebates',      tab: 'rebates' },
-        { icon: '📈', label: 'Impact',       tab: 'impact' },
-      ]},
-      { heading: 'Platform',  items: [
-        { icon: '🌐', label: 'Model',        tab: 'model' },
-        { icon: '⭐', label: 'Recognition',  tab: 'recognition' },
+      { heading: 'Platform', items: [
+        { icon: '📖', label: 'Sponsor Model',tab: 'model' },
       ]},
     ],
     quick: [
@@ -36,22 +36,21 @@ const SIDEBAR_CONFIG = {
     sections: [
       { heading: 'My Work', items: [
         { icon: '🏠', label: 'Dashboard',    tab: 'overview' },
-        { icon: '👥', label: 'My Cells',     tab: 'cells' },
-        { icon: '🎬', label: 'Content',      tab: 'content' },
+        { icon: '🏫', label: 'My Cells',     tab: 'cells' },
+        { icon: '🧑‍🏫', label: 'Guiders',    tab: 'guiders' },
+        { icon: '📅', label: 'Sessions',     tab: 'sessions' },
       ]},
       { heading: 'Students', items: [
-        { icon: '📋', label: 'Attendance',   tab: 'attendance' },
-        { icon: '📹', label: 'Video Reviews',tab: 'reviews' },
-        { icon: '🎖️', label: 'Promotions',   tab: 'promotions' },
+        { icon: '📊', label: 'Progress',     tab: 'progress' },
+        { icon: '🤖', label: 'AI Tool',      tab: 'ai' },
       ]},
       { heading: 'Growth', items: [
-        { icon: '💰', label: 'Earnings',     tab: 'payments' },
-        { icon: '📈', label: 'Performance',  tab: 'performance' },
+        { icon: '💰', label: 'Earnings',     tab: 'earnings' },
+        { icon: '🔗', label: 'Tools',        tab: 'tools' },
       ]},
     ],
     quick: [
-      { icon: '✅', label: 'Log Session',  tab: 'attendance' },
-      { icon: '📹', label: 'Review Video', tab: 'reviews' },
+      { icon: '📅', label: 'Plan Session', tab: 'sessions' },
     ],
   },
   student: {
@@ -61,18 +60,21 @@ const SIDEBAR_CONFIG = {
     label: 'Student',
     sections: [
       { heading: 'My Learning', items: [
-        { icon: '🏠', label: 'Dashboard',    tab: 'overview' },
-        { icon: '🎯', label: 'My Cell',      tab: 'cell' },
-        { icon: '📚', label: 'Curriculum',   tab: 'curriculum' },
+        { icon: '🏠', label: 'Home',         tab: 'home' },
+        { icon: '📦', label: 'My Packs',     tab: 'packs' },
+        { icon: '🏫', label: 'My Cell',      tab: 'cell' },
       ]},
       { heading: 'Progress', items: [
-        { icon: '🎬', label: 'My Videos',    tab: 'videos' },
-        { icon: '🪙', label: 'Coins',        tab: 'coins' },
-        { icon: '🌱', label: 'Growth',       tab: 'growth' },
+        { icon: '🪙', label: 'My Coins',     tab: 'coins' },
+        { icon: '⬆️', label: 'Pathway',      tab: 'pathway' },
+        { icon: '🔗', label: 'My Tools',     tab: 'tools' },
+      ]},
+      { heading: 'Family', items: [
+        { icon: '👨‍👩‍👧', label: 'Parents',   tab: 'parents' },
       ]},
     ],
     quick: [
-      { icon: '📤', label: 'Submit Video', tab: 'videos' },
+      { icon: '📹', label: 'Submit Video', tab: 'packs' },
     ],
   },
   connector: {
@@ -84,15 +86,18 @@ const SIDEBAR_CONFIG = {
       { heading: 'My Network', items: [
         { icon: '🏠', label: 'Dashboard',    tab: 'overview' },
         { icon: '🏫', label: 'My Cells',     tab: 'cells' },
-        { icon: '👥', label: 'Contacts',     tab: 'contacts' },
+        { icon: '➕', label: 'Form Cell',    tab: 'form' },
       ]},
-      { heading: 'Earnings', items: [
-        { icon: '💰', label: 'Payments',     tab: 'payments' },
-        { icon: '📊', label: 'Rankings',     tab: 'rankings' },
+      { heading: 'Finance', items: [
+        { icon: '💰', label: 'Earnings',     tab: 'earnings' },
+        { icon: '🏆', label: 'Rankings',     tab: 'rankings' },
+      ]},
+      { heading: 'Governance', items: [
+        { icon: '⚖️', label: 'Ethics Rules', tab: 'ethics' },
       ]},
     ],
     quick: [
-      { icon: '➕', label: 'Register Cell', tab: 'cells' },
+      { icon: '➕', label: 'Register Cell', tab: 'form' },
     ],
   },
   platform: {
@@ -104,18 +109,18 @@ const SIDEBAR_CONFIG = {
       { heading: 'Operations', items: [
         { icon: '🏠', label: 'Dashboard',    tab: 'overview' },
         { icon: '🏫', label: 'All Cells',    tab: 'cells' },
-        { icon: '👤', label: 'All Users',    tab: 'users' },
-      ]},
-      { heading: 'Finance', items: [
-        { icon: '💸', label: 'Payments',     tab: 'payments' },
-        { icon: '📊', label: 'Reports',      tab: 'reports' },
+        { icon: '🏦', label: 'Sponsors',     tab: 'sponsors' },
+        { icon: '🔗', label: 'Connectors',   tab: 'connectors' },
       ]},
       { heading: 'System', items: [
+        { icon: '🛡️', label: 'Ethics Engine',tab: 'ethics' },
         { icon: '🌍', label: 'Regions',      tab: 'regions' },
-        { icon: '🤖', label: 'AI Assistants',tab: 'assistants' },
+        { icon: '🤖', label: 'AI Tool',      tab: 'ai' },
       ]},
     ],
-    quick: [],
+    quick: [
+      { icon: '✅', label: 'Approve Sponsor', tab: 'sponsors' },
+    ],
   },
 }
 

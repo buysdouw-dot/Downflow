@@ -97,18 +97,7 @@ export default function ConnectorDashboard() {
     <DashboardShell role="connector" activeTab={activeTab} onTabChange={setActiveTab}
       title="Connector Dashboard" subtitle="Build learning groups · Earn from growth" actions={topActions}>
       {showOnboarding && <OnboardingBanner role="connector" onDismiss={()=>setShowOnboarding(false)}/>}
-      <div className="db-page-header connector-header">
-        <div className="db-header-inner">
-          <div>
-            <p className="kicker">Connector Dashboard</p>
-            <h1 className="db-title">🔗 Connector Command Centre</h1>
-            <p className="db-subtitle">Form cells · Support families · Earn on quality — Vietnam</p>
-          </div>
-          <div className="db-header-actions">
-            <button className="btn btn-primary" onClick={() => { setActiveTab('form'); setFormStep(1) }}>+ Form New Cell</button>
-          </div>
-        </div>
-        <div className="db-stats-row">
+      <div className="db-stats-row" style={{gridTemplateColumns:'repeat(4,1fr)',marginBottom:'1.5rem'}}>
           <div className="db-stat-card" style={{ '--stat-color': '#ff9f5a' }}>
             <span className="db-stat-icon">🏫</span>
             <div><p className="db-stat-value">3</p><p className="db-stat-label">Cells Formed</p><p className="db-stat-sub">2 active · 1 draft</p></div>
@@ -126,13 +115,6 @@ export default function ConnectorDashboard() {
             <div><p className="db-stat-value">{(pendingEarn/1000000).toFixed(1)}M</p><p className="db-stat-label">VND Pending</p><p className="db-stat-sub">On VN-05 activation</p></div>
           </div>
         </div>
-      </div>
-
-      <div className="db-tabs">
-        {[['overview','🔭 Overview'],['cells','🏫 My Cells'],['earnings','💰 Earnings'],['rankings','🏆 Rankings'],['form','➕ Form Cell'],['ethics','⚖️ Ethics Rules']].map(([id,label])=>(
-          <button key={id} className={`db-tab${activeTab===id?' active':''}`} onClick={()=>setActiveTab(id)}>{label}</button>
-        ))}
-      </div>
 
       <div className="db-content">
 

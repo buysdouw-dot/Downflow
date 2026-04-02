@@ -99,7 +99,7 @@ export default function Layout() {
       <header className="topbar">
         <Link to="/" className="brand">
           <span className="brand-down">DOWN</span><span className="brand-flow">FLOW</span>
-          <span className="brand-sub"> — School of Life</span>
+          <span className="brand-sub">School of Life — The New Heavenly Order</span>
         </Link>
 
         {/* Desktop grouped nav */}
