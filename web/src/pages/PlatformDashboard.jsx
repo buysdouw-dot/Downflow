@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { getCells, getSystemStats, getAllSponsorships } from '../services/api.js'
 import AIAssistant from '../components/AIAssistant.jsx'
+import usePageMeta from '../hooks/usePageMeta.js'
 
 const SYSTEM_STATS = [
   { icon: '🏫', value: '7', label: 'Active Cells', sub: '3 VN · 3 DE · 1 RU', color: '#4de8b0' },
@@ -32,7 +33,10 @@ const SPONSORS = [
   { name: 'Individual Sponsor', cells: 1, students: 5, impact: 70, tier: '1-Cell Partner', status: 'active' },
 ]
 
+
 export default function PlatformDashboard() {
+  usePageMeta("Platform Admin", "Global oversight - approve sponsors, monitor ethics, manage regions and AI tools.")
+
   const [activeTab, setActiveTab] = useState('overview')
   const [paused, setPaused] = useState([])
 

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import usePageMeta from '../hooks/usePageMeta.js'
 
 /* ─────────────────────────────────────────────────────────
    ROLE LANDING PAGES — 4 Segments
@@ -373,7 +374,10 @@ const ROLES = [
   { id: 'connector',   label: '🔗 Connector',    color: '#38bdf8' },
 ]
 
+
 export default function RoleLanding() {
+  usePageMeta("Join DOWNFLOW", "Apply as a Sponsor, Facilitator, Student or Connector. Every role earns. Every role grows.")
+
   const params = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '')
   const initialRole = params.get('role') || 'sponsor'
   const [role, setRole] = useState(ROLES.find(r => r.id === initialRole)?.id || 'sponsor')

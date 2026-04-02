@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { auth, db, isConfigured, signInWithEmailAndPassword, doc, getDoc } from '../services/firebase.js'
+import usePageMeta from '../hooks/usePageMeta.js'
 
 // ── demo shortcut credentials ──────────────────────────────
 const DEMO_ROLES = [
@@ -19,7 +20,10 @@ const ROLE_REDIRECT = {
   platform:    '/platform',
 }
 
+
 export default function Login() {
+  usePageMeta("Sign In", "Sign in to your DOWNFLOW dashboard - Sponsor, Facilitator, Student or Connector.")
+
   const navigate = useNavigate()
   const [email, setEmail]     = useState('')
   const [pass,  setPass]      = useState('')

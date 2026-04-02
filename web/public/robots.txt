@@ -1,0 +1,29 @@
+User-agent: *
+Allow: /
+
+# Public pages
+Allow: /
+Allow: /curriculum
+Allow: /content
+Allow: /news
+Allow: /model
+Allow: /facilitator-film
+Allow: /connector-film
+Allow: /funding
+Allow: /join
+Allow: /auto-funnel
+Allow: /payments
+Allow: /social-ads
+
+# Keep dashboards private from crawlers
+Disallow: /sponsor
+Disallow: /student
+Disallow: /facilitator
+Disallow: /connector
+Disallow: /platform
+Disallow: /facilitator-app
+Disallow: /facilitator-onboarding
+Disallow: /payment-engine
+Disallow: /assistants
+
+Sitemap: https://downflow.app/sitemap.xml

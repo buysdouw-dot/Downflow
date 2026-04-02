@@ -2,6 +2,7 @@ import { useState } from 'react'
 import OnboardingBanner from '../components/OnboardingBanner.jsx'
 import { HexIcon } from '../components/HexSymbols.jsx'
 import DashboardShell from '../components/DashboardShell.jsx'
+import usePageMeta from '../hooks/usePageMeta.js'
 
 const CONNECTOR_RANKINGS = [
   { name:'Minh Tran',       region:'🇻🇳 VN', cells:12, placements:58, retention:94, quality:9.1, succession:8.9, overall:9.0 },
@@ -84,7 +85,10 @@ function CellStatusBadge({ status }) {
   return <span style={{ color, fontWeight: 700, fontSize: '0.8rem' }}>{label}</span>
 }
 
+
 export default function ConnectorDashboard() {
+  usePageMeta("Connector Dashboard", "Form learning cells, recruit families, and earn from every cell you build and grow.")
+
   const [activeTab, setActiveTab] = useState('overview')
   const [formStep, setFormStep] = useState(1)
   const [showOnboarding, setShowOnboarding] = useState(true)

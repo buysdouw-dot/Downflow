@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#0f1b2d"/>
+  <!-- D letterform -->
+  <text x="7" y="46" font-family="'Outfit', system-ui, sans-serif" font-weight="900" font-size="38" fill="#e8eef6" letter-spacing="-2">D</text>
+  <!-- Gold flow accent -->
+  <rect x="8" y="50" width="22" height="3" rx="1.5" fill="#d4a840"/>
+  <!-- F letterform -->
+  <text x="33" y="46" font-family="'Outfit', system-ui, sans-serif" font-weight="900" font-size="38" fill="#d4a840" letter-spacing="-2">F</text>
+</svg>

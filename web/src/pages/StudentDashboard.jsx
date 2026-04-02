@@ -2,6 +2,7 @@ import { useState } from 'react'
 import OnboardingBanner from '../components/OnboardingBanner.jsx'
 import { HexIcon } from '../components/HexSymbols.jsx'
 import DashboardShell from '../components/DashboardShell.jsx'
+import usePageMeta from '../hooks/usePageMeta.js'
 
 const CELL_MEMBERS = [
   { av:'🧑‍🏫', name:'Minh P.',  role:'Student Guider', streak:14, isMe:false },
@@ -224,7 +225,10 @@ function CellGroupView() {
   )
 }
 
-export default function StudentDashboard(){
+
+export default function StudentDashboard() {
+  usePageMeta("Student Dashboard", "Build real skills, submit video reps, earn coins, and grow into a Student Guider.")
+
   const [activeTab,setActiveTab]=useState('home')
   const [done,setDone]=useState(false)
   const [showOnboarding,setShowOnboarding]=useState(true)

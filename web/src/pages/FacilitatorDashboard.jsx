@@ -4,6 +4,7 @@ import { getCells, getProgressLogs, getPromotions } from '../services/api.js'
 import AIAssistant from '../components/AIAssistant.jsx'
 import OnboardingBanner from '../components/OnboardingBanner.jsx'
 import { HexIcon } from '../components/HexSymbols.jsx'
+import usePageMeta from '../hooks/usePageMeta.js'
 
 const CELLS = [
   { id:'VN-01', region:'Hanoi 🇻🇳', sg:'Minh P.', students:5, week:7, health:92, streak:7, packs:['✏️ Pencil Proof','🗣️ Voice'], status:'active' },
@@ -33,7 +34,10 @@ function HealthRing({ score }) {
   )
 }
 
+
 export default function FacilitatorDashboard() {
+  usePageMeta("Facilitator Dashboard", "Manage your learning cells, guide students, log sessions and track weekly earnings.")
+
   const [activeTab, setActiveTab]   = useState('overview')
   const [sessionTheme, setSessionTheme] = useState('')
   const [sessionPack, setSessionPack]   = useState('')

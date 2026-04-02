@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import usePageMeta from '../hooks/usePageMeta.js'
 
 // ─── Video snippets — original + voice-subtitled + narrated versions ─────────
 const VIDEOS = [
@@ -221,7 +222,10 @@ function VideoGallery() {
   )
 }
 
+
 export default function Funding() {
+  usePageMeta("Invest in DOWNFLOW", "Fund the infrastructure that grows real human capital. Sponsor cells, earn recognition, compound impact.")
+
   const [activeTier, setActiveTier] = useState(1)
   const [contactOpen, setContactOpen] = useState(false)
 

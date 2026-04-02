@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import usePageMeta from '../hooks/usePageMeta.js'
 
 /* ─────────────────────────────────────────────────────────
    AUTOMATED FUNNEL — 7-Step System
@@ -184,7 +185,10 @@ function StepCard({ step, role, active, onClick }) {
   )
 }
 
+
 export default function AutoFunnel() {
+  usePageMeta("Automated Funnel", "The DOWNFLOW 7-step acquisition and activation system - from ads to retention, fully automated.")
+
   const [role, setRole] = useState('facilitator')
   const [activeStep, setActiveStep] = useState(0)
 

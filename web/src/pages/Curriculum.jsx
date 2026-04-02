@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import MyVoiceStory from '../components/MyVoiceStory.jsx'
+import usePageMeta from '../hooks/usePageMeta.js'
 
 /* ─────────────────────────────────────────────────────────
    INVERTED EDUCATION MODEL DATA
@@ -461,7 +462,10 @@ function StageCard({ stage }) {
 /* ─────────────────────────────────────────────────────────
    MAIN PAGE
 ───────────────────────────────────────────────────────── */
+
 export default function Curriculum() {
+  usePageMeta("Curriculum", "Explore DOWNFLOW learning packs - Voice & Presence, Kidinomics, Systems Thinking and more.")
+
   const [activeFilter, setActiveFilter] = useState('all')
 
   const filtered = activeFilter === 'all'

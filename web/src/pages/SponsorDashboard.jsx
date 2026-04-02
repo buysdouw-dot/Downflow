@@ -3,6 +3,7 @@ import { HexIcon, HexSystemRow } from '../components/HexSymbols.jsx'
 import OnboardingBanner from '../components/OnboardingBanner.jsx'
 import { getCells, getSponsorships } from '../services/api.js'
 import DashboardShell from '../components/DashboardShell.jsx'
+import usePageMeta from '../hooks/usePageMeta.js'
 
 // ── Global Map ────────────────────────────────────────────────
 const CITIES = [
@@ -105,7 +106,10 @@ const GIFT_PACKS = [
   { emoji:'🧠', name:'Self-Awareness',   ages:'13–18', assigned:null,    status:'available' },
 ]
 
+
 export default function SponsorDashboard() {
+  usePageMeta("Sponsor Dashboard", "Fund learning cells, track student impact, and earn recognition. Sponsor-funded education that compounds.")
+
   const [activeTab, setActiveTab] = useState('overview')
   const [showOnboarding, setShowOnboarding] = useState(true)
   const [cells, setCells] = useState(CELLS_DATA)

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import usePageMeta from '../hooks/usePageMeta.js'
 
 const FLOW_ITEMS = [
   { from: 'Sponsor', to: 'Learning Cell', amount: '72,000,000 VND', pct: '100%', color: '#4de8b0', note: 'Full cycle funding — 12 weeks, 6 students' },
@@ -34,7 +35,10 @@ const RULES = [
   { icon: '🔄', rule: 'Rebate funds the next generation', desc: '15% of every cycle is reinvested — 9% into new cells, 6% into student coin wallets. The system grows itself.' },
 ]
 
+
 export default function Payments() {
+  usePageMeta("Payments", "Transparent payment flows - see how funds move from sponsors to facilitators to students.")
+
   const [activeTab, setActiveTab] = useState('overview')
 
   const txColor = (type) => type === 'sponsor' ? '#4de8b0' : type === 'rebate' ? '#d2ad44' : '#72d0ff'
