@@ -5,6 +5,7 @@ import { useAuth, DEMO_PERSONAS } from '../context/AuthContext.jsx'
 
 const NAV = [
   { to: '/', label: 'Home', exact: true },
+  { to: '/curriculum', label: 'Curriculum' },
   { to: '/sponsor', label: 'Sponsors' },
   { to: '/student', label: 'Students' },
   { to: '/facilitator', label: 'Facilitators' },

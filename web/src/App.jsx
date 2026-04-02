@@ -6,6 +6,7 @@ import StudentDashboard from './pages/StudentDashboard.jsx'
 import FacilitatorDashboard from './pages/FacilitatorDashboard.jsx'
 import ConnectorDashboard from './pages/ConnectorDashboard.jsx'
 import PlatformDashboard from './pages/PlatformDashboard.jsx'
+import Curriculum from './pages/Curriculum.jsx'
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/facilitator" element={<FacilitatorDashboard />} />
         <Route path="/connector" element={<ConnectorDashboard />} />
         <Route path="/platform" element={<PlatformDashboard />} />
+        <Route path="/curriculum" element={<Curriculum />} />
       </Route>
     </Routes>
   )
