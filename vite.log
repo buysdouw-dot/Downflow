@@ -1,55 +1,5 @@
 
-> web@0.0.0 dev
-> vite --host 0.0.0.0 --port 5173
+  VITE v7.3.1  ready in 125 ms
 
-
-  VITE v7.3.1  ready in 106 ms
-
-  ➜  Local:   http://localhost:5173/
-  ➜  Network: http://172.20.0.33:5173/
-5:38:51 AM [vite] (client) hmr update /src/App.jsx
-5:39:03 AM [vite] (client) hmr update /src/components/Layout.jsx
-5:40:20 AM [vite] (client) hmr update /src/style.css
-6:03:41 AM [vite] (client) hmr update /src/style.css
-6:04:07 AM [vite] (client) hmr update /src/pages/ConnectorDashboard.jsx
-6:04:18 AM [vite] (client) hmr update /src/pages/ConnectorDashboard.jsx
-6:04:51 AM [vite] (client) hmr update /src/pages/ConnectorDashboard.jsx
-6:05:28 AM [vite] (client) hmr update /src/pages/StudentDashboard.jsx
-6:05:56 AM [vite] (client) hmr update /src/pages/StudentDashboard.jsx
-6:06:43 AM [vite] (client) hmr update /src/pages/StudentDashboard.jsx
-6:11:56 AM [vite] (client) hmr update /src/pages/Curriculum.jsx
-6:12:56 AM [vite] (client) hmr update /src/style.css
-6:16:51 AM [vite] (client) hmr update /src/style.css
-6:17:06 AM [vite] (client) hmr update /src/pages/Curriculum.jsx
-6:17:18 AM [vite] (client) hmr update /src/pages/Curriculum.jsx
-6:18:08 AM [vite] (client) hmr update /src/pages/Home.jsx
-6:18:31 AM [vite] (client) hmr update /src/pages/Home.jsx
-6:25:55 AM [vite] (client) hmr update /src/pages/SponsorDashboard.jsx
-6:26:41 AM [vite] (client) hmr update /src/pages/SponsorDashboard.jsx
-6:27:17 AM [vite] (client) hmr update /src/pages/SponsorDashboard.jsx
-6:27:33 AM [vite] (client) hmr update /src/pages/SponsorDashboard.jsx
-6:28:28 AM [vite] (client) hmr update /src/pages/Home.jsx
-6:31:04 AM [vite] (client) hmr update /src/style.css
-6:43:01 AM [vite] (client) hmr update /src/pages/FacilitatorDashboard.jsx
-6:43:53 AM [vite] (client) hmr update /src/pages/FacilitatorDashboard.jsx
-6:44:30 AM [vite] (client) hmr update /src/pages/StudentDashboard.jsx
-6:44:55 AM [vite] (client) hmr update /src/pages/StudentDashboard.jsx
-6:45:06 AM [vite] (client) hmr update /src/App.jsx
-6:45:30 AM [vite] (client) hmr update /src/components/Layout.jsx
-6:45:48 AM [vite] (client) hmr update /src/components/Layout.jsx
-6:47:18 AM [vite] (client) hmr update /src/style.css
-6:51:11 AM [vite] (client) hmr update /src/pages/StudentDashboard.jsx
-6:52:11 AM [vite] (client) hmr update /src/pages/StudentDashboard.jsx
-6:52:45 AM [vite] (client) hmr update /src/pages/StudentDashboard.jsx
-6:54:01 AM [vite] (client) hmr update /src/pages/ConnectorDashboard.jsx
-6:55:00 AM [vite] (client) hmr update /src/pages/ConnectorDashboard.jsx
-6:55:16 AM [vite] (client) hmr update /src/pages/ConnectorDashboard.jsx
-6:56:04 AM [vite] (client) hmr update /src/pages/Home.jsx
-6:56:04 AM [vite] (client) hmr update /src/pages/PlatformDashboard.jsx
-6:56:04 AM [vite] (client) hmr update /src/pages/SponsorDashboard.jsx
-6:56:04 AM [vite] (client) hmr update /src/pages/Payments.jsx
-6:56:31 AM [vite] (client) hmr update /src/App.jsx
-6:56:39 AM [vite] (client) hmr update /src/components/Layout.jsx
-6:57:15 AM [vite] (client) hmr update /src/style.css
-7:02:59 AM [vite] (client) hmr update /src/pages/Payments.jsx
-7:03:12 AM [vite] (client) hmr update /src/pages/Payments.jsx
+  ➜  Local:   http://localhost:3000/
+  ➜  Network: http://172.20.0.37:3000/
