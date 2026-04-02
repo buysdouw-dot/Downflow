@@ -247,7 +247,7 @@ export default function StudentDashboard(){
         </div>
       </div>
       <div className="db-tabs">
-        {[['home','🏠 Home'],['packs','📦 My Packs'],['cell','🏫 My Cell'],['tools','🔗 My Tools'],['pathway','⬆️ Pathway']].map(([id,label])=>(
+        {[['home','🏠 Home'],['packs','📦 My Packs'],['coins','🪙 My Coins'],['cell','🏫 My Cell'],['tools','🔗 My Tools'],['parents','👨‍👩‍👧 Parents'],['pathway','⬆️ Pathway']].map(([id,label])=>(
           <button key={id} className={`db-tab${activeTab===id?' active':''}`} onClick={()=>setActiveTab(id)}>{label}</button>
         ))}
       </div>
@@ -297,6 +297,104 @@ export default function StudentDashboard(){
             </div>
           </div>
         )}
+        {activeTab==='coins'&&(
+          <div className="db-tab-content">
+            {/* Balance Hero */}
+            <div className="coins-hero-panel">
+              <div className="coins-ring-wrap">
+                <CoinRing coins={145} goal={200} color="#d2ad44"/>
+              </div>
+              <div className="coins-hero-info">
+                <h3 className="coins-hero-title">🪙 145 Coins</h3>
+                <p className="coins-hero-sub">55 away from your next unlock (200 coins = Systems Thinking pack)</p>
+                <div className="coins-hero-bars">
+                  {[['Packs unlocked with coins','3','#4de8b0'],['TA sessions booked','2','#72d0ff'],['Coins earned this cycle','145','#d2ad44']].map(([l,v,c])=>(
+                    <div key={l} style={{display:'flex',justifyContent:'space-between',fontSize:'0.82rem',padding:'0.35rem 0',borderBottom:'1px solid rgba(255,255,255,0.08)'}}>
+                      <span style={{color:'rgba(255,255,255,0.6)'}}>{l}</span>
+                      <strong style={{color:c}}>{v}</strong>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="two-col-grid" style={{marginTop:'1.5rem'}}>
+              {/* Earn */}
+              <div className="db-panel">
+                <h3 className="db-panel-title">⬆️ How to Earn Coins</h3>
+                <p style={{fontSize:'0.82rem',color:'var(--text-soft)',marginBottom:'1rem'}}>Coins are earned through participation — never bought. Every contribution is recognised.</p>
+                {[
+                  ['🎬','Submit a video rep','+5 coins','Per rep reviewed by your guider'],
+                  ['✅','Complete a challenge','+15 coins','Per micro-challenge completed'],
+                  ['🔥','7-session streak','+20 coins','Consistency bonus, auto-calculated'],
+                  ['💡','Helpful in session','+10 coins','Recognised by your Student Guider'],
+                  ['👥','Help a peer','+10 coins','When guider notes peer support'],
+                  ['📤','Content reused by another cell','+25 coins','One-time when your clip is reused'],
+                ].map(([icon,label,coins,note])=>(
+                  <div key={label} style={{display:'flex',gap:'0.75rem',padding:'0.65rem 0',borderBottom:'1px solid var(--bg-card-alt)',alignItems:'flex-start'}}>
+                    <span style={{fontSize:'1.1rem',flexShrink:0}}>{icon}</span>
+                    <div style={{flex:1}}>
+                      <strong style={{display:'block',fontSize:'0.84rem',color:'var(--navy)'}}>{label}</strong>
+                      <span style={{fontSize:'0.75rem',color:'var(--text-soft)'}}>{note}</span>
+                    </div>
+                    <span style={{fontWeight:800,color:'#4de8b0',fontSize:'0.88rem',flexShrink:0}}>{coins}</span>
+                  </div>
+                ))}
+                <div style={{marginTop:'1rem',padding:'0.75rem',background:'var(--green-pale)',border:'1px solid var(--green)',borderRadius:'8px',fontSize:'0.78rem',color:'var(--text-soft)'}}>
+                  ✅ Coins are learning credits only. They have no cash value and cannot be withdrawn.
+                </div>
+              </div>
+
+              {/* Spend */}
+              <div className="db-panel">
+                <h3 className="db-panel-title">🔓 What Coins Unlock</h3>
+                <p style={{fontSize:'0.82rem',color:'var(--text-soft)',marginBottom:'1rem'}}>Coins unlock optional depth and support — never core learning.</p>
+                {[
+                  {icon:'📦',label:'Extra pack depth',cost:'30–40',desc:'Unlock bonus exercises inside any content pack.',available:true},
+                  {icon:'👩‍🏫',label:'TA session (Vietnamese)',cost:'20',desc:'One extra session with a local-language Teacher Assistant.',available:true},
+                  {icon:'👨‍🏫',label:'TA session (German / Russian)',cost:'25',desc:'Extra session with your region\'s Teacher Assistant.',available:true},
+                  {icon:'🎓',label:'Premium mini-lesson',cost:'15',desc:'Unlock a best-moment lesson from the Content Engine.',available:true},
+                  {icon:'🏆',label:'Cell rankings',cost:'0',desc:'Rankings are public and free — coins never affect standing.',available:false,locked:true},
+                ].map(item=>(
+                  <div key={item.label} style={{display:'flex',gap:'0.75rem',padding:'0.7rem',marginBottom:'0.5rem',background:item.locked?'var(--bg-card-alt)':'var(--bg-page)',borderRadius:'10px',border:'1px solid var(--border)',alignItems:'flex-start',opacity:item.locked?0.6:1}}>
+                    <span style={{fontSize:'1.25rem',flexShrink:0}}>{item.icon}</span>
+                    <div style={{flex:1}}>
+                      <strong style={{display:'block',fontSize:'0.84rem',color:'var(--navy)'}}>{item.label}</strong>
+                      <p style={{margin:'0.2rem 0 0',fontSize:'0.75rem',color:'var(--text-soft)',lineHeight:1.5}}>{item.desc}</p>
+                    </div>
+                    {item.locked
+                      ? <span style={{fontSize:'0.7rem',color:'var(--text-muted)',fontStyle:'italic',flexShrink:0}}>Not for sale</span>
+                      : <span style={{fontWeight:800,color:'#d2ad44',fontSize:'0.88rem',flexShrink:0}}>🪙 {item.cost}</span>
+                    }
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Transaction history */}
+            <div className="db-panel" style={{marginTop:'1.5rem'}}>
+              <h3 className="db-panel-title">📋 Coin History</h3>
+              {[
+                ['🎬','Video rep — Pencil Proof Week 5','+5','2h ago'],
+                ['✅','Challenge: Teach an imaginary friend','+15','Yesterday'],
+                ['🔥','Weekly streak bonus (7 sessions)','+20','3 days ago'],
+                ['💡','Session contribution — recognised by guider','+10','5 days ago'],
+                ['👩‍🏫','TA session booked — Nguyen Thi Lan','-20','1 week ago'],
+                ['👥','Helped peer understand value exchange','+10','1 week ago'],
+                ['📦','Unlocked: Kidinomics extra depth','-35','2 weeks ago'],
+                ['🎬','Video rep — Pencil Proof Week 4','+5','2 weeks ago'],
+              ].map(([icon,label,coins,time])=>(
+                <div key={label} style={{display:'flex',gap:'0.75rem',padding:'0.6rem 0',borderBottom:'1px solid var(--bg-card-alt)',alignItems:'center',fontSize:'0.84rem'}}>
+                  <span style={{fontSize:'1rem',flexShrink:0}}>{icon}</span>
+                  <span style={{flex:1,color:'var(--navy)'}}>{label}</span>
+                  <span style={{fontWeight:700,color:coins.startsWith('+')?'#4de8b0':'#ff9f5a',minWidth:'48px',textAlign:'right'}}>{coins}</span>
+                  <span style={{color:'var(--text-muted)',fontSize:'0.75rem',minWidth:'70px',textAlign:'right'}}>{time}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {activeTab==='cell'&&(
           <CellGroupView />
         )}
@@ -369,6 +467,90 @@ export default function StudentDashboard(){
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab==='parents'&&(
+          <div className="db-tab-content">
+            <div className="two-col-grid">
+              {/* Parent account */}
+              <div className="db-panel">
+                <h3 className="db-panel-title">👨‍👩‍👧 Parent Account — Thi Huong (Mum)</h3>
+                <div style={{display:'flex',gap:'0.75rem',alignItems:'center',padding:'1rem',background:'var(--green-pale)',border:'1px solid var(--green)',borderRadius:'10px',marginBottom:'1.25rem'}}>
+                  <span style={{fontSize:'1.5rem'}}>✅</span>
+                  <div>
+                    <strong style={{display:'block',fontSize:'0.9rem',color:'var(--navy)'}}>Linked & Consented</strong>
+                    <span style={{fontSize:'0.78rem',color:'var(--text-soft)'}}>ClassDojo notifications active · Data sharing: minimal</span>
+                  </div>
+                </div>
+                {[
+                  ['Parent name','Nguyen Thi Huong'],
+                  ['Relationship','Mother'],
+                  ['Contact via','ClassDojo messages'],
+                  ['Consent level','Core programme + optional ClassDojo updates'],
+                  ['Sponsor data sharing','Opted out — family data protected'],
+                ].map(([k,v])=>(
+                  <div key={k} className="cell-info-row">
+                    <span>{k}</span>
+                    <strong style={{color:'var(--navy)',textAlign:'right',maxWidth:'200px'}}>{v}</strong>
+                  </div>
+                ))}
+              </div>
+
+              {/* Fees */}
+              <div className="db-panel">
+                <h3 className="db-panel-title">💸 Fees & Payments</h3>
+                <p style={{fontSize:'0.82rem',color:'var(--text-soft)',marginBottom:'1rem',lineHeight:1.6}}>
+                  Core learning is always free. The registration fee is a one-time onboarding fee. If no sponsor is available, families can pay tuition directly.
+                </p>
+                <div style={{display:'flex',flexDirection:'column',gap:'0.75rem'}}>
+                  {[
+                    {label:'Registration Fee',amount:'1,000,000 VND',status:'paid',note:'One-time onboarding. 50% kept by connector now, 50% after programme.'},
+                    {label:'Cycle Tuition (if no sponsor)',amount:'Sponsor covered ✓',status:'sponsored',note:'Cell VN-01 is fully funded by TechCorp VN. No family payment needed.'},
+                    {label:'Optional: TA Sessions',amount:'Pay per session',status:'optional',note:'50,000 VND / session or 20 coins. Never required.'},
+                    {label:'Optional: Extra Content',amount:'Pay per pack',status:'optional',note:'Unlock with coins or small payment. Core learning never locked.'},
+                  ].map(item=>(
+                    <div key={item.label} style={{padding:'0.85rem 1rem',background:'var(--bg-card-alt)',borderRadius:'10px',border:'1px solid var(--border)'}}>
+                      <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',gap:'0.5rem'}}>
+                        <strong style={{fontSize:'0.88rem',color:'var(--navy)'}}>{item.label}</strong>
+                        <span style={{
+                          fontSize:'0.7rem',fontWeight:700,padding:'0.2rem 0.55rem',borderRadius:'20px',flexShrink:0,
+                          background: item.status==='paid'?'#4de8b022':item.status==='sponsored'?'#72d0ff22':'#d2ad4422',
+                          color: item.status==='paid'?'#4de8b0':item.status==='sponsored'?'#72d0ff':'#a8843e',
+                          border: '1px solid currentColor',
+                        }}>
+                          {item.status==='paid'?'✓ Paid':item.status==='sponsored'?'✓ Sponsored':'○ Optional'}
+                        </span>
+                      </div>
+                      <p style={{margin:'0.3rem 0 0',fontSize:'0.8rem',color:'var(--blue)',fontWeight:600}}>{item.amount}</p>
+                      <p style={{margin:'0.2rem 0 0',fontSize:'0.75rem',color:'var(--text-soft)',lineHeight:1.5}}>{item.note}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Consent & transparency */}
+            <div className="db-panel" style={{marginTop:'1.5rem',background:'var(--navy)',border:'none'}}>
+              <h3 className="db-panel-title" style={{color:'#fff'}}>🛡️ What Parents See — and What They Never See</h3>
+              <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1.25rem',marginTop:'0.75rem'}}>
+                <div>
+                  <p style={{fontSize:'0.75rem',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.06em',color:'#4de8b0',marginBottom:'0.6rem'}}>✅ Parents can see</p>
+                  {['Session attendance (via ClassDojo)','General participation mood','Next session date and topic','How the coin system works','Fee breakdown and consent status'].map(i=>(
+                    <div key={i} style={{display:'flex',gap:'0.5rem',fontSize:'0.82rem',color:'rgba(255,255,255,0.6)',padding:'0.2rem 0'}}><span style={{color:'#4de8b0'}}>✓</span>{i}</div>
+                  ))}
+                </div>
+                <div>
+                  <p style={{fontSize:'0.75rem',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.06em',color:'#ff9f5a',marginBottom:'0.6rem'}}>🚫 Parents never see</p>
+                  {['Your individual coin balance','Your performance vs other students','Any sponsor identity or branding','Session recordings (unless you consent)','Ranking scores or comparison data'].map(i=>(
+                    <div key={i} style={{display:'flex',gap:'0.5rem',fontSize:'0.82rem',color:'rgba(255,255,255,0.45)',padding:'0.2rem 0'}}><span style={{color:'#ff9f5a'}}>✗</span>{i}</div>
+                  ))}
+                </div>
+              </div>
+              <p style={{marginTop:'1rem',fontSize:'0.8rem',color:'rgba(255,255,255,0.4)',lineHeight:1.6,borderTop:'1px solid rgba(255,255,255,0.08)',paddingTop:'0.75rem'}}>
+                Parents are guardians of trust — not customers. They support access and give consent. They are never responsible for rankings, sponsor satisfaction, or outcomes.
+              </p>
             </div>
           </div>
         )}

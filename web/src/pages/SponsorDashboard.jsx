@@ -396,7 +396,7 @@ export default function SponsorDashboard() {
                 </p>
                 <div className="flywheel-steps">
                   {[
-                    {n:'1',icon:'💼',label:'Sponsor funds cell',   detail:'5,000,000 VND → 12-week cycle for 5 students'},
+                    {n:'1',icon:'💼',label:'Sponsor funds cell',   detail:'5,000,000 VND → 12-week cycle for 6 students'},
                     {n:'2',icon:'🧑‍🎓',label:'Students participate', detail:'Video reps, sessions, micro-challenges, streaks'},
                     {n:'3',icon:'📊',label:'Data proves value',    detail:'Attendance, speaking scores, GPA, rep counts'},
                     {n:'4',icon:'💰',label:'Rebate returns',       detail:'15% back: 9% reinvest · 6% student coins'},
@@ -478,7 +478,7 @@ export default function SponsorDashboard() {
                   <div className="smodel-cell-box">
                     <span className="smodel-cell-icon">🏫</span>
                     <strong>1 Learning Cell</strong>
-                    {['5 students','1 facilitator','Fixed learning cycle (6–8 weeks)','Protected, non-commercial space'].map(i=>(
+                    {['6 students','1 facilitator','Fixed learning cycle (6–8 weeks)','Protected, non-commercial space'].map(i=>(
                       <span key={i} className="smodel-cell-item">→ {i}</span>
                     ))}
                   </div>
@@ -540,7 +540,7 @@ export default function SponsorDashboard() {
               <p className="smodel-body-text">Impact, not spend, defines status.</p>
               <div className="smodel-tiers-row">
                 {[
-                  { tier:'Learning Cell Partner', cells:1,  students:5,   color:'#72d0ff', icon:'🌱', desc:'Fund one complete learning environment. A full group of 5 students, 12 weeks, one facilitator.' },
+                  { tier:'Learning Cell Partner', cells:1,  students:5,   color:'#72d0ff', icon:'🌱', desc:'Fund one complete learning environment. A full group of 6 students, 12 weeks, one facilitator.' },
                   { tier:'Growth Partner',         cells:3,  students:15,  color:'#d2ad44', icon:'🌿', desc:'Three active cells running simultaneously. Your impact spans three communities.' },
                   { tier:'Impact Partner',         cells:10, students:50,  color:'#4de8b0', icon:'🌳', desc:'Ten cells. Fifty students. Your name leads the public leaderboard.' },
                 ].map(t=>(

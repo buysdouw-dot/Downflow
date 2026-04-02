@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 const FLOW_ITEMS = [
-  { from: 'Sponsor', to: 'Learning Cell', amount: '72,000,000 VND', pct: '100%', color: '#4de8b0', note: 'Full cycle funding — 12 weeks, 5 students' },
+  { from: 'Sponsor', to: 'Learning Cell', amount: '72,000,000 VND', pct: '100%', color: '#4de8b0', note: 'Full cycle funding — 12 weeks, 6 students' },
   { from: 'Cell Fund', to: 'Facilitator', amount: '18,000,000 VND', pct: '25%', color: '#72d0ff', note: 'Compensation for running 24 sessions' },
   { from: 'Cell Fund', to: 'Connector', amount: '25,200,000 VND', pct: '35%', color: '#ff9f5a', note: 'Registration share + lesson quality share' },
   { from: 'Cell Fund', to: 'Platform Reserve', amount: '18,000,000 VND', pct: '25%', color: '#b083ff', note: 'Operations, infrastructure, maintenance' },
@@ -92,7 +92,7 @@ export default function Payments() {
             <div className="db-panel" style={{ marginBottom: '1.5rem' }}>
               <h3 className="db-panel-title">💸 Where Every VND Goes</h3>
               <p style={{ fontSize: '0.84rem', color: 'var(--text-soft)', marginBottom: '1.5rem' }}>
-                Per cycle · 12 weeks · 5 students · 1 cell. Every split is fixed and transparent.
+                Per cycle · 12 weeks · 6 students · 1 cell. Every split is fixed and transparent.
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
                 {FLOW_ITEMS.map(item => (

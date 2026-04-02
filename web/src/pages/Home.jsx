@@ -264,7 +264,7 @@ export default function Home() {
       <section className="section" id="structure">
         <div className="section-head"><p className="kicker">Role Architecture</p><h2>The Downflow Structure</h2></div>
         <div className="ladder">
-          {['🏦 Sponsors (fund capacity, compete on impact)','🔗 Connectors (form cells, earn on quality)','🧭 Facilitators (run sessions, protect safety)','⭐ Student Guiders (lead cells, grow into facilitators)','🏫 Learning Cells (5 students · 12-week cycles)'].map(l=><div key={l}>{l}</div>)}
+          {['🏦 Sponsors (fund capacity, compete on impact)','🔗 Connectors (form cells, earn on quality)','🧭 Facilitators (run sessions, protect safety)','⭐ Student Guiders (lead cells, grow into facilitators)','🏫 Learning Cells (6 students · 12-week cycles)'].map(l=><div key={l}>{l}</div>)}
         </div>
         <p className="supporting">Each level teaches the level below. Pressure never flows upward. Value always flows downward.</p>
       </section>
@@ -324,7 +324,7 @@ export default function Home() {
           <div style={{background:'var(--bg-card)',border:'1.5px solid var(--border)',borderRadius:'var(--radius-sm)',padding:'1.25rem'}}>
             <strong style={{display:'block',fontSize:'0.88rem',color:'var(--navy)',marginBottom:'0.75rem'}}>🌿 Partner Tiers — Based on Cells, Not Spend</strong>
             <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'0.5rem'}}>
-              {[['🌱','Learning Cell Partner','1 cell · 5 students','#72d0ff'],['🌿','Growth Partner','3 cells · 15 students','#d2ad44'],['🌳','Impact Partner','10 cells · 50 students','#4de8b0']].map(([icon,name,nums,color])=>(
+              {[['🌱','Learning Cell Partner','1 cell · 6 students','#72d0ff'],['🌿','Growth Partner','3 cells · 16 students','#d2ad44'],['🌳','Impact Partner','10 cells · 60 students','#4de8b0']].map(([icon,name,nums,color])=>(
                 <div key={name} style={{textAlign:'center',padding:'0.75rem',background:color+'0f',border:`1px solid ${color}40`,borderRadius:'8px'}}>
                   <span style={{fontSize:'1.4rem',display:'block'}}>{icon}</span>
                   <strong style={{fontSize:'0.75rem',display:'block',color:'var(--navy)',marginTop:'0.25rem'}}>{name}</strong>
@@ -553,7 +553,7 @@ export default function Home() {
         </p>
         <div className="sponsor-values-row">
           {[
-            {icon:'💛', title:'Meaningful', desc:'Your funding directly enables a cell of 5 students for a full 12-week cycle. You see every rep, every session, every milestone.'},
+            {icon:'💛', title:'Meaningful', desc:'Your funding directly enables a cell of 6 students for a full 12-week cycle. You see every rep, every session, every milestone.'},
             {icon:'📊', title:'Clear Impact', desc:'Weekly progress reports. Cell GPA, attendance, video submissions, and succession data. No abstractions — only verified performance.'},
             {icon:'🏆', title:'Trusted Oversight', desc:'The platform enforces all ethical boundaries automatically. Your brand is never at risk. Your involvement is recognised on the public leaderboard.'},
           ].map(v=>(

@@ -12,7 +12,7 @@ const SYSTEM_STATS = [
 ]
 
 const ALERTS = [
-  { id: 1, type: 'participation', cell: 'VN-03', msg: 'Participation drop detected — 3 of 5 students below threshold this week.', urgent: true, action: 'Freeze Rankings' },
+  { id: 1, type: 'participation', cell: 'VN-03', msg: 'Participation drop detected — 3 of 6 students below threshold this week.', urgent: true, action: 'Freeze Rankings' },
   { id: 2, type: 'connector', cell: 'DE-01', msg: 'Connector submitted cell with only 4 students. Requires approval or correction.', urgent: false, action: 'Review Cell' },
 ]
 

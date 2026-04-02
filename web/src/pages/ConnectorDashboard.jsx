@@ -15,23 +15,66 @@ const CONNECTOR_RANKINGS = [
 ]
 
 const MY_CELLS = [
-  { id: 'VN-01', region: 'Hanoi, Vietnam', students: 5, facilitator: 'Phuong V.', week: 7, health: 92, status: 'active', regPaid: true, lessonShare: 1200000, regShare: 1200000 },
-  { id: 'VN-03', region: 'Ho Chi Minh City', students: 5, facilitator: 'Linh T.', week: 3, health: 74, status: 'active', regPaid: true, lessonShare: 480000, regShare: 1200000 },
+  { id: 'VN-01', region: 'Hanoi, Vietnam', students: 6, facilitator: 'Phuong V.', week: 7, health: 92, status: 'active', regPaid: true, lessonShare: 1200000, regShare: 1200000 },
+  { id: 'VN-03', region: 'Ho Chi Minh City', students: 6, facilitator: 'Linh T.', week: 3, health: 74, status: 'active', regPaid: true, lessonShare: 480000, regShare: 1200000 },
   { id: 'VN-05', region: 'Da Nang, Vietnam', students: 4, facilitator: 'Pending', week: 0, health: 0, status: 'draft', regPaid: false, lessonShare: 0, regShare: 0 },
 ]
 
+// Blueprint: 30% of cell tuition in 3 tranches + 50% of registration fee
+// Cell tuition = 24,000,000 VND → 30% = 7,200,000 VND total
+// Reg fee per student = 1,000,000 VND × 6 = 6,000,000 → 50% = 3,000,000 VND
 const EARN_RULES = [
-  { icon: '📋', label: 'Registration share (1% of cell value)', timing: 'On onboarding completion', vnd: '1,200,000', note: 'Per cell, one-time' },
-  { icon: '📅', label: 'Lesson share — activation (5%)', timing: 'After cell launches', vnd: '1,200,000', note: 'Per cell, on start' },
-  { icon: '✅', label: 'Lesson share — stability (5%)', timing: 'After stability confirmed', vnd: '1,200,000', note: 'Attendance + health + output' },
+  {
+    icon: '📋',
+    label: 'Registration fee share (50%)',
+    timing: '50% upfront on onboarding · 50% after programme (month 3)',
+    vnd: '3,000,000',
+    breakdown: '50% now: 1,500,000 · 50% at close: 1,500,000',
+    note: '6 students × 1,000,000 VND reg fee × 50%',
+    color: '#72d0ff',
+  },
+  {
+    icon: '🚀',
+    label: 'Tuition share — Tranche 1 (33%)',
+    timing: 'On cell launch',
+    vnd: '2,376,000',
+    breakdown: '33% of 30% of 24,000,000 VND tuition',
+    note: 'Paid when cell launches with 6 confirmed students',
+    color: '#4de8b0',
+  },
+  {
+    icon: '✅',
+    label: 'Tuition share — Tranche 2 (33%)',
+    timing: 'After 1 month stability confirmed',
+    vnd: '2,376,000',
+    breakdown: '33% of 30% of 24,000,000 VND tuition',
+    note: 'Requires: consistent attendance + healthy participation + no ethical flags',
+    color: '#d2ad44',
+  },
+  {
+    icon: '🏁',
+    label: 'Tuition share — Tranche 3 (34%)',
+    timing: 'After month 2 (week 8)',
+    vnd: '2,448,000',
+    breakdown: '34% of 30% of 24,000,000 VND tuition',
+    note: 'Requires: reusable output produced + growth confirmed',
+    color: '#b083ff',
+  },
+]
+
+const STABILITY_CRITERIA = [
+  { icon: '📅', label: 'Consistent attendance', desc: 'All 6 students attending at least 80% of sessions' },
+  { icon: '💬', label: 'Healthy participation', desc: 'Active engagement measured by facilitator weekly report' },
+  { icon: '🛡️', label: 'No ethical flags', desc: 'No pressure, coercion, or consent anomalies detected' },
+  { icon: '📤', label: 'Reusable output produced', desc: 'At least one lesson clip submitted to Content Engine' },
 ]
 
 const ETHICS_RULES = [
-  'You do not teach. You do not handle cash.',
+  'You do not teach. You do not handle cash directly.',
   'You do not pressure families. Consent must be genuine.',
-  'You earn on quality, not volume.',
-  'Rushed or forced cells lose the stability payout.',
-  'Happy connectors keep the system alive.',
+  'You earn on quality, not volume. Rushed cells lose tranche 2 and 3.',
+  'You cannot see student identities, recordings, or individual performance.',
+  'Happy connectors create stable cells. Stable cells create happy sponsors.',
 ]
 
 function CellStatusBadge({ status }) {
@@ -201,49 +244,73 @@ export default function ConnectorDashboard() {
 
         {activeTab === 'earnings' && (
           <div className="db-tab-content">
+
+            {/* Blueprint payout model */}
+            <div className="db-panel" style={{ marginBottom: '1.5rem' }}>
+              <h3 className="db-panel-title">💰 How You Earn — Per Cell</h3>
+              <p style={{ fontSize: '0.84rem', color: 'var(--text-soft)', marginBottom: '1.25rem', lineHeight: 1.6 }}>
+                Per cell of 6 students · One 12-week cycle · 24,000,000 VND tuition
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                {EARN_RULES.map(rule => (
+                  <div key={rule.label} style={{ display: 'flex', gap: '1rem', padding: '1rem 1.1rem', background: 'var(--bg-card-alt)', borderRadius: '12px', borderLeft: `4px solid ${rule.color}`, alignItems: 'flex-start' }}>
+                    <span style={{ fontSize: '1.4rem', flexShrink: 0 }}>{rule.icon}</span>
+                    <div style={{ flex: 1 }}>
+                      <strong style={{ display: 'block', fontSize: '0.9rem', color: 'var(--navy)', marginBottom: '0.2rem' }}>{rule.label}</strong>
+                      <span style={{ fontSize: '0.75rem', color: rule.color, fontWeight: 700, display: 'block', marginBottom: '0.15rem' }}>Timing: {rule.timing}</span>
+                      <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block' }}>{rule.note}</span>
+                    </div>
+                    <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                      <strong style={{ color: '#d2ad44', fontSize: '1rem', display: 'block' }}>{rule.vnd} VND</strong>
+                      <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>{rule.breakdown}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ marginTop: '1rem', padding: '0.85rem 1.1rem', background: 'var(--gold-pale)', border: '1px solid var(--gold)', borderRadius: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <strong style={{ color: 'var(--navy)' }}>Total per cell (full cycle)</strong>
+                <div style={{ textAlign: 'right' }}>
+                  <strong style={{ fontSize: '1.4rem', color: '#a8843e', display: 'block' }}>10,200,000 VND</strong>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Reg: 3,000,000 + Tuition: 7,200,000</span>
+                </div>
+              </div>
+            </div>
+
             <div className="two-col-grid">
               <div className="db-panel">
-                <h3 className="db-panel-title">💰 Earnings Breakdown</h3>
-                <div className="cycle-bars" style={{ gap: '1.2rem' }}>
-                  {MY_CELLS.filter(c => c.status === 'active').map(cell => (
-                    <div key={cell.id}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.4rem', fontSize: '0.85rem' }}>
-                        <strong>{cell.id}</strong>
-                        <span style={{ color: '#d2ad44' }}>{((cell.regShare + cell.lessonShare)/1000).toFixed(0)}k VND</span>
-                      </div>
-                      <div className="sp-bar-track">
-                        <div className="sp-bar-fill" style={{ width: `${((cell.regShare + cell.lessonShare) / 3600000) * 100}%`, background: '#d2ad44' }} />
-                      </div>
-                      <p style={{ fontSize: '0.75rem', color: 'var(--text-soft)', marginTop: '0.3rem' }}>
-                        {((cell.regShare + cell.lessonShare) / 3600000 * 100).toFixed(0)}% of full cycle earnings
-                      </p>
+                <h3 className="db-panel-title">✅ Stability Criteria (Tranche 2 & 3)</h3>
+                <p style={{ fontSize: '0.82rem', color: 'var(--text-soft)', marginBottom: '1rem' }}>These must be met to unlock tranches 2 and 3. The system auto-checks weekly.</p>
+                {STABILITY_CRITERIA.map(s => (
+                  <div key={s.label} style={{ display: 'flex', gap: '0.75rem', padding: '0.65rem 0', borderBottom: '1px solid var(--bg-card-alt)' }}>
+                    <span style={{ fontSize: '1.1rem', flexShrink: 0 }}>{s.icon}</span>
+                    <div>
+                      <strong style={{ display: 'block', fontSize: '0.84rem', color: 'var(--navy)' }}>{s.label}</strong>
+                      <span style={{ fontSize: '0.76rem', color: 'var(--text-soft)' }}>{s.desc}</span>
                     </div>
-                  ))}
-                </div>
-                <div style={{ borderTop: '1px solid var(--border-soft)', marginTop: '1.5rem', paddingTop: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <strong>Total earned (all cells)</strong>
-                  <span style={{ fontSize: '1.4rem', fontWeight: 800, color: '#d2ad44' }}>{(totalEarned/1000).toFixed(0)}k VND</span>
-                </div>
+                  </div>
+                ))}
               </div>
 
               <div className="db-panel">
-                <h3 className="db-panel-title">📅 Payout Timeline</h3>
+                <h3 className="db-panel-title">📅 Payout Timeline — My Cells</h3>
                 <div className="milestone-list">
                   {[
-                    { icon: '✅', label: 'VN-01 Registration share', amount: '1,200k', date: 'Mar 1', type: 'milestone' },
-                    { icon: '✅', label: 'VN-01 Activation payout', amount: '1,200k', date: 'Mar 8', type: 'milestone' },
-                    { icon: '✅', label: 'VN-03 Registration share', amount: '1,200k', date: 'Mar 20', type: 'milestone' },
-                    { icon: '⏳', label: 'VN-01 Stability payout', amount: '1,200k', date: 'Apr 12 (est.)', type: 'review' },
-                    { icon: '⏳', label: 'VN-03 Activation payout', amount: '1,200k', date: 'Apr 18 (est.)', type: 'task' },
-                    { icon: '🔒', label: 'VN-05 All payouts', amount: '3,600k', date: 'Pending activation', type: 'unlock' },
+                    { icon: '✅', label: 'VN-01 — Reg share (50% upfront)', amount: '1,500k', date: 'Mar 1', type: 'milestone' },
+                    { icon: '✅', label: 'VN-01 — Tranche 1 (cell launch)', amount: '2,376k', date: 'Mar 8', type: 'milestone' },
+                    { icon: '✅', label: 'VN-03 — Reg share (50% upfront)', amount: '1,500k', date: 'Mar 20', type: 'milestone' },
+                    { icon: '✅', label: 'VN-03 — Tranche 1 (cell launch)', amount: '2,376k', date: 'Mar 28', type: 'milestone' },
+                    { icon: '⏳', label: 'VN-01 — Tranche 2 (stability ✓)', amount: '2,376k', date: 'Apr 12 est.', type: 'review' },
+                    { icon: '⏳', label: 'VN-03 — Tranche 2 (stability ✓)', amount: '2,376k', date: 'Apr 28 est.', type: 'review' },
+                    { icon: '🔒', label: 'VN-01 — Tranche 3 (week 8)', amount: '2,448k', date: 'May 10 est.', type: 'task' },
+                    { icon: '🔒', label: 'VN-05 — All payouts', amount: '10,200k', date: 'Pending launch', type: 'unlock' },
                   ].map((m, i) => (
                     <div key={i} className="milestone-row">
                       <span className={`milestone-dot ${m.type}`}/>
                       <div style={{ flex: 1 }}>
-                        <strong style={{ fontSize: '0.86rem' }}>{m.icon} {m.label}</strong>
+                        <strong style={{ fontSize: '0.83rem' }}>{m.icon} {m.label}</strong>
                         <span className="milestone-date" style={{ display: 'block' }}>{m.date}</span>
                       </div>
-                      <span style={{ color: '#d2ad44', fontWeight: 700, fontSize: '0.85rem' }}>{m.amount} VND</span>
+                      <span style={{ color: '#d2ad44', fontWeight: 700, fontSize: '0.82rem', flexShrink: 0 }}>{m.amount}</span>
                     </div>
                   ))}
                 </div>
@@ -266,8 +333,8 @@ export default function ConnectorDashboard() {
 
               {formStep === 1 && (
                 <div className="session-builder">
-                  <p style={{ color: 'var(--text-soft)', fontSize: '0.88rem', marginBottom: '1rem' }}>A Learning Cell requires exactly 5 students. Add their details below. Student identities are kept private — only parents can link identities.</p>
-                  {[1,2,3,4,5].map(n => (
+                  <p style={{ color: 'var(--text-soft)', fontSize: '0.88rem', marginBottom: '1rem' }}>A Learning Cell requires exactly 6 students. Add their details below. Student identities are kept private — only parents can link identities.</p>
+                  {[1,2,3,4,5,6].map(n => (
                     <div key={n} className="sb-field">
                       <label>Student {n} — Avatar Name</label>
                       <input className="sb-input" placeholder={`e.g. StarFox_0${n}`} />

@@ -13,6 +13,7 @@ const NAV = [
   { to: '/facilitator', label: 'Facilitators' },
   { to: '/connector', label: 'Connectors' },
   { to: '/payments', label: 'Payments' },
+  { to: '/assistants', label: 'Assistants' },
   { to: '/platform', label: 'Platform' },
 ]
 
