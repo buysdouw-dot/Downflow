@@ -23,6 +23,7 @@ import RoleLanding from './pages/RoleLanding.jsx'
 import AutoFunnel from './pages/AutoFunnel.jsx'
 import Login from './pages/Login.jsx'
 import Integrations from './pages/Integrations.jsx'
+import SessionRecordings from './pages/SessionRecordings.jsx'
 
 export default function App() {
   return (
@@ -51,6 +52,7 @@ export default function App() {
         <Route path="/join" element={<RoleLanding />} />
         <Route path="/auto-funnel" element={<AutoFunnel />} />
         <Route path="/integrations" element={<Integrations />} />
+        <Route path="/recordings" element={<SessionRecordings />} />
       </Route>
     </Routes>
   )

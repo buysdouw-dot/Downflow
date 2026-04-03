@@ -50,6 +50,7 @@ const NAV_GROUPS = [
       { to: '/facilitator-onboarding',label: '📄 Contract' },
       { to: '/assistants',            label: 'Assistants' },
       { to: '/integrations',          label: '🔗 Integrations' },
+      { to: '/recordings',            label: '📹 Recordings' },
     ]
   },
 ]
