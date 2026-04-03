@@ -113,9 +113,15 @@ function CellGroupView() {
                 <div className="ns-info">
                   <strong>Live Learning Cell · VN-01</strong>
                   <p>Theme: <em>Effort & Reward</em> — Kidinomics Wk 7</p>
-                  <p style={{color:'var(--text-soft)',fontSize:'0.85rem'}}>4:00 PM · 60 min · Google Meet</p>
+                  <p style={{color:'var(--text-soft)',fontSize:'0.85rem',marginBottom:'0.5rem'}}>4:00 PM · 60 min</p>
+                  <div style={{display:'flex',gap:'0.4rem',flexWrap:'wrap'}}>
+                    <a href="https://meet.google.com/abc-defg-hij" target="_blank" rel="noreferrer" className="btn-join-meet">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style={{flexShrink:0}}><path d="M15 10.5L19.5 7.5V16.5L15 13.5V10.5Z" fill="#00897B"/><rect x="4" y="7.5" width="11" height="9" rx="2" fill="#00BCD4"/></svg>
+                      Join Meet
+                    </a>
+                    <a href="https://www.classdojo.com" target="_blank" rel="noreferrer" className="btn-join-dojo">🎯 ClassDojo</a>
+                  </div>
                 </div>
-                <button className="btn btn-primary btn-sm">Join →</button>
               </div>
             </div>
             <div className="db-panel">
@@ -444,9 +450,15 @@ export default function StudentDashboard() {
                     <div key={s.step} className="integration-flow-row"><span>{s.icon}</span><span>{s.step}</span></div>
                   ))}
                 </div>
-                <a href="https://meet.google.com" target="_blank" rel="noreferrer" className="btn btn-primary" style={{marginTop:'1.25rem',display:'inline-block'}}>
-                  Join Session →
-                </a>
+                <div style={{display:'flex',gap:'0.6rem',marginTop:'1.25rem',flexWrap:'wrap'}}>
+                  <a href="https://meet.google.com/abc-defg-hij" target="_blank" rel="noreferrer" className="btn-join-meet" style={{fontSize:'0.85rem',padding:'0.5rem 1.1rem'}}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style={{flexShrink:0}}><path d="M15 10.5L19.5 7.5V16.5L15 13.5V10.5Z" fill="#00897B"/><rect x="4" y="7.5" width="11" height="9" rx="2" fill="#00BCD4"/></svg>
+                    Join VN-01 Session →
+                  </a>
+                  <a href="https://www.classdojo.com" target="_blank" rel="noreferrer" className="btn btn-secondary btn-sm">
+                    🎯 Open ClassDojo →
+                  </a>
+                </div>
               </div>
             </div>
 

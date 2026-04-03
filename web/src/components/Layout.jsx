@@ -49,6 +49,7 @@ const NAV_GROUPS = [
       { to: '/facilitator-app',       label: '📱 Facilitator App' },
       { to: '/facilitator-onboarding',label: '📄 Contract' },
       { to: '/assistants',            label: 'Assistants' },
+      { to: '/integrations',          label: '🔗 Integrations' },
     ]
   },
 ]
@@ -108,6 +109,21 @@ export default function Layout() {
             <NavGroup key={g.label} group={g} currentPath={pathname} />
           ))}
         </nav>
+
+        {/* Integration quick-join buttons */}
+        <div className="topbar-integrations">
+          <a href="https://meet.google.com" target="_blank" rel="noreferrer" className="topbar-meet-btn" title="Join Google Meet session">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+              <path d="M15 10.5L19.5 7.5V16.5L15 13.5V10.5Z" fill="#00897B"/>
+              <rect x="4" y="7.5" width="11" height="9" rx="2" fill="#00BCD4"/>
+            </svg>
+            <span>Join Session</span>
+          </a>
+          <a href="https://www.classdojo.com" target="_blank" rel="noreferrer" className="topbar-dojo-btn" title="Open ClassDojo">
+            <span>🎯</span>
+            <span>ClassDojo</span>
+          </a>
+        </div>
 
         {/* Pay / Sponsor CTA */}
         <Link to="/funding" className="topbar-pay-btn">Sponsor Now</Link>

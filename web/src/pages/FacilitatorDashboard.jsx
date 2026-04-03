@@ -7,10 +7,10 @@ import { HexIcon } from '../components/HexSymbols.jsx'
 import usePageMeta from '../hooks/usePageMeta.js'
 
 const CELLS = [
-  { id:'VN-01', region:'Hanoi 🇻🇳', sg:'Minh P.', students:5, week:7, health:92, streak:7, packs:['✏️ Pencil Proof','🗣️ Voice'], status:'active' },
-  { id:'VN-02', region:'HCMC 🇻🇳',  sg:'Linh T.', students:5, week:3, health:74, streak:4, packs:['💰 Kidinomics','🧩 Systems'], status:'active' },
-  { id:'VN-03', region:'Da Nang 🇻🇳',sg:'Hoa N.', students:5, week:5, health:58, streak:2, packs:['🎯 Confidence','🛠️ Life Skills'], status:'flagged' },
-  { id:'DE-01', region:'Berlin 🇩🇪',  sg:'Felix K.', students:5, week:11, health:88, streak:9, packs:['🗣️ Voice','🧠 Self-Awareness'], status:'completing' },
+  { id:'VN-01', region:'Hanoi 🇻🇳', sg:'Minh P.', students:5, week:7, health:92, streak:7, packs:['✏️ Pencil Proof','🗣️ Voice'], status:'active', meetLink:'https://meet.google.com/abc-defg-hij', dojoCode:'STAR7X' },
+  { id:'VN-02', region:'HCMC 🇻🇳',  sg:'Linh T.', students:5, week:3, health:74, streak:4, packs:['💰 Kidinomics','🧩 Systems'], status:'active', meetLink:'https://meet.google.com/kln-mnop-qrs', dojoCode:'MOON3K' },
+  { id:'VN-03', region:'Da Nang 🇻🇳',sg:'Hoa N.', students:5, week:5, health:58, streak:2, packs:['🎯 Confidence','🛠️ Life Skills'], status:'flagged', meetLink:'https://meet.google.com/tuv-wxyz-123', dojoCode:'WAVE2Q' },
+  { id:'DE-01', region:'Berlin 🇩🇪',  sg:'Felix K.', students:5, week:11, health:88, streak:9, packs:['🗣️ Voice','🧠 Self-Awareness'], status:'completing', meetLink:'https://meet.google.com/456-ghij-klm', dojoCode:'SUN9P' },
 ]
 
 const SGS = [
@@ -110,14 +110,24 @@ export default function FacilitatorDashboard() {
               <div className="db-panel">
                 <h3 className="db-panel-title">📅 Upcoming Sessions</h3>
                 {[
-                  {cell:'VN-01',theme:'Voice & Confidence',day:'WED',num:'9',time:'4:00 PM'},
-                  {cell:'VN-02',theme:'Value Creation',day:'THU',num:'10',time:'5:00 PM'},
-                  {cell:'DE-01',theme:'Final Reflection',day:'FRI',num:'11',time:'3:00 PM'},
+                  {cell:'VN-01',theme:'Voice & Confidence',day:'WED',num:'9',time:'4:00 PM', meetLink:'https://meet.google.com/abc-defg-hij', dojoCode:'STAR7X'},
+                  {cell:'VN-02',theme:'Value Creation',day:'THU',num:'10',time:'5:00 PM', meetLink:'https://meet.google.com/kln-mnop-qrs', dojoCode:'MOON3K'},
+                  {cell:'DE-01',theme:'Final Reflection',day:'FRI',num:'11',time:'3:00 PM', meetLink:'https://meet.google.com/456-ghij-klm', dojoCode:'SUN9P'},
                 ].map(s=>(
                   <div key={s.cell} className="next-session" style={{marginBottom:'0.75rem'}}>
                     <div className="ns-date"><span className="ns-day">{s.day}</span><span className="ns-num">{s.num}</span></div>
-                    <div className="ns-info"><strong>{s.cell} · {s.theme}</strong><p style={{color:'var(--text-soft)',fontSize:'0.82rem',margin:'0.2rem 0 0'}}>{s.time} · 60 min · Google Meet</p></div>
-                    <button className="btn btn-primary btn-sm">Prepare</button>
+                    <div className="ns-info">
+                      <strong>{s.cell} · {s.theme}</strong>
+                      <p style={{color:'var(--text-soft)',fontSize:'0.82rem',margin:'0.2rem 0 0.4rem'}}>{s.time} · 60 min</p>
+                      <div style={{display:'flex',gap:'0.4rem',flexWrap:'wrap'}}>
+                        <a href={s.meetLink} target="_blank" rel="noreferrer" className="btn-join-meet">
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style={{flexShrink:0}}><path d="M15 10.5L19.5 7.5V16.5L15 13.5V10.5Z" fill="#00897B"/><rect x="4" y="7.5" width="11" height="9" rx="2" fill="#00BCD4"/></svg>
+                          Start Meet
+                        </a>
+                        <a href="https://www.classdojo.com" target="_blank" rel="noreferrer" className="btn-join-dojo">🎯 Dojo</a>
+                      </div>
+                    </div>
+                    <button className="btn btn-secondary btn-sm">Prepare</button>
                   </div>
                 ))}
               </div>

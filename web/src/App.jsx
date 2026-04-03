@@ -22,6 +22,7 @@ import SocialAds from './pages/SocialAds.jsx'
 import RoleLanding from './pages/RoleLanding.jsx'
 import AutoFunnel from './pages/AutoFunnel.jsx'
 import Login from './pages/Login.jsx'
+import Integrations from './pages/Integrations.jsx'
 
 export default function App() {
   return (
@@ -49,6 +50,7 @@ export default function App() {
         <Route path="/social-ads" element={<SocialAds />} />
         <Route path="/join" element={<RoleLanding />} />
         <Route path="/auto-funnel" element={<AutoFunnel />} />
+        <Route path="/integrations" element={<Integrations />} />
       </Route>
     </Routes>
   )
