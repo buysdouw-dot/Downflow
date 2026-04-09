@@ -1,0 +1,681 @@
+/* ═══════════════════════════════════════════════════════
+   FUNDING / SPONSOR PROPOSAL PAGE
+   ═══════════════════════════════════════════════════════ */
+
+.fund-page {
+  width: 100%;
+}
+
+/* ── Hero ── */
+.fund-hero {
+  position: relative;
+  min-height: 92vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.fund-hero-img-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.fund-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+}
+.fund-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(5,10,8,0.88) 0%, rgba(5,10,8,0.65) 60%, rgba(5,10,8,0.82) 100%);
+}
+.fund-hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+  padding: 6rem 2.5rem 4rem;
+  margin: 0 auto;
+  text-align: center;
+}
+.fund-hero-title {
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.1;
+  margin: 0.75rem 0 1rem;
+  letter-spacing: -0.02em;
+}
+.fund-hero-sub {
+  font-size: 1.15rem;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 2rem;
+  letter-spacing: 0.04em;
+}
+.fund-hero-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+.btn-lg {
+  padding: 0.85rem 2rem;
+  font-size: 1rem;
+}
+.fund-hero-stats {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.12);
+}
+.fund-hero-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.fund-hero-stat strong {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #d2ad44;
+}
+.fund-hero-stat span {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ── Sections ── */
+.fund-section {
+  padding: 5rem 0;
+}
+.fund-section-alt {
+  background: var(--bg-card-alt);
+}
+.fund-section-dark {
+  background: var(--navy);
+}
+.fund-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+.fund-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+.fund-two-col-reverse {
+  direction: rtl;
+}
+.fund-two-col-reverse > * {
+  direction: ltr;
+}
+.fund-center-header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 3rem;
+}
+.fund-section-kicker {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #4de8b0;
+  margin: 0 0 0.6rem;
+}
+.fund-section-title {
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 900;
+  color: var(--navy);
+  line-height: 1.15;
+  margin: 0 0 0.75rem;
+}
+.fund-section-lead {
+  font-size: 1rem;
+  color: var(--text-soft);
+  margin: 0;
+  line-height: 1.7;
+}
+
+/* ── Slide images ── */
+.fund-slide-wrap {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+  border: 1.5px solid var(--border);
+}
+.fund-slide-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.fund-slide-lg { max-width: 560px; width: 100%; }
+.fund-slide-md { max-width: 480px; width: 100%; margin: 0 auto; }
+
+/* ── Problem section ── */
+.fund-problem-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+.fund-problem-item {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  font-size: 0.9rem;
+  color: var(--text-soft);
+  line-height: 1.5;
+}
+.fund-problem-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4de8b0;
+  flex-shrink: 0;
+  margin-top: 0.4rem;
+}
+.fund-callout {
+  padding: 1.1rem 1.4rem;
+  background: var(--navy);
+  border-radius: 12px;
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.7;
+  border-left: 4px solid #4de8b0;
+}
+.fund-callout strong { color: #4de8b0; }
+
+/* ── Cell stats ── */
+.fund-cell-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+.fund-cell-stat {
+  padding: 0.85rem 1rem;
+  background: var(--bg-card);
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.fund-cell-stat strong {
+  font-size: 1.05rem;
+  font-weight: 900;
+}
+.fund-cell-stat span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.fund-badge-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.fund-badge {
+  padding: 0.3rem 0.75rem;
+  background: #4de8b022;
+  border: 1px solid #4de8b044;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #4de8b0;
+  letter-spacing: 0.04em;
+}
+
+/* ── Students section ── */
+.fund-students-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+.fund-students-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.fund-student-item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 1rem 1.25rem;
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.fund-student-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+.fund-student-item strong {
+  display: block;
+  color: #fff;
+  font-size: 0.92rem;
+  margin-bottom: 0.25rem;
+}
+.fund-student-item p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.5;
+}
+
+/* ── Rebate pills ── */
+.fund-rebate-pills {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.fund-rebate-pill {
+  padding: 1.25rem;
+  border: 1.5px solid;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.fund-rebate-pill span {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--navy);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.fund-rebate-pill p {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--text-soft);
+  line-height: 1.55;
+}
+
+/* ── Money flow table ── */
+.fund-money-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+.fund-money-table {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1.5px solid var(--border);
+}
+.fund-money-header {
+  display: grid;
+  grid-template-columns: 2fr 0.6fr 1fr 1.5fr;
+  gap: 0;
+  padding: 0.65rem 1rem;
+  background: var(--navy);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.5);
+}
+.fund-money-row {
+  display: grid;
+  grid-template-columns: 2fr 0.6fr 1fr 1.5fr;
+  gap: 0;
+  padding: 0.8rem 1rem;
+  border-top: 1px solid var(--border);
+  border-left: 4px solid;
+  background: var(--bg-card);
+  align-items: center;
+}
+.fund-money-row:nth-child(even) { background: var(--bg-card-alt); }
+.fund-money-label {
+  display: flex;
+  align-items: center;
+  font-size: 0.88rem;
+}
+.fund-money-pct {
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+.fund-money-vnd {
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+.fund-money-note {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+.fund-money-total {
+  display: grid;
+  grid-template-columns: 2fr 0.6fr 1fr 1.5fr;
+  gap: 0;
+  padding: 0.85rem 1rem;
+  background: var(--navy);
+  border-top: 2px solid var(--border);
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: #d2ad44;
+}
+.fund-money-total span:last-child { color: rgba(255,255,255,0.4); font-size: 0.78rem; font-weight: 400; }
+
+/* ── Advantages ── */
+.fund-advantages-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+.fund-advantage-card {
+  display: flex;
+  gap: 1rem;
+  padding: 1.1rem 1.25rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  align-items: flex-start;
+}
+.fund-advantage-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+.fund-advantage-card strong {
+  display: block;
+  color: #fff;
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+}
+.fund-advantage-card p {
+  margin: 0;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.55;
+}
+
+/* ── Compounding loop ── */
+.fund-loop-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.fund-loop-step {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.fund-loop-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+.fund-loop-label {
+  font-size: 0.9rem;
+  color: var(--text-soft);
+  line-height: 1.4;
+}
+
+/* ── Tier selector ── */
+.fund-tier-toggle {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+.fund-tier-btn {
+  padding: 0.65rem 1.5rem;
+  border-radius: 30px;
+  border: 1.5px solid var(--border);
+  background: var(--bg-card);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-soft);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.fund-tier-btn:hover {
+  border-color: #4de8b0;
+  color: var(--navy);
+}
+.fund-tier-detail {
+  max-width: 760px;
+  margin: 0 auto;
+  border: 2px solid;
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--bg-card);
+}
+.fund-tier-detail-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.75rem 2rem 1.5rem;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.fund-tier-name {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: var(--navy);
+  margin: 0 0 0.25rem;
+}
+.fund-tier-meta {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+.fund-tier-price-block {
+  text-align: right;
+  padding: 0.9rem 1.25rem;
+  border: 1.5px solid;
+  border-radius: 12px;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.fund-tier-price-block strong {
+  font-size: 1.3rem;
+  font-weight: 900;
+}
+.fund-tier-price-block span {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+.fund-tier-monthly {
+  font-size: 0.72rem !important;
+  color: var(--text-muted) !important;
+}
+.fund-tier-detail-body {
+  padding: 0 2rem 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+.fund-tier-rebate-box {
+  padding: 1rem 1.25rem;
+  border: 1.5px solid;
+  border-radius: 12px;
+}
+.fund-tier-rebate-box strong {
+  display: block;
+  font-size: 0.88rem;
+  margin-bottom: 0.4rem;
+}
+.fund-tier-rebate-box p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--text-soft);
+  line-height: 1.5;
+}
+.fund-tier-perks { display: flex; flex-direction: column; gap: 0.35rem; }
+.fund-tier-perks-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+.fund-tier-perk-row {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.84rem;
+  color: var(--text-soft);
+}
+.fund-tier-cta {
+  display: block;
+  width: calc(100% - 4rem);
+  margin: 0 2rem 2rem;
+  padding: 0.9rem;
+  text-align: center;
+}
+
+/* ── Policy quote ── */
+.fund-policy {
+  text-align: center;
+  padding: 4rem 0;
+}
+.fund-policy-quote {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: rgba(255,255,255,0.8);
+  font-style: italic;
+  line-height: 1.75;
+  max-width: 720px;
+  margin: 0 auto 0.75rem;
+  quotes: none;
+}
+.fund-policy-label {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.06em;
+  margin-bottom: 2rem;
+}
+.fund-policy-links {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ── Contact modal ── */
+.fund-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.fund-modal {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  padding: 2.5rem;
+  max-width: 640px;
+  width: 100%;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.fund-modal-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--text-soft);
+}
+.fund-modal-title {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--navy);
+  margin: 0 0 0.5rem;
+}
+.fund-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.fund-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.fund-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.fund-form-group label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.fund-form-group input,
+.fund-form-group select,
+.fund-form-group textarea {
+  padding: 0.65rem 0.9rem;
+  background: var(--bg-card-alt);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.88rem;
+  color: var(--navy);
+  outline: none;
+  font-family: inherit;
+  resize: vertical;
+}
+.fund-form-group input:focus,
+.fund-form-group select:focus,
+.fund-form-group textarea:focus {
+  border-color: #4de8b0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .fund-two-col,
+  .fund-two-col-reverse,
+  .fund-students-wrap,
+  .fund-advantages-grid,
+  .fund-tier-detail-body,
+  .fund-form-row {
+    grid-template-columns: 1fr;
+    direction: ltr;
+  }
+  .fund-hero-content { padding: 5rem 1.25rem 3rem; }
+  .fund-hero-actions { flex-direction: column; align-items: center; }
+  .fund-rebate-pills { grid-template-columns: 1fr; }
+  .fund-cell-stats { grid-template-columns: 1fr; }
+  .fund-money-header,
+  .fund-money-row,
+  .fund-money-total { grid-template-columns: 1.5fr 0.5fr 1fr; }
+  .fund-money-note { display: none; }
+  .fund-money-total span:last-child { display: none; }
+  .fund-tier-detail-top { flex-direction: column; }
+  .fund-tier-price-block { min-width: unset; text-align: left; }
+  .fund-tier-cta { width: calc(100% - 2rem); margin: 0 1rem 1.5rem; }
+}
+

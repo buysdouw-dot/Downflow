@@ -1,0 +1,183 @@
+/* ═══════════════════════════════════════════
+   MISSING / SHARED COMPONENTS
+   ═══════════════════════════════════════════ */
+
+/* ── Filter buttons (Curriculum / Pack pages) ── */
+.filter-btn {
+  padding: 0.35rem 0.9rem; border-radius: 999px; font-size: 0.82rem;
+  font-weight: 600; border: 1.5px solid var(--border); background: var(--bg-card);
+  color: var(--text-soft); cursor: pointer; font-family: 'Outfit', sans-serif;
+  transition: all 0.15s;
+}
+.filter-btn.active, .filter-btn:hover {
+  background: var(--navy); color: #fff; border-color: var(--navy);
+}
+
+/* ── Earn list (Connector) ── */
+.earn-list { display: flex; flex-direction: column; gap: 0; }
+.earn-row {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.65rem 0; border-bottom: 1px solid var(--bg-card-alt);
+}
+.earn-icon  { font-size: 1.1rem; flex-shrink: 0; }
+.earn-label { font-size: 0.86rem; font-weight: 600; color: var(--navy); }
+
+/* ── Cell map list (Connector overview) ── */
+.cell-map-list { display: flex; flex-direction: column; gap: 0.6rem; }
+.cell-map-row {
+  display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
+  padding: 0.65rem 0.75rem; background: var(--bg-page);
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  font-size: 0.84rem;
+}
+.chc-id { font-weight: 800; color: var(--navy); min-width: 52px; }
+
+/* ── Milestone list (Connector earnings) ── */
+.milestone-list { display: flex; flex-direction: column; gap: 0; }
+.milestone-row {
+  display: flex; align-items: flex-start; gap: 0.75rem;
+  padding: 0.7rem 0; border-bottom: 1px solid var(--bg-card-alt);
+}
+.milestone-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  margin-top: 0.35rem; flex-shrink: 0;
+  background: var(--border);
+}
+.milestone-dot.milestone { background: var(--green); }
+.milestone-dot.review    { background: var(--gold); box-shadow: 0 0 6px var(--gold); }
+.milestone-dot.task      { background: var(--blue); }
+.milestone-dot.unlock    { background: var(--text-muted); }
+.milestone-date { font-size: 0.75rem; color: var(--text-soft); margin-top: 0.15rem; }
+
+/* ── Form step dots (Connector form cell) ── */
+.form-steps {
+  display: flex; gap: 0; align-items: flex-start;
+  margin-bottom: 1.75rem; overflow-x: auto;
+}
+.form-step-dot {
+  display: flex; flex-direction: column; align-items: center; gap: 0.35rem;
+  flex: 1; position: relative;
+}
+.form-step-dot::after {
+  content: ''; position: absolute; top: 13px; left: 50%; right: -50%;
+  height: 2px; background: var(--border); z-index: 0;
+}
+.form-step-dot:last-child::after { display: none; }
+.form-step-dot span {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.78rem; font-weight: 700; position: relative; z-index: 1;
+  background: var(--bg-card-alt); border: 2px solid var(--border); color: var(--text-soft);
+}
+.form-step-dot.active span { background: var(--gold); border-color: var(--gold-dark); color: var(--navy); }
+.form-step-dot.done span   { background: var(--green); border-color: var(--green); color: #fff; }
+.form-step-dot p { font-size: 0.7rem; text-align: center; color: var(--text-soft); margin: 0; max-width: 72px; line-height: 1.35; }
+
+/* ── Session builder (Connector form) ── */
+.session-builder { display: flex; flex-direction: column; gap: 0.85rem; }
+.sb-field { display: flex; flex-direction: column; gap: 0.3rem; }
+.sb-field label { font-size: 0.8rem; font-weight: 600; color: var(--text-soft); }
+.sb-input, .sb-select {
+  padding: 0.6rem 0.85rem; background: var(--bg-card);
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  color: var(--text-main); font-family: 'Outfit', sans-serif; font-size: 0.85rem;
+  outline: none; transition: border-color 0.15s;
+}
+.sb-input:focus, .sb-select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(74,111,165,0.12); }
+.stream-checkboxes { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.stream-check-label {
+  display: flex; align-items: center; gap: 0.35rem;
+  font-size: 0.82rem; padding: 0.3rem 0.75rem;
+  border: 1.5px solid var(--border); border-radius: 999px;
+  cursor: pointer; background: var(--bg-card); color: var(--text-soft);
+  transition: all 0.12s;
+}
+.stream-check-label:hover { border-color: var(--blue); color: var(--navy); }
+
+/* ── Activity list (Student home) ── */
+.activity-list  { display: flex; flex-direction: column; gap: 0; }
+.activity-row {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.6rem 0; border-bottom: 1px solid var(--bg-card-alt);
+  font-size: 0.84rem;
+}
+.activity-icon  { font-size: 1rem; flex-shrink: 0; }
+.activity-label { flex: 1; color: var(--text-main); }
+.activity-coins { font-size: 0.78rem; font-weight: 700; color: var(--gold-dark); white-space: nowrap; }
+.activity-time  { font-size: 0.72rem; color: var(--text-muted); white-space: nowrap; }
+
+/* ── Cell members list (Student cell tab) ── */
+.cell-members-list { display: flex; flex-direction: column; gap: 0.4rem; }
+
+/* ── Connector Rankings ── */
+.connector-rankings-layout { display: grid; grid-template-columns: 1fr 280px; gap: 1.5rem; }
+.conn-rank-table-head {
+  display: grid; grid-template-columns: 48px 1fr 70px 80px 80px 80px 80px;
+  padding: 0.5rem 0.75rem; font-size: 0.68rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted);
+  border-bottom: 1.5px solid var(--border);
+}
+.conn-rank-row {
+  display: grid; grid-template-columns: 48px 1fr 70px 80px 80px 80px 80px;
+  padding: 0.65rem 0.75rem; align-items: center;
+  border-bottom: 1px solid var(--bg-card-alt); transition: background 0.15s;
+  font-size: 0.85rem;
+}
+.conn-rank-row:hover  { background: var(--blue-pale); }
+.conn-rank-row.is-user{ background: var(--gold-pale); border-color: var(--gold); }
+
+/* ── Student cell Group tabs ── */
+.cell-group-tabs {
+  display: flex; gap: 0; border-bottom: 1.5px solid var(--border);
+  margin-bottom: 1.5rem; overflow-x: auto;
+}
+.cell-group-tab {
+  background: none; border: none; padding: 0.75rem 1.1rem;
+  font-size: 0.84rem; font-weight: 600; color: var(--text-soft);
+  cursor: pointer; border-bottom: 2.5px solid transparent;
+  transition: all 0.15s; white-space: nowrap;
+  font-family: 'Outfit', sans-serif; margin-bottom: -1.5px;
+}
+.cell-group-tab:hover  { color: var(--navy); background: var(--blue-pale); }
+.cell-group-tab.active { color: var(--navy); border-bottom-color: var(--navy); background: transparent; }
+
+/* ── Participation bar ── */
+.participation-row {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.5rem 0; border-bottom: 1px solid var(--bg-card-alt);
+}
+.participation-name  { font-size: 0.84rem; font-weight: 600; color: var(--navy); min-width: 100px; }
+.participation-track { flex: 1; height: 6px; background: var(--bg-card-alt); border-radius: 3px; overflow: hidden; }
+.participation-fill  { height: 100%; border-radius: 3px; }
+.participation-pct   { font-size: 0.78rem; font-weight: 700; color: var(--navy); min-width: 36px; text-align: right; }
+
+/* ── Video rep list ── */
+.video-rep-row {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.65rem; border-radius: var(--radius-sm);
+  background: var(--bg-page); border: 1.5px solid var(--border);
+  margin-bottom: 0.5rem;
+}
+.vr-thumb {
+  width: 40px; height: 40px; border-radius: 6px;
+  background: var(--blue-pale); display: flex; align-items: center;
+  justify-content: center; font-size: 1.1rem; flex-shrink: 0;
+}
+.vr-info { flex: 1; }
+.vr-info strong { font-size: 0.85rem; display: block; color: var(--navy); }
+.vr-info span   { font-size: 0.75rem; color: var(--text-soft); }
+.vr-status {
+  font-size: 0.72rem; font-weight: 700; border-radius: 20px;
+  padding: 0.2rem 0.5rem;
+}
+.vr-status.reviewed  { background: var(--green-pale); color: var(--green); }
+.vr-status.pending   { background: var(--gold-pale); color: var(--gold-dark); }
+
+@media (max-width: 900px) {
+  .connector-rankings-layout { grid-template-columns: 1fr; }
+  .conn-rank-table-head { grid-template-columns: 40px 1fr 60px 68px 68px !important; }
+  .conn-rank-row        { grid-template-columns: 40px 1fr 60px 68px 68px !important; }
+  .conn-rank-table-head span:nth-child(n+6),
+  .conn-rank-row span:nth-child(n+6) { display: none; }
+}
+

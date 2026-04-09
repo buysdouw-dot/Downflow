@@ -1,0 +1,88 @@
+/* ══════════════════════════════════════════════════════════
+   TOPBAR INTEGRATION BUTTONS
+══════════════════════════════════════════════════════════ */
+.topbar-integrations {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+.topbar-meet-btn,
+.topbar-dojo-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.36rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.16s;
+  white-space: nowrap;
+  flex-shrink: 0;
+  border: 1.5px solid transparent;
+}
+.topbar-meet-btn {
+  background: rgba(0,188,212,0.12);
+  border-color: rgba(0,188,212,0.35);
+  color: #00bcd4;
+}
+.topbar-meet-btn:hover {
+  background: rgba(0,188,212,0.22);
+  border-color: #00bcd4;
+  box-shadow: 0 2px 10px rgba(0,188,212,0.25);
+}
+.topbar-dojo-btn {
+  background: rgba(255,159,90,0.12);
+  border-color: rgba(255,159,90,0.35);
+  color: #ff9f5a;
+}
+.topbar-dojo-btn:hover {
+  background: rgba(255,159,90,0.22);
+  border-color: #ff9f5a;
+  box-shadow: 0 2px 10px rgba(255,159,90,0.2);
+}
+@media (max-width: 860px) {
+  .topbar-integrations { display: none; }
+}
+
+/* ── Shared inline join buttons (used in dashboards) ── */
+.btn-join-meet {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 8px;
+  background: rgba(0,188,212,0.14);
+  border: 1px solid rgba(0,188,212,0.4);
+  color: #00bcd4;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.14s;
+  cursor: pointer;
+}
+.btn-join-meet:hover {
+  background: rgba(0,188,212,0.25);
+  border-color: #00bcd4;
+}
+.btn-join-dojo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 8px;
+  background: rgba(255,159,90,0.12);
+  border: 1px solid rgba(255,159,90,0.38);
+  color: #ff9f5a;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.14s;
+  cursor: pointer;
+}
+.btn-join-dojo:hover {
+  background: rgba(255,159,90,0.22);
+  border-color: #ff9f5a;
+}
+

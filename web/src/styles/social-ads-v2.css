@@ -1,0 +1,74 @@
+/* ═══════════════════════════════════════════════════════════
+   AUTO FUNNEL  (af-*)
+═══════════════════════════════════════════════════════════ */
+.af-page { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem 5rem; background: var(--bg-page); min-height: 100vh; }
+
+/* Hero */
+.af-hero { text-align: center; margin-bottom: 2.5rem; }
+.af-eyebrow { font-size: 0.7rem; letter-spacing: .18em; color: var(--text-muted); text-transform: uppercase; margin: 0 0 0.8rem; }
+.af-title { font-size: clamp(1.9rem, 5vw, 3.2rem); font-weight: 900; margin: 0 0 0.75rem; }
+.af-sub { font-size: 0.9rem; color: var(--text-soft); margin: 0; }
+
+/* Flow strip */
+.af-flow-strip { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0; margin: 0 0 2rem; padding: 1.5rem; background: var(--bg-card); border-radius: 16px; border: 1px solid var(--border); overflow-x: auto; box-shadow: var(--shadow-sm); }
+.af-flow-node { display: flex; align-items: center; cursor: pointer; }
+.af-fn-circle { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; border: 1.5px solid; transition: transform 0.15s; }
+.af-fn-circle:hover { transform: scale(1.1); }
+.af-fn-label { font-size: 0.6rem; font-weight: 700; text-align: center; margin-top: 0.3rem; color: var(--text-muted); width: 54px; display: flex; align-items: center; justify-content: center; }
+.af-fn-arrow { font-size: 1rem; color: var(--border-med); padding: 0 0.2rem; margin-top: -16px; }
+.af-flow-node { flex-direction: column; align-items: center; }
+
+/* Role switcher */
+.af-role-switcher { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; }
+.af-rs-label { font-size: 0.72rem; color: var(--text-muted); margin-right: 0.25rem; }
+.af-role-pill { padding: 0.4rem 1rem; border-radius: 999px; border: 1.5px solid var(--border); background: var(--bg-card); color: var(--text-soft); font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.15s; font-family: 'Outfit',sans-serif; }
+.af-role-pill:hover { border-color: var(--blue); color: var(--navy); background: var(--blue-pale); }
+.af-role-pill.active { color: #000; font-weight: 800; }
+
+/* Step cards */
+.af-steps { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 3rem; }
+.af-step-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; cursor: pointer; transition: border-color 0.15s; box-shadow: var(--shadow-sm); }
+.af-step-card:hover { border-color: var(--blue); }
+.af-step-card.expanded { border-color: var(--step-col, rgba(255,255,255,0.2)); }
+.af-sc-header { display: flex; align-items: center; gap: 0.85rem; padding: 1rem 1.2rem; }
+.af-sc-left { display: flex; align-items: center; gap: 0.85rem; flex: 1; }
+.af-sc-num { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 900; flex-shrink: 0; }
+.af-sc-title { font-size: 0.9rem; font-weight: 800; margin: 0 0 0.1rem; }
+.af-sc-sub { font-size: 0.65rem; color: var(--text-muted); margin: 0; }
+.af-sc-icon { font-size: 1.5rem; }
+.af-sc-chevron { font-size: 0.65rem; color: var(--text-muted); margin-left: auto; }
+.af-sc-body { padding: 0 1.2rem 1.2rem; }
+.af-sc-desc { font-size: 0.82rem; color: var(--text-soft); line-height: 1.6; margin: 0 0 1rem; }
+.af-sc-role-block { border-radius: 10px; border: 1px solid; padding: 0.85rem 1rem; }
+.af-sc-rb-head { font-size: 0.7rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; margin: 0 0 0.6rem; }
+.af-field-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.af-field-list li { display: flex; align-items: center; gap: 0.6rem; font-size: 0.8rem; color: var(--text-soft); }
+.af-field-bullet { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.af-field-num { width: 18px; height: 18px; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 900; color: #000; flex-shrink: 0; }
+.af-platforms { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+.af-platform-tag { padding: 0.2rem 0.6rem; border-radius: 6px; border: 1px solid; font-size: 0.65rem; font-weight: 700; }
+.af-role-detail { font-size: 0.8rem; color: var(--text-soft); margin: 0; font-style: italic; }
+.af-sc-link { display: inline-block; margin-top: 0.75rem; font-size: 0.8rem; font-weight: 700; text-decoration: none; }
+.af-sc-link:hover { text-decoration: underline; }
+
+/* System flow */
+.af-system-flow { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem 1.5rem; text-align: center; box-shadow: var(--shadow-sm); }
+.af-sf-title { font-size: 1.3rem; font-weight: 900; margin: 0 0 1.2rem; }
+.af-sf-chain { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.25rem; margin-bottom: 1.5rem; }
+.af-sf-item { display: flex; align-items: center; gap: 0.25rem; }
+.af-sf-node { background: var(--bg-card-alt); border: 1px solid var(--border); border-radius: 8px; padding: 0.3rem 0.65rem; font-size: 0.75rem; font-weight: 700; color: var(--navy); }
+.af-sf-arrow { font-size: 0.85rem; color: var(--text-muted); }
+.af-sf-tagline { font-size: 0.9rem; color: var(--text-soft); line-height: 1.7; margin: 0 0 1.5rem; }
+.af-sf-tagline strong { color: var(--navy); }
+.af-sf-links { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
+.af-sf-btn { padding: 0.6rem 1.4rem; border-radius: 999px; font-size: 0.82rem; font-weight: 800; text-decoration: none; border: 1.5px solid var(--border); color: var(--text-soft); transition: all 0.15s; }
+.af-sf-btn:hover { border-color: var(--blue); color: var(--navy); background: var(--blue-pale); }
+.af-sf-btn.primary { background: var(--navy); color: #fff; border-color: var(--navy); }
+.af-sf-btn.primary:hover { opacity: 0.85; }
+
+@media (max-width: 640px) {
+  .af-flow-strip { gap: 0.1rem; }
+  .af-fn-circle { width: 38px; height: 38px; font-size: 1rem; }
+  .af-fn-label { width: 42px; font-size: 0.5rem; }
+}
+

@@ -1,0 +1,345 @@
+/* ═══════════════════════════════════════════
+   CURRICULUM PAGE
+   ═══════════════════════════════════════════ */
+
+/* Hero */
+.curric-hero {
+  background: linear-gradient(135deg, var(--navy) 0%, #1a2a3a 100%);
+  padding: 5rem 2rem 4rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.curric-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 60% 40%, rgba(200,169,110,0.12) 0%, transparent 60%),
+              radial-gradient(ellipse at 20% 80%, rgba(74,111,165,0.18) 0%, transparent 50%);
+  pointer-events: none;
+}
+.curric-hero-inner { position: relative; max-width: 800px; margin: 0 auto; }
+.curric-hero-title {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.1;
+  margin: 0.75rem 0 1.25rem;
+}
+.curric-hero-sub {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.72);
+  max-width: 620px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.7;
+}
+.curric-hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+}
+.curric-hero-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+.curric-hero-stat strong {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--gold);
+  line-height: 1;
+}
+.curric-hero-stat span {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.55);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* How Strip */
+.curric-how-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: var(--navy);
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.curric-how-item {
+  padding: 2rem 1.5rem;
+  border-right: 1px solid rgba(255,255,255,0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.curric-how-item:last-child { border-right: none; }
+.curric-how-icon { font-size: 1.75rem; }
+.curric-how-item strong { color: #fff; font-size: 1rem; }
+.curric-how-item p { color: rgba(255,255,255,0.5); font-size: 0.82rem; line-height: 1.55; margin: 0; }
+
+/* Age Streams */
+.curric-ages-section { background: var(--bg-card-alt); }
+.curric-age-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+.curric-age-card {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 1.75rem;
+  border-top: 4px solid var(--stream-color);
+  box-shadow: var(--shadow-sm);
+}
+.curric-age-badge {
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--stream-color);
+  margin-bottom: 0.5rem;
+}
+.curric-age-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 0 0 0.5rem;
+}
+.curric-age-card p {
+  color: var(--text-soft);
+  font-size: 0.85rem;
+  line-height: 1.55;
+  margin: 0 0 1rem;
+}
+.curric-age-packs { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.curric-age-pack-chip {
+  font-size: 0.72rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 20px;
+  border: 1.5px solid;
+  color: var(--text-soft);
+  background: transparent;
+}
+
+/* Filter row */
+.curric-filter-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+/* Pack Grid */
+.curric-packs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+/* Pack Card */
+.curric-pack-card {
+  background: var(--bg-card);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1.5px solid var(--bg-card-alt);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+.curric-pack-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--pack-color);
+}
+.curric-pack-img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/10;
+  overflow: hidden;
+  background: var(--bg-card-alt);
+}
+.curric-pack-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s;
+}
+.curric-pack-card:hover .curric-pack-img { transform: scale(1.04); }
+.curric-pack-img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--bg-card-alt), var(--blue-pale));
+}
+.curric-pack-img-overlay {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  right: 0.6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.4rem;
+}
+.curric-cat-badge {
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.6rem;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+  text-transform: uppercase;
+}
+.curric-age-badge-img {
+  background: var(--pack-color);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 20px;
+}
+.curric-age-badge {
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+}
+.curric-pack-body {
+  padding: 1.25rem 1.25rem 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.curric-pack-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 0;
+}
+.curric-pack-tagline {
+  font-size: 0.82rem;
+  color: var(--pack-color);
+  font-style: italic;
+  margin: 0;
+  font-weight: 500;
+}
+.curric-pack-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.78rem;
+  color: var(--text-soft);
+}
+.curric-pack-desc {
+  font-size: 0.83rem;
+  color: var(--text-soft);
+  line-height: 1.55;
+  margin: 0;
+}
+.curric-pack-expanded {
+  border-top: 1px solid var(--bg-card-alt);
+  padding-top: 0.85rem;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+.curric-mini-head {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 0.4rem;
+}
+.curric-pack-topics ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.8rem;
+  color: var(--text-soft);
+  line-height: 1.7;
+}
+.curric-pack-skills { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.skill-chip {
+  font-size: 0.72rem;
+  padding: 0.22rem 0.65rem;
+  border-radius: 20px;
+  background: var(--blue-pale);
+  color: var(--blue);
+  font-weight: 600;
+}
+.curric-expand-btn {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  color: var(--pack-color);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  margin-top: auto;
+}
+.curric-expand-btn:hover { opacity: 0.7; }
+
+/* Principles */
+.curric-principles-section { background: var(--navy); }
+.curric-principles-section .kicker { color: var(--gold) !important; }
+.curric-principles-section h2 { color: #fff; }
+.curric-principles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+.curric-principle-item {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.curric-principle-icon { font-size: 1.75rem; }
+.curric-principle-item strong { color: #fff; font-size: 0.95rem; }
+.curric-principle-item p { color: rgba(255,255,255,0.55); font-size: 0.82rem; line-height: 1.6; margin: 0; }
+
+/* CTA */
+.curric-cta-section { background: var(--gold-pale); text-align: center; }
+.curric-cta-inner { max-width: 600px; margin: 0 auto; }
+.curric-cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .curric-how-strip    { grid-template-columns: repeat(2, 1fr); }
+  .curric-packs-grid   { grid-template-columns: repeat(2, 1fr); }
+  .curric-principles-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .curric-age-grid     { grid-template-columns: 1fr; }
+  .curric-packs-grid   { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .curric-how-strip    { grid-template-columns: 1fr 1fr; }
+  .curric-packs-grid   { grid-template-columns: 1fr; }
+  .curric-principles-grid { grid-template-columns: 1fr; }
+  .curric-hero-stats   { gap: 1.5rem; }
+}
+
