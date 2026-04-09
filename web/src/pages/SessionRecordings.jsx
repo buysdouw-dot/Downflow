@@ -1,4 +1,6 @@
 import { useState, useRef } from 'react'
+import VideoUpload from '../components/VideoUpload.jsx'
+import { useAuth } from '../context/AuthContext.jsx'
 import usePageMeta from '../hooks/usePageMeta.js'
 
 /* ═══════════════════════════════════════════════════════════════
@@ -498,7 +500,10 @@ function WeekSection({ week, students, cellColor, onUpdateSession }) {
 export default function SessionRecordings() {
   usePageMeta("Session Recordings", "All weekly session recordings for every cell. Students mark watched. Facilitators track replay attendance.")
 
+  const { role } = useAuth()
   const [recordings, setRecordings] = useState(INIT_RECORDINGS)
+  const [showUpload, setShowUpload] = useState(false)
+  const [uploadWeek, setUploadWeek] = useState(null)
   const [activeCell, setActiveCell] = useState('VN-01')
   const [view, setView] = useState('library') // 'library' | 'overview'
   const [filterPhase, setFilterPhase] = useState('all')
@@ -543,6 +548,7 @@ export default function SessionRecordings() {
   }).sort((a, b) => b.pct - a.pct)
 
   return (
+    <>
     <div className="sr-page">
 
       {/* ── Page Header ── */}
@@ -552,6 +558,11 @@ export default function SessionRecordings() {
         <p className="sr-hero-sub">
           Paste recording links for each week. Students watch after sessions. Track who has and hasn't caught up.
         </p>
+        {(role === 'facilitator' || role === 'platform') && (
+          <button className="btn btn-primary" style={{marginTop:'1rem'}} onClick={()=>setShowUpload(true)}>
+            📹 Upload Session Recording
+          </button>
+        )}
       </div>
 
       {/* ── Cell Selector ── */}
@@ -754,5 +765,7 @@ export default function SessionRecordings() {
         </div>
       )}
     </div>
+      {showUpload && <VideoUpload cellId={activeCell} packName={cellMeta?.pack || 'Session'} weekNum={uploadWeek || 1} onSuccess={()=>setShowUpload(false)} onClose={()=>setShowUpload(false)} />}
+    </>
   )
 }

@@ -1,9 +1,11 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import VideoUpload from '../components/VideoUpload.jsx'
 import OnboardingBanner from '../components/OnboardingBanner.jsx'
 import { HexIcon } from '../components/HexSymbols.jsx'
 import DashboardShell from '../components/DashboardShell.jsx'
 import usePageMeta from '../hooks/usePageMeta.js'
+import { useAuth } from '../context/AuthContext.jsx'
+import { getCell, getVideoReviews, getProgressLogs } from '../services/api.js'
 
 const CELL_MEMBERS = [
   { av:'🧑‍🏫', name:'Minh P.',  role:'Student Guider', streak:14, isMe:false },
@@ -236,15 +238,25 @@ function CellGroupView() {
 export default function StudentDashboard() {
   usePageMeta("Student Dashboard", "Build real skills, submit video reps, earn coins, and grow into a Student Guider.")
 
+  const { uid, profile } = useAuth()
   const [activeTab,setActiveTab]=useState('home')
   const [done,setDone]=useState(false)
   const [showUpload,setShowUpload]=useState(false)
   const [showOnboarding,setShowOnboarding]=useState(true)
+  const [cell, setCell] = useState(null)
+  const [videoReps, setVideoReps] = useState(null)
+
+  const cellId = profile?.cellId || 'VN-01'
+
+  useEffect(() => {
+    getCell(cellId).then(d => { if (d) setCell(d) }).catch(() => {})
+    getVideoReviews({ studentId: uid || 'user-001' }).then(d => { if (d?.length) setVideoReps(d) }).catch(() => {})
+  }, [cellId, uid])
   const topActions = (<><button className="btn btn-primary" onClick={()=>setActiveTab('packs')}>📹 Submit Video</button></>)
   return (
     <>
     <DashboardShell role="student" activeTab={activeTab} onTabChange={setActiveTab}
-      title="My Learning Dashboard" subtitle="Cell VN-01 · Week 7 of 12 · Student Guider: Minh P." actions={topActions}>
+      title="My Learning Dashboard" subtitle={cell ? `Cell ${cell.name} · Week ${cell.cycleWeek} of ${cell.cycleTotal}` : 'Cell VN-01 · Week 7 of 12'} actions={topActions}>
       {showOnboarding && <OnboardingBanner role="student" onDismiss={()=>setShowOnboarding(false)}/>}
       <div className="db-stats-row" style={{gridTemplateColumns:'repeat(4,1fr)',marginBottom:'1.5rem'}}>
         <div className="db-stat-card" style={{'--stat-color':'#d2ad44'}}>
@@ -593,7 +605,7 @@ export default function StudentDashboard() {
         )}
       </div>
     </DashboardShell>
-    {showUpload && <VideoUpload cellId="VN-01" packName="💰 Kidinomics" weekNum={7} onSuccess={()=>setShowUpload(false)} onClose={()=>setShowUpload(false)} />}
+    {showUpload && <VideoUpload cellId={cellId} packName="💰 Kidinomics" weekNum={cell?.cycleWeek || 7} onSuccess={()=>setShowUpload(false)} onClose={()=>setShowUpload(false)} />}
     </>
   )
 }

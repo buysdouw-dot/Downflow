@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { getCells } from '../services/api.js'
-import { useAuth } from '../context/AuthContext.jsx'
+import { db, isConfigured, addDoc, collection, serverTimestamp } from '../services/firebase.js'
 import { useToast } from '../components/Toast.jsx'
+import { useAuth } from '../context/AuthContext.jsx'
 import OnboardingBanner from '../components/OnboardingBanner.jsx'
 import { HexIcon } from '../components/HexSymbols.jsx'
 import DashboardShell from '../components/DashboardShell.jsx'
@@ -90,7 +91,7 @@ function CellStatusBadge({ status }) {
 
 
 export default function ConnectorDashboard() {
-  const { uid } = useAuth()
+  const { uid, displayName } = useAuth()
   const toast = useToast()
   const [liveCells, setLiveCells] = useState(null)
 
@@ -105,6 +106,31 @@ export default function ConnectorDashboard() {
   const [activeTab, setActiveTab] = useState('overview')
   const [formStep, setFormStep] = useState(1)
   const [showOnboarding, setShowOnboarding] = useState(true)
+  const [submitting, setSubmitting] = useState(false)
+  const [formData, setFormData] = useState({ students: [], facilitator: '', days: [], time: '4:00 PM - 5:00 PM' })
+
+  async function submitCell() {
+    if (submitting) return
+    setSubmitting(true)
+    try {
+      if (isConfigured && db) {
+        await addDoc(collection(db, 'cellApplications'), {
+          connectorId: uid || 'user-c01',
+          connectorName: displayName,
+          ...formData,
+          status: 'pending_review',
+          submittedAt: serverTimestamp(),
+        })
+      }
+      toast('Cell submitted for approval!', 'success')
+      setFormStep(1)
+      setFormData({ students: [], facilitator: '', days: [], time: '4:00 PM - 5:00 PM' })
+    } catch (e) {
+      toast('Submission failed: ' + e.message, 'error')
+    } finally {
+      setSubmitting(false)
+    }
+  }
 
   const totalEarned = MY_CELLS.filter(c => c.status === 'active').reduce((sum, c) => sum + c.lessonShare + c.regShare, 0)
   const pendingEarn = 3600000 // VN-05 potential
@@ -413,7 +439,7 @@ export default function ConnectorDashboard() {
                   <p style={{ fontSize: '0.85rem', color: 'var(--text-soft)', marginBottom: '1.2rem' }}>By submitting, you confirm that all families have given genuine consent and no pressure was applied. Your registration share (1,200,000 VND) will be released upon approval.</p>
                   <div style={{ display: 'flex', gap: '0.75rem' }}>
                     <button className="btn btn-secondary" onClick={() => setFormStep(3)}>← Back</button>
-                    <button className="btn btn-primary" onClick={() => setFormStep(1)}>Submit Cell for Approval</button>
+                    <button className="btn btn-primary" onClick={submitCell} disabled={submitting}>{submitting ? 'Submitting…' : 'Submit Cell for Approval'}</button>
                   </div>
                 </div>
               )}
