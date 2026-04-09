@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import { useAuth } from '../context/AuthContext.jsx'
+import { useToast } from '../components/Toast.jsx'
 import DashboardShell from '../components/DashboardShell.jsx'
 import { getCells, getProgressLogs, getPromotions } from '../services/api.js'
 import AIAssistant from '../components/AIAssistant.jsx'
@@ -36,6 +38,8 @@ function HealthRing({ score }) {
 
 
 export default function FacilitatorDashboard() {
+  const { uid } = useAuth()
+  const toast = useToast()
   usePageMeta("Facilitator Dashboard", "Manage your learning cells, guide students, log sessions and track weekly earnings.")
 
   const [activeTab, setActiveTab]   = useState('overview')
@@ -48,8 +52,9 @@ export default function FacilitatorDashboard() {
 
   useEffect(() => {
     setLoading(true)
-    getCells({ facilitatorId: 'user-f01' })
+    getCells({ facilitatorId: uid || 'user-f01' })
       .then(data => { if (data?.length) setCells(data) })
+      .catch(() => toast?.('Failed to load cells', 'error'))
       .finally(() => setLoading(false))
   }, [])
 

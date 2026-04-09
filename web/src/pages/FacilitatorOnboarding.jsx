@@ -1,4 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useAuth } from '../context/AuthContext.jsx'
+import { useToast } from '../components/Toast.jsx'
+import { db, isConfigured, doc, getDoc, updateDoc } from '../services/firebase.js'
 import { Link } from 'react-router-dom'
 
 /* ─────────────────────────────────────────────────────────
@@ -130,8 +133,43 @@ const ONBOARDING_STEPS = [
 ]
 
 export default function FacilitatorOnboarding() {
+  const { uid } = useAuth()
+  const toast = useToast()
   const [contractOpen, setContractOpen] = useState(null)
   const [activeStep, setActiveStep] = useState(0)
+  const [completedSteps, setCompletedSteps] = useState([])
+  const [saving, setSaving] = useState(false)
+
+  // Load saved progress from Firestore
+  useEffect(() => {
+    if (!uid || !isConfigured) return
+    getDoc(doc(db, 'users', uid)).then(snap => {
+      if (snap.exists()) {
+        const data = snap.data()
+        if (data.onboardingSteps) setCompletedSteps(data.onboardingSteps)
+        if (data.onboardingStep != null) setActiveStep(data.onboardingStep)
+      }
+    }).catch(() => {})
+  }, [uid])
+
+  async function completeStep(stepIndex) {
+    const updated = [...new Set([...completedSteps, stepIndex])]
+    setCompletedSteps(updated)
+    const next = Math.min(stepIndex + 1, 5)
+    setActiveStep(next)
+    if (!uid || !isConfigured) return
+    setSaving(true)
+    try {
+      await updateDoc(doc(db, 'users', uid), {
+        onboardingSteps: updated,
+        onboardingStep: next,
+        onboardingPhase: updated.length >= 6 ? 1 : 0,
+      })
+      if (updated.length >= 6) toast('Onboarding complete! You can now run your first cell.', 'success')
+      else toast('Step saved', 'success')
+    } catch { toast('Could not save progress', 'error') }
+    finally { setSaving(false) }
+  }
 
   return (
     <div className="fob-page">
@@ -180,7 +218,7 @@ export default function FacilitatorOnboarding() {
           <div className="fob-step-nav">
             {ONBOARDING_STEPS.map((step, i) => (
               <button key={step.num}
-                className={`fob-step-navbtn${i === activeStep ? ' active' : ''}${i < activeStep ? ' done' : ''}`}
+                className={`fob-step-navbtn${i === activeStep ? ' active' : ''}${completedSteps.includes(i) ? ' done' : ''}`}
                 style={i === activeStep ? { borderColor: step.color, color: step.color } : {}}
                 onClick={() => setActiveStep(i)}>
                 <span className="fob-sn-num">{step.num}</span>
@@ -225,8 +263,9 @@ export default function FacilitatorOnboarding() {
                   <div className="fob-sd-nav-row">
                     <button className="fob-sd-prev" disabled={activeStep === 0}
                       onClick={() => setActiveStep(s => s - 1)}>← Prev</button>
-                    <button className="fob-sd-action" style={{ background: step.color }}>
-                      {step.action}
+                    <button className="fob-sd-action" style={{ background: step.color }}
+                      onClick={() => completeStep(activeStep)} disabled={saving || completedSteps.includes(activeStep)}>
+                      {saving ? "Saving…" : completedSteps.includes(activeStep) ? "✓ Completed" : step.action}
                     </button>
                     <button className="fob-sd-next" disabled={activeStep === ONBOARDING_STEPS.length - 1}
                       onClick={() => setActiveStep(s => s + 1)}>Next →</button>

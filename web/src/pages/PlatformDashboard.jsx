@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useToast } from '../components/Toast.jsx'
 import { getCells, getSystemStats, getAllSponsorships } from '../services/api.js'
 import AIAssistant from '../components/AIAssistant.jsx'
 import usePageMeta from '../hooks/usePageMeta.js'
@@ -37,8 +38,16 @@ const SPONSORS = [
 export default function PlatformDashboard() {
   usePageMeta("Platform Admin", "Global oversight - approve sponsors, monitor ethics, manage regions and AI tools.")
 
+  const toast = useToast()
   const [activeTab, setActiveTab] = useState('overview')
   const [paused, setPaused] = useState([])
+  const [cells, setCells] = useState([])
+  const [stats, setStats] = useState(null)
+
+  useEffect(() => {
+    getCells().then(d => { if(d?.length) setCells(d) }).catch(() => toast?.('Failed to load cells', 'error'))
+    getSystemStats().then(d => { if(d) setStats(d) }).catch(() => {})
+  }, [])
 
   const togglePause = (id) => setPaused(p => p.includes(id) ? p.filter(x => x !== id) : [...p, id])
 
@@ -109,12 +118,12 @@ export default function PlatformDashboard() {
                 <h3 className="db-panel-title">💰 Value Flow Summary</h3>
                 <div className="cell-info-block">
                   {[
-                    ['Total sponsor funding (cycle)', '72,000,000 VND'],
-                    ['9% reinvested → new cells', '6,480,000 VND'],
-                    ['6% → student accounts', '4,320,000 VND'],
-                    ['Connector payouts (total)', '25,200,000 VND'],
-                    ['Facilitator compensation', '18,000,000 VND'],
-                    ['Platform operational reserve', '18,000,000 VND'],
+                    ['Total VND circulating', stats ? (stats.totalVNDCirculating?.toLocaleString() + ' VND') : '33,600,000 VND'],
+                    ['Active cells', stats ? (stats.activeCells + ' / ' + stats.totalCells) : '3 / 4'],
+                    ['Total students', stats ? String(stats.totalStudents) : '20'],
+                    ['Total facilitators', stats ? String(stats.totalFacilitators) : '2'],
+                    ['Open alerts', stats ? String(stats.alertsOpen) : '1'],
+                    ['Connectors', stats ? String(stats.totalConnectors) : '2'],
                   ].map(([k, v]) => (
                     <div key={k} className="cell-info-row">
                       <span>{k}</span>

@@ -1,4 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { getCells } from '../services/api.js'
+import { useAuth } from '../context/AuthContext.jsx'
+import { useToast } from '../components/Toast.jsx'
 import OnboardingBanner from '../components/OnboardingBanner.jsx'
 import { HexIcon } from '../components/HexSymbols.jsx'
 import DashboardShell from '../components/DashboardShell.jsx'
@@ -87,6 +90,16 @@ function CellStatusBadge({ status }) {
 
 
 export default function ConnectorDashboard() {
+  const { uid } = useAuth()
+  const toast = useToast()
+  const [liveCells, setLiveCells] = useState(null)
+
+  useEffect(() => {
+    if (!uid) return
+    getCells({ connectorId: uid })
+      .then(data => { if (data?.length) setLiveCells(data) })
+      .catch(() => toast?.('Failed to load cells', 'error'))
+  }, [uid])
   usePageMeta("Connector Dashboard", "Form learning cells, recruit families, and earn from every cell you build and grow.")
 
   const [activeTab, setActiveTab] = useState('overview')

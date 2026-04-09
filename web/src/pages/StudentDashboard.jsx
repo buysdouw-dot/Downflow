@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import VideoUpload from '../components/VideoUpload.jsx'
 import OnboardingBanner from '../components/OnboardingBanner.jsx'
 import { HexIcon } from '../components/HexSymbols.jsx'
 import DashboardShell from '../components/DashboardShell.jsx'
@@ -208,7 +209,7 @@ function CellGroupView() {
         <div className="db-panel">
           <div className="db-panel-header">
             <h3 className="db-panel-title">🎬 My Video Reps</h3>
-            <button className="btn btn-primary btn-sm">+ Submit New Rep</button>
+            <button className="btn btn-primary btn-sm" onClick={()=>setShowUpload(true)}>+ Submit New Rep</button>
           </div>
           <p style={{fontSize:'0.84rem',color:'var(--text-soft)',marginBottom:'1.25rem'}}>Every video rep earns coins and contributes to your participation score. Aim for 2+ per week.</p>
           {VIDEO_REPS.map((v,i)=>(
@@ -237,9 +238,11 @@ export default function StudentDashboard() {
 
   const [activeTab,setActiveTab]=useState('home')
   const [done,setDone]=useState(false)
+  const [showUpload,setShowUpload]=useState(false)
   const [showOnboarding,setShowOnboarding]=useState(true)
   const topActions = (<><button className="btn btn-primary" onClick={()=>setActiveTab('packs')}>📹 Submit Video</button></>)
   return (
+    <>
     <DashboardShell role="student" activeTab={activeTab} onTabChange={setActiveTab}
       title="My Learning Dashboard" subtitle="Cell VN-01 · Week 7 of 12 · Student Guider: Minh P." actions={topActions}>
       {showOnboarding && <OnboardingBanner role="student" onDismiss={()=>setShowOnboarding(false)}/>}
@@ -590,5 +593,7 @@ export default function StudentDashboard() {
         )}
       </div>
     </DashboardShell>
+    {showUpload && <VideoUpload cellId="VN-01" packName="💰 Kidinomics" weekNum={7} onSuccess={()=>setShowUpload(false)} onClose={()=>setShowUpload(false)} />}
+    </>
   )
 }

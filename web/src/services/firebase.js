@@ -32,6 +32,13 @@ import {
   signOut,
   onAuthStateChanged
 } from 'firebase/auth'
+import {
+  getStorage,
+  ref as storageRef,
+  uploadBytesResumable,
+  getDownloadURL,
+  deleteObject
+} from 'firebase/storage'
 
 const firebaseConfig = {
   apiKey:            import.meta.env.VITE_FIREBASE_API_KEY,
@@ -45,19 +52,21 @@ const firebaseConfig = {
 // Only init Firebase if config is present
 const isConfigured = Object.values(firebaseConfig).every(Boolean)
 
-let app, db, auth
+let app, db, auth, storage
 
 if (isConfigured) {
-  app  = initializeApp(firebaseConfig)
-  db   = getFirestore(app)
-  auth = getAuth(app)
+  app     = initializeApp(firebaseConfig)
+  db      = getFirestore(app)
+  auth    = getAuth(app)
+  storage = getStorage(app)
 }
 
-export { db, auth, isConfigured }
+export { db, auth, storage, isConfigured }
 export {
   collection, doc,
   getDocs, getDoc, addDoc, updateDoc, deleteDoc,
   query, where, orderBy, limit,
   serverTimestamp,
-  signInWithEmailAndPassword, signOut, onAuthStateChanged
+  signInWithEmailAndPassword, signOut, onAuthStateChanged,
+  storageRef, uploadBytesResumable, getDownloadURL, deleteObject
 }

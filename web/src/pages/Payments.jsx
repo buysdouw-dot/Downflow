@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import SponsorCheckout from '../components/SponsorCheckout.jsx'
 import { Link } from 'react-router-dom'
 import usePageMeta from '../hooks/usePageMeta.js'
 
@@ -37,6 +38,7 @@ const RULES = [
 
 
 export default function Payments() {
+  const [showCheckout, setShowCheckout] = useState(false)
   usePageMeta("Payments", "Transparent payment flows - see how funds move from sponsors to facilitators to students.")
 
   const [activeTab, setActiveTab] = useState('overview')
@@ -358,4 +360,5 @@ export default function Payments() {
       </div>
     </div>
   )
+  {showCheckout && <SponsorCheckout onClose={()=>setShowCheckout(false)} />}
 }

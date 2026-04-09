@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
+import { useAuth } from '../context/AuthContext.jsx'
+import { useToast } from '../components/Toast.jsx'
 import { HexIcon, HexSystemRow } from '../components/HexSymbols.jsx'
 import OnboardingBanner from '../components/OnboardingBanner.jsx'
 import { getCells, getSponsorships } from '../services/api.js'
@@ -108,6 +110,8 @@ const GIFT_PACKS = [
 
 
 export default function SponsorDashboard() {
+  const { uid } = useAuth()
+  const toast = useToast()
   usePageMeta("Sponsor Dashboard", "Fund learning cells, track student impact, and earn recognition. Sponsor-funded education that compounds.")
 
   const [activeTab, setActiveTab] = useState('overview')
@@ -115,10 +119,14 @@ export default function SponsorDashboard() {
   const [cells, setCells] = useState(CELLS_DATA)
 
   useEffect(()=>{
-    getSponsorships('user-s01').then(data=>{
-      if(data?.length) { /* map to cells */ }
-    })
-  },[])
+    if (!uid) return
+    getSponsorships(uid).then(data=>{
+      if(data?.length) { /* map to cells if needed */ }
+    }).catch(()=> toast?.('Failed to load sponsorships', 'error'))
+    getCells({ sponsorId: uid }).then(data=>{
+      if(data?.length) setCells(data)
+    }).catch(()=>{})
+  },[uid])
 
   const topActions = (
     <>
