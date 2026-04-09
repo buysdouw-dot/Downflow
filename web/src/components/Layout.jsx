@@ -47,6 +47,7 @@ const NAV_GROUPS = [
       { to: '/auto-funnel',           label: '⚡ Funnel' },
       { to: '/social-ads',            label: '📣 Ads' },
       { to: '/referrals',             label: '🔗 Referrals' },
+      { to: '/marketing',             label: '📣 Marketing Engine' },
       { to: '/facilitator-app',       label: '📱 Facilitator App' },
       { to: '/facilitator-onboarding',label: '📄 Contract' },
       { to: '/assistants',            label: 'Assistants' },

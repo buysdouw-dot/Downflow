@@ -33,6 +33,7 @@ import './styles/topbar-integrations.css'
 import './styles/integrations.css'
 import './styles/session-recordings.css'
 import './styles/new-pages.css'
+import './styles/marketing.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

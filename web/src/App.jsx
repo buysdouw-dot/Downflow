@@ -37,6 +37,7 @@ const EarningsWallet      = lazy(() => import('./pages/EarningsWallet.jsx'))
 const BackupSystem        = lazy(() => import('./pages/BackupSystem.jsx'))
 const BusinessMetrics     = lazy(() => import('./pages/BusinessMetrics.jsx'))
 const Referrals           = lazy(() => import('./pages/Referrals.jsx'))
+const MarketingEngine     = lazy(() => import('./pages/MarketingEngine.jsx'))
 
 function PageLoader() {
   return (
@@ -126,6 +127,7 @@ export default function App() {
           <Route path="/backup-system"    element={<ProtectedRoute roles={['platform']}><BackupSystem /></ProtectedRoute>} />
           <Route path="/metrics"          element={<ProtectedRoute roles={['platform']}><BusinessMetrics /></ProtectedRoute>} />
           <Route path="/referrals"        element={<ProtectedRoute><Referrals /></ProtectedRoute>} />
+          <Route path="/marketing"        element={<ProtectedRoute roles={['platform','connector']}><MarketingEngine /></ProtectedRoute>} />
         </Route>
       </Routes>
     </Suspense>
