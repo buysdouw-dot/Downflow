@@ -126,8 +126,6 @@ export default function App() {
           <Route path="/backup-system"    element={<ProtectedRoute roles={['platform']}><BackupSystem /></ProtectedRoute>} />
           <Route path="/metrics"          element={<ProtectedRoute roles={['platform']}><BusinessMetrics /></ProtectedRoute>} />
           <Route path="/referrals"        element={<ProtectedRoute><Referrals /></ProtectedRoute>} />
-            <ProtectedRoute><FundingProposal /></ProtectedRoute>
-          } />
         </Route>
       </Routes>
     </Suspense>
