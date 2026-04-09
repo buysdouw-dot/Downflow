@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react'
+import { useAuth } from '../context/AuthContext.jsx'
+import { getAllFundingRequests, confirmPaymentReceived } from '../services/funding.js'
+import { notifySponsorPaymentConfirmed } from '../services/email.js'
 import { useToast } from '../components/Toast.jsx'
 import { getCells, getSystemStats, getAllSponsorships } from '../services/api.js'
 import AIAssistant from '../components/AIAssistant.jsx'
@@ -38,16 +41,40 @@ const SPONSORS = [
 export default function PlatformDashboard() {
   usePageMeta("Platform Admin", "Global oversight - approve sponsors, monitor ethics, manage regions and AI tools.")
 
+  const { uid } = useAuth()
   const toast = useToast()
   const [activeTab, setActiveTab] = useState('overview')
   const [paused, setPaused] = useState([])
   const [cells, setCells] = useState([])
   const [stats, setStats] = useState(null)
+  const [fundingRequests, setFundingRequests] = useState([])
+  const [confirming, setConfirming] = useState(null)
+
 
   useEffect(() => {
     getCells().then(d => { if(d?.length) setCells(d) }).catch(() => toast?.('Failed to load cells', 'error'))
     getSystemStats().then(d => { if(d) setStats(d) }).catch(() => {})
+    getAllFundingRequests().then(d => setFundingRequests(d)).catch(() => {})
   }, [])
+
+  async function handleConfirmPayment(req) {
+    setConfirming(req.id)
+    try {
+      await confirmPaymentReceived({ requestId: req.id, adminId: 'platform', cellIds: [] })
+      await notifySponsorPaymentConfirmed({
+        sponsorEmail: req.sponsorEmail,
+        sponsorName:  req.sponsorName,
+        tierName:     req.tierName,
+        invoiceRef:   req.invoiceRef,
+      }).catch(() => {})
+      setFundingRequests(prev => prev.map(r => r.id === req.id ? { ...r, status: 'active' } : r))
+      toast('Payment confirmed — cells activated!', 'success')
+    } catch (e) {
+      toast('Failed to confirm: ' + e.message, 'error')
+    } finally {
+      setConfirming(null)
+    }
+  }
 
   const togglePause = (id) => setPaused(p => p.includes(id) ? p.filter(x => x !== id) : [...p, id])
 
@@ -178,6 +205,49 @@ export default function PlatformDashboard() {
 
         {activeTab === 'sponsors' && (
           <div className="db-tab-content">
+
+            {/* ── Funding Requests — Confirm Payment ── */}
+            <div className="db-panel" style={{ marginBottom: '1.5rem' }}>
+              <div className="db-panel-header">
+                <h3 className="db-panel-title">💸 Funding Requests</h3>
+                <span className="badge" style={{ background: 'rgba(77,232,176,0.15)', color: '#4de8b0', fontSize: '0.78rem', padding: '0.2rem 0.6rem', borderRadius: '99px' }}>
+                  {fundingRequests.filter(r => r.status === 'pending_payment').length} pending
+                </span>
+              </div>
+              {fundingRequests.length === 0 ? (
+                <p style={{ fontSize: '0.86rem', color: 'var(--text-soft)' }}>No funding requests yet.</p>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                  {fundingRequests.map(req => (
+                    <div key={req.id} className="action-item" style={{ alignItems: 'flex-start', gap: '1rem' }}>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap', marginBottom: '0.3rem' }}>
+                          <strong style={{ fontSize: '0.9rem' }}>{req.sponsorName}</strong>
+                          <span style={{ fontSize: '0.75rem', color: 'var(--text-soft)' }}>{req.sponsorEmail}</span>
+                          <span className={`vr-status ${req.status === 'active' ? 'reviewed' : 'pending'}`}>
+                            {req.status === 'active' ? '✓ Confirmed' : req.status === 'pending_payment' ? '⏳ Awaiting payment' : req.status}
+                          </span>
+                        </div>
+                        <div style={{ fontSize: '0.82rem', color: 'var(--text-soft)', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                          <span>🏷 {req.tierName}</span>
+                          <span>💰 ${req.amount} USD</span>
+                          <span>🌍 {req.region}</span>
+                          <span>📄 {req.invoiceRef}</span>
+                        </div>
+                      </div>
+                      {req.status === 'pending_payment' && (
+                        <button className="btn btn-primary btn-sm"
+                          disabled={confirming === req.id}
+                          onClick={() => handleConfirmPayment(req)}>
+                          {confirming === req.id ? 'Confirming…' : '✓ Confirm Payment'}
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <div className="db-panel">
               <div className="db-panel-header">
                 <h3 className="db-panel-title">🏦 Sponsor Registry</h3>

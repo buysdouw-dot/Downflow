@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import SponsorCheckout from '../components/SponsorCheckout.jsx'
+import FundingRequestModal from '../components/FundingRequestModal.jsx'
 import { Link } from 'react-router-dom'
 import usePageMeta from '../hooks/usePageMeta.js'
 
@@ -360,5 +360,5 @@ export default function Payments() {
       </div>
     </div>
   )
-  {showCheckout && <SponsorCheckout onClose={()=>setShowCheckout(false)} />}
+  {showCheckout && <FundingRequestModal onClose={()=>setShowCheckout(false)} onSuccess={()=>setShowCheckout(false)} />}
 }

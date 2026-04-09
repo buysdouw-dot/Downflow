@@ -79,4 +79,26 @@ export async function notifyStudentPromotion({ studentEmail, studentName, fromRo
   })
 }
 
+// ── Notify platform admin of new funding request ────────────
+export async function notifyAdminFundingRequest({ sponsorName, sponsorEmail, tierName, amount, region, invoiceRef }) {
+  return send(T_NOTIFY, {
+    to_email:   'admin@downflow.app',
+    to_name:    'Platform Admin',
+    subject:    `New funding request — ${sponsorName} · ${tierName}`,
+    message:    `${sponsorName} (${sponsorEmail}) has submitted a funding request.\n\nTier: ${tierName}\nAmount: $${amount} USD\nRegion: ${region}\nReference: ${invoiceRef}\n\nLog in to confirm payment and activate their cells.`,
+    action_url: `${window.location.origin}/platform`,
+  })
+}
+
+// ── Confirm payment received to sponsor ─────────────────────
+export async function notifySponsorPaymentConfirmed({ sponsorEmail, sponsorName, tierName, invoiceRef }) {
+  return send(T_NOTIFY, {
+    to_email:   sponsorEmail,
+    to_name:    sponsorName,
+    subject:    `Payment confirmed — Your cells are now active`,
+    message:    `We've confirmed your payment for ${tierName} (${invoiceRef}). Your learning cells are now active. Log in to your sponsor dashboard to track impact.`,
+    action_url: `${window.location.origin}/sponsor`,
+  })
+}
+
 export { isEmailConfigured }

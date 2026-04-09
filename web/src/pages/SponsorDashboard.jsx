@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useAuth } from '../context/AuthContext.jsx'
 import { useToast } from '../components/Toast.jsx'
 import { HexIcon, HexSystemRow } from '../components/HexSymbols.jsx'
+import FundingRequestModal from '../components/FundingRequestModal.jsx'
 import OnboardingBanner from '../components/OnboardingBanner.jsx'
 import { getCells, getSponsorships } from '../services/api.js'
 import DashboardShell from '../components/DashboardShell.jsx'
@@ -130,7 +131,7 @@ export default function SponsorDashboard() {
 
   const topActions = (
     <>
-      <button className="btn btn-primary" onClick={()=>setActiveTab('cells')}>+ Fund New Cell</button>
+      <button className="btn btn-primary" onClick={()=>setShowFunding(true)}>+ Fund New Cell</button>
       <button className="btn btn-secondary" onClick={()=>setActiveTab('impact')}>Download Report</button>
     </>
   )
@@ -253,7 +254,7 @@ export default function SponsorDashboard() {
             <div className="db-panel" style={{marginBottom:'1.5rem'}}>
               <div className="db-panel-header">
                 <h3 className="db-panel-title">🏫 Funded Cells</h3>
-                <button className="btn btn-primary btn-sm">+ Fund New Cell</button>
+<button className="btn btn-primary btn-sm" onClick={()=>setShowFunding(true)}>+ Fund New Cell</button>
               </div>
               <div className="cells-table">
                 <div className="cells-table-head" style={{gridTemplateColumns:'80px 1fr 90px 100px 120px 90px 100px'}}>
@@ -709,4 +710,5 @@ export default function SponsorDashboard() {
       </div>
     </DashboardShell>
   )
+  {showFunding && <FundingRequestModal onClose={()=>setShowFunding(false)} onSuccess={()=>setShowFunding(false)} />}
 }
