@@ -102,3 +102,58 @@ export async function notifySponsorPaymentConfirmed({ sponsorEmail, sponsorName,
 }
 
 export { isEmailConfigured }
+
+// ── Session reminder (24h or 1h before class) ───────────────
+export async function sendSessionReminder({ toEmail, toName, cellId, packName, weekNum, sessionDate, sessionTime, meetLink, hoursUntil }) {
+  return send(T_NOTIFY, {
+    to_email:   toEmail,
+    to_name:    toName,
+    subject:    hoursUntil <= 1 ? `Class starts in 1 hour — ${packName}` : `Reminder: Class tomorrow — ${packName}`,
+    message:    `Hi ${toName},\n\nYour DOWNFLOW session is ${hoursUntil <= 1 ? 'starting in 1 hour' : 'tomorrow'}.\n\n📚 Pack: ${packName}\n📅 Week: ${weekNum}\n🏫 Cell: ${cellId}\n🕐 Time: ${sessionDate} at ${sessionTime}\n\nJoin here: ${meetLink}\n\nSee you there!`,
+    action_url: meetLink || `${window.location.origin}/student`,
+  })
+}
+
+// ── Re-engagement (inactive student) ───────────────────────
+export async function sendReEngagementEmail({ toEmail, toName, cellId, daysSinceLastSession, packName }) {
+  return send(T_NOTIFY, {
+    to_email:   toEmail,
+    to_name:    toName,
+    subject:    `We miss you, ${toName} — your cell is waiting`,
+    message:    `Hi ${toName},\n\nIt's been ${daysSinceLastSession} days since your last session in ${cellId}.\n\nYour group is continuing with ${packName} — don't fall behind!\n\nLog in to see what you missed and book your next session.`,
+    action_url: `${window.location.origin}/student`,
+  })
+}
+
+// ── Teacher no-show alert ───────────────────────────────────
+export async function alertNoShow({ adminEmail, facilitatorName, cellId, sessionDate }) {
+  return send(T_NOTIFY, {
+    to_email:   adminEmail || 'admin@downflow.app',
+    to_name:    'Platform Admin',
+    subject:    `⚠️ No-show alert — ${facilitatorName} · Cell ${cellId}`,
+    message:    `Facilitator ${facilitatorName} did not appear for the scheduled session in Cell ${cellId} on ${sessionDate}.\n\nPlease assign a backup facilitator immediately and investigate.`,
+    action_url: `${window.location.origin}/platform`,
+  })
+}
+
+// ── New teacher application received ───────────────────────
+export async function notifyNewTeacherApplication({ applicantName, applicantEmail, region }) {
+  return send(T_NOTIFY, {
+    to_email:   'admin@downflow.app',
+    to_name:    'Platform Admin',
+    subject:    `New facilitator application — ${applicantName}`,
+    message:    `${applicantName} (${applicantEmail}) has applied to become a facilitator in region: ${region}.\n\nLog in to review their application and schedule a demo lesson.`,
+    action_url: `${window.location.origin}/platform`,
+  })
+}
+
+// ── Weekly performance digest to admin ─────────────────────
+export async function sendWeeklyDigest({ activeCells, avgHealth, newStudents, retentionRate, flaggedCells }) {
+  return send(T_NOTIFY, {
+    to_email:   'admin@downflow.app',
+    to_name:    'Platform Admin',
+    subject:    `Weekly Digest — DOWNFLOW Platform`,
+    message:    `Weekly Summary:\n\n📊 Active Cells: ${activeCells}\n💚 Average Health: ${avgHealth}%\n👥 New Students: ${newStudents}\n🔁 Retention Rate: ${retentionRate}%\n⚠️ Flagged Cells: ${flaggedCells}\n\nLog in for full details.`,
+    action_url: `${window.location.origin}/platform`,
+  })
+}

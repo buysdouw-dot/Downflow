@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import VideoUpload from '../components/VideoUpload.jsx'
+import SessionFeedback from '../components/SessionFeedback.jsx'
 import OnboardingBanner from '../components/OnboardingBanner.jsx'
 import { HexIcon } from '../components/HexSymbols.jsx'
 import DashboardShell from '../components/DashboardShell.jsx'
@@ -242,6 +243,7 @@ export default function StudentDashboard() {
   const [activeTab,setActiveTab]=useState('home')
   const [done,setDone]=useState(false)
   const [showUpload,setShowUpload]=useState(false)
+  const [showFeedback,setShowFeedback]=useState(false)
   const [showOnboarding,setShowOnboarding]=useState(true)
   const [cell, setCell] = useState(null)
   const [videoReps, setVideoReps] = useState(null)
@@ -289,6 +291,9 @@ export default function StudentDashboard() {
                     <div className="ns-info"><strong>Live Learning Cell · VN-01</strong><p>Theme: <em>Voice & Confidence</em></p><p style={{color:'var(--text-soft)',fontSize:'0.85rem'}}>4:00 PM · 60 min · Google Meet</p></div>
                     <button className="btn btn-primary btn-sm">Join Session</button>
                   </div>
+                  <button className="btn btn-secondary btn-sm" style={{marginTop:'0.75rem',fontSize:'0.78rem'}} onClick={()=>setShowFeedback(true)}>
+                    📋 Rate Last Session
+                  </button>
                 </div>
               </div>
               <div className="db-panel">
@@ -606,6 +611,7 @@ export default function StudentDashboard() {
       </div>
     </DashboardShell>
     {showUpload && <VideoUpload cellId={cellId} packName="💰 Kidinomics" weekNum={cell?.cycleWeek || 7} onSuccess={()=>setShowUpload(false)} onClose={()=>setShowUpload(false)} />}
+    {showFeedback && <SessionFeedback session={{ cellId, weekNum: cell?.cycleWeek || 7, packName: '💰 Kidinomics', facilitatorName: 'Your Facilitator' }} onClose={()=>setShowFeedback(false)} onSubmit={()=>setShowFeedback(false)} />}
     </>
   )
 }

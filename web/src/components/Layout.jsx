@@ -46,11 +46,20 @@ const NAV_GROUPS = [
       { to: '/join',                  label: '🌐 Join' },
       { to: '/auto-funnel',           label: '⚡ Funnel' },
       { to: '/social-ads',            label: '📣 Ads' },
+      { to: '/referrals',             label: '🔗 Referrals' },
       { to: '/facilitator-app',       label: '📱 Facilitator App' },
       { to: '/facilitator-onboarding',label: '📄 Contract' },
       { to: '/assistants',            label: 'Assistants' },
       { to: '/integrations',          label: '🔗 Integrations' },
       { to: '/recordings',            label: '📹 Recordings' },
+    ]
+  },
+  {
+    label: 'Help',
+    links: [
+      { to: '/support',  label: '❓ Support & FAQ' },
+      { to: '/legal',    label: '📄 Legal' },
+      { to: '/metrics',  label: '📊 Business Metrics' },
     ]
   },
 ]

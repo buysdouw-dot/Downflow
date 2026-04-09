@@ -31,6 +31,12 @@ const AutoFunnel            = lazy(() => import('./pages/AutoFunnel.jsx'))
 const Integrations          = lazy(() => import('./pages/Integrations.jsx'))
 const SessionRecordings     = lazy(() => import('./pages/SessionRecordings.jsx'))
 const FundingProposal       = lazy(() => import('./pages/FundingProposal.jsx'))
+const Support             = lazy(() => import('./pages/Support.jsx'))
+const Legal               = lazy(() => import('./pages/Legal.jsx'))
+const EarningsWallet      = lazy(() => import('./pages/EarningsWallet.jsx'))
+const BackupSystem        = lazy(() => import('./pages/BackupSystem.jsx'))
+const BusinessMetrics     = lazy(() => import('./pages/BusinessMetrics.jsx'))
+const Referrals           = lazy(() => import('./pages/Referrals.jsx'))
 
 function PageLoader() {
   return (
@@ -113,7 +119,13 @@ export default function App() {
           } />
 
           {/* Shared authenticated */}
-          <Route path="/funding-proposal" element={
+          <Route path="/funding-proposal" element={<ProtectedRoute><FundingProposal /></ProtectedRoute>} />
+          <Route path="/support"          element={<Support />} />
+          <Route path="/legal"            element={<Legal />} />
+          <Route path="/earnings"         element={<ProtectedRoute roles={['facilitator','platform']}><EarningsWallet /></ProtectedRoute>} />
+          <Route path="/backup-system"    element={<ProtectedRoute roles={['platform']}><BackupSystem /></ProtectedRoute>} />
+          <Route path="/metrics"          element={<ProtectedRoute roles={['platform']}><BusinessMetrics /></ProtectedRoute>} />
+          <Route path="/referrals"        element={<ProtectedRoute><Referrals /></ProtectedRoute>} />
             <ProtectedRoute><FundingProposal /></ProtectedRoute>
           } />
         </Route>

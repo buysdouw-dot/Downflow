@@ -32,6 +32,7 @@ import './styles/social-ads-engine.css'
 import './styles/topbar-integrations.css'
 import './styles/integrations.css'
 import './styles/session-recordings.css'
+import './styles/new-pages.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

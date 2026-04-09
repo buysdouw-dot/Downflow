@@ -182,6 +182,15 @@ export default function DashboardShell({ role, activeTab, onTabChange, title, su
 
         {/* Bottom: nav to other dashboards + sign out */}
         <div className="dsh-sb-footer">
+          {(role === 'facilitator' || role === 'platform') && (
+            <NavLink to="/earnings" className="dsh-sb-footer-link">💰 Earnings Wallet</NavLink>
+          )}
+          {role === 'platform' && <>
+            <NavLink to="/metrics" className="dsh-sb-footer-link">📊 Business Metrics</NavLink>
+            <NavLink to="/backup-system" className="dsh-sb-footer-link">🛡 Backup System</NavLink>
+          </>}
+          <NavLink to="/referrals" className="dsh-sb-footer-link">🔗 Referrals</NavLink>
+          <NavLink to="/support" className="dsh-sb-footer-link">❓ Support</NavLink>
           <NavLink to="/" className="dsh-sb-footer-link">← Back to site</NavLink>
           {isConfigured && (
             <button className="dsh-sb-footer-link dsh-sb-signout"
