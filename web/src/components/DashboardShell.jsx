@@ -186,9 +186,15 @@ export default function DashboardShell({ role, activeTab, onTabChange, title, su
             <NavLink to="/earnings" className="dsh-sb-footer-link">💰 Earnings Wallet</NavLink>
           )}
           {role === 'platform' && <>
+            <NavLink to="/admin" className="dsh-sb-footer-link">🛡 Admin Dashboard</NavLink>
+            <NavLink to="/growth-system" className="dsh-sb-footer-link">⚙️ Growth System</NavLink>
+            <NavLink to="/lead-intelligence" className="dsh-sb-footer-link">🎯 Lead Intelligence</NavLink>
             <NavLink to="/metrics" className="dsh-sb-footer-link">📊 Business Metrics</NavLink>
             <NavLink to="/backup-system" className="dsh-sb-footer-link">🛡 Backup System</NavLink>
           </>}
+          {role === 'parent' && (
+            <NavLink to="/parent-dashboard" className="dsh-sb-footer-link">👨‍👩‍👧 Child Progress</NavLink>
+          )}
           <NavLink to="/referrals" className="dsh-sb-footer-link">🔗 Referrals</NavLink>
           <NavLink to="/support" className="dsh-sb-footer-link">❓ Support</NavLink>
           <NavLink to="/" className="dsh-sb-footer-link">← Back to site</NavLink>

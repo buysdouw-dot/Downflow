@@ -56,11 +56,21 @@ const NAV_GROUPS = [
     ]
   },
   {
+    label: 'Intelligence',
+    links: [
+      { to: '/admin',             label: '🛡 Admin Dashboard' },
+      { to: '/growth-system',     label: '⚙️ Growth System' },
+      { to: '/lead-intelligence', label: '🎯 Lead Intelligence' },
+      { to: '/parent-dashboard',  label: '👨‍👩‍👧 Parent Dashboard' },
+      { to: '/backup-system',     label: '🛡 Backup System' },
+      { to: '/metrics',           label: '📊 Business Metrics' },
+    ]
+  },
+  {
     label: 'Help',
     links: [
       { to: '/support',  label: '❓ Support & FAQ' },
       { to: '/legal',    label: '📄 Legal' },
-      { to: '/metrics',  label: '📊 Business Metrics' },
     ]
   },
 ]

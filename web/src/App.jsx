@@ -38,6 +38,10 @@ const BackupSystem        = lazy(() => import('./pages/BackupSystem.jsx'))
 const BusinessMetrics     = lazy(() => import('./pages/BusinessMetrics.jsx'))
 const Referrals           = lazy(() => import('./pages/Referrals.jsx'))
 const MarketingEngine     = lazy(() => import('./pages/MarketingEngine.jsx'))
+const GrowthSystem        = lazy(() => import('./pages/GrowthSystem.jsx'))
+const LeadIntelligence    = lazy(() => import('./pages/LeadIntelligence.jsx'))
+const AdminDashboard      = lazy(() => import('./pages/AdminDashboard.jsx'))
+const ParentDashboard     = lazy(() => import('./pages/ParentDashboard.jsx'))
 
 function PageLoader() {
   return (
@@ -128,6 +132,10 @@ export default function App() {
           <Route path="/metrics"          element={<ProtectedRoute roles={['platform']}><BusinessMetrics /></ProtectedRoute>} />
           <Route path="/referrals"        element={<ProtectedRoute><Referrals /></ProtectedRoute>} />
           <Route path="/marketing"        element={<ProtectedRoute roles={['platform','connector']}><MarketingEngine /></ProtectedRoute>} />
+          <Route path="/growth-system"    element={<ProtectedRoute roles={['platform']}><GrowthSystem /></ProtectedRoute>} />
+          <Route path="/lead-intelligence" element={<ProtectedRoute roles={['platform']}><LeadIntelligence /></ProtectedRoute>} />
+          <Route path="/admin"            element={<ProtectedRoute roles={['platform']}><AdminDashboard /></ProtectedRoute>} />
+          <Route path="/parent-dashboard" element={<ProtectedRoute roles={['platform','parent']}><ParentDashboard /></ProtectedRoute>} />
         </Route>
       </Routes>
     </Suspense>
