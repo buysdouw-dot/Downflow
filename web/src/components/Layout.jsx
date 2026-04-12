@@ -156,7 +156,7 @@ export default function Layout() {
             ))}
           </nav>
 
-          <button className="hamburger" onClick={() => setMenuOpen(o => !o)} aria-label="Menu">
+          <button className={`hamburger${menuOpen ? ' is-open' : ''}`} onClick={() => setMenuOpen(o => !o)} aria-label="Menu">
             <span/><span/><span/>
           </button>
         </div>
@@ -239,22 +239,42 @@ export default function Layout() {
         </div>
       </header>
 
-      {/* Mobile nav drawer */}
+      {/* Mobile nav overlay + drawer */}
       {menuOpen && (
-        <nav className="mobile-nav">
-          {NAV_GROUPS.map(g => (
-            <div key={g.label} className="mobile-nav-group">
-              <p className="mobile-nav-group-label">{g.label}</p>
-              {g.links.map(({ to, label, exact }) => (
-                <NavLink key={to} to={to} end={exact}
-                  className={({ isActive }) => `mobile-nav-link${isActive ? ' active' : ''}`}
-                  onClick={() => setMenuOpen(false)}>
-                  {label}
-                </NavLink>
-              ))}
+        <>
+          <div className="mobile-nav-overlay" onClick={() => setMenuOpen(false)} />
+          <nav className="mobile-nav">
+            {/* Header row */}
+            <div className="mobile-nav-close">
+              <span className="mobile-nav-close-brand"><span style={{ color: '#e8eef6' }}>DOWN</span><span style={{ color: 'var(--gold-dark)' }}>FLOW</span></span>
+              <button className="mobile-nav-close-btn" onClick={() => setMenuOpen(false)} aria-label="Close menu">✕</button>
             </div>
-          ))}
-        </nav>
+
+            {/* Nav groups */}
+            {NAV_GROUPS.map(g => (
+              <div key={g.label} className="mobile-nav-group">
+                <p className="mobile-nav-group-label">{g.label}</p>
+                {g.links.map(({ to, label, exact }) => (
+                  <NavLink key={to} to={to} end={exact}
+                    className={({ isActive }) => `mobile-nav-link${isActive ? ' active' : ''}`}
+                    onClick={() => setMenuOpen(false)}>
+                    {label}
+                  </NavLink>
+                ))}
+              </div>
+            ))}
+
+            {/* Bottom actions */}
+            <div className="mobile-nav-actions">
+              <Link to="/onboarding" className="mobile-nav-action-btn gold" onClick={() => setMenuOpen(false)}>
+                🚀 Get Started
+              </Link>
+              <Link to="/booking" className="mobile-nav-action-btn secondary" onClick={() => setMenuOpen(false)}>
+                📅 Book a Session
+              </Link>
+            </div>
+          </nav>
+        </>
       )}
 
       <main><Outlet/></main>

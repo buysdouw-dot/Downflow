@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 /* ─────────────────────────────────────────────────────────────
    ParentDashboard — Child progress, sessions, outputs, notes
@@ -10,6 +11,7 @@ const MOCK_CHILD = {
   age: 14,
   cell: 'Confidence Cell 001',
   facilitator: 'Peter Nkosi',
+  facilitatorEmail: 'peter.nkosi@downflow.edu',
   startDate: 'Mar 3, 2026',
   endDate: 'Jun 23, 2026',
   sessionsCompleted: 6,
@@ -18,7 +20,19 @@ const MOCK_CHILD = {
   outputsApproved: 4,
   attendanceRate: 100,
   coinsEarned: 240,
+  currentStreak: 5,
+  pack: 'Voice & Presence',
+  cellGrade: 'B+',
 }
+
+const SKILLS = [
+  { label: 'Confidence',    score: 78, color: '#00c896' },
+  { label: 'Articulation',  score: 65, color: '#5b9bd5' },
+  { label: 'Listening',     score: 82, color: '#a259ff' },
+  { label: 'Collaboration', score: 71, color: '#ffd740' },
+  { label: 'Initiative',    score: 59, color: '#ff9f5a' },
+  { label: 'Resilience',    score: 74, color: '#ff6b8a' },
+]
 
 const OUTPUTS = [
   { id: 'out_001', week: 'Week 3, Lesson 2', type: 'Video', title: 'Explaining the water cycle to my neighbour', status: 'approved', duration: '47s', submitted: 'Apr 7', feedback: 'Great confidence! Eye contact excellent.' },
@@ -30,11 +44,11 @@ const OUTPUTS = [
 
 const SESSIONS = [
   { week: 'Week 4, Lesson 1', date: 'Apr 14', status: 'upcoming', topic: 'Debate: agree or disagree?' },
-  { week: 'Week 3, Lesson 2', date: 'Apr 7', status: 'completed', topic: 'Real-world explanation challenge', attended: true },
-  { week: 'Week 3, Lesson 1', date: 'Apr 5', status: 'completed', topic: 'Reading aloud + pronunciation', attended: true },
-  { week: 'Week 2, Lesson 2', date: 'Mar 28', status: 'completed', topic: 'Group discussion exercise', attended: true },
-  { week: 'Week 2, Lesson 1', date: 'Mar 25', status: 'completed', topic: 'Daily life narration', attended: true },
-  { week: 'Week 1, Lesson 2', date: 'Mar 17', status: 'completed', topic: 'Cell kickoff + confidence check-in', attended: true },
+  { week: 'Week 3, Lesson 2', date: 'Apr 7', status: 'completed', topic: 'Real-world explanation challenge', attended: true, score: 9 },
+  { week: 'Week 3, Lesson 1', date: 'Apr 5', status: 'completed', topic: 'Reading aloud + pronunciation', attended: true, score: 8 },
+  { week: 'Week 2, Lesson 2', date: 'Mar 28', status: 'completed', topic: 'Group discussion exercise', attended: true, score: 7 },
+  { week: 'Week 2, Lesson 1', date: 'Mar 25', status: 'completed', topic: 'Daily life narration', attended: true, score: 8 },
+  { week: 'Week 1, Lesson 2', date: 'Mar 17', status: 'completed', topic: 'Cell kickoff + confidence check-in', attended: true, score: 6 },
 ]
 
 const FACILITATOR_NOTES = [
@@ -43,15 +57,51 @@ const FACILITATOR_NOTES = [
   { date: 'Mar 17', note: 'Great first session. Sipho is enthusiastic and eager to participate. Strong foundation for the program.' },
 ]
 
+const MILESTONES = [
+  { icon: '🎤', label: 'First Output',      desc: 'Submitted a video',            earned: true,  date: 'Mar 17' },
+  { icon: '⚡', label: '3 Sessions Done',   desc: 'Attended 3 consecutive',       earned: true,  date: 'Mar 28' },
+  { icon: '🌟', label: 'Perfect Week',      desc: 'On time + output submitted',   earned: true,  date: 'Apr 5' },
+  { icon: '💬', label: 'Debate Ready',      desc: 'Lead a class discussion',      earned: false, date: null },
+  { icon: '🏆', label: 'Cell Champion',     desc: 'Top scorer in cell session',   earned: false, date: null },
+  { icon: '🎓', label: 'Course Complete',   desc: 'Finish all 24 sessions',       earned: false, date: null },
+]
+
+const MESSAGES = [
+  { from: 'Peter Nkosi', role: 'Facilitator', avatar: '🧭', time: 'Apr 7, 2:14 PM', text: "Sipho did brilliantly today — please encourage him to review his week 3 video and share it with family." },
+  { from: 'You', role: 'Parent', avatar: '👨‍👩‍👧', time: 'Apr 7, 3:45 PM', text: "Thank you Peter! He was so proud when he came home. Will do." },
+  { from: 'Peter Nkosi', role: 'Facilitator', avatar: '🧭', time: 'Apr 8, 9:01 AM', text: "Next session is a debate format — let him practise arguing both sides of any topic at home. Fun exercise!" },
+]
+
+// Score trend data (last 6 sessions)
+const TREND = [6, 8, 7, 8, 9, null] // null = upcoming
+
 export default function ParentDashboard() {
-  const [activeTab, setActiveTab] = useState('overview')
+  const [activeTab, setActiveTab]       = useState('overview')
   const [expandedOutput, setExpandedOutput] = useState(null)
+  const [msgText, setMsgText]           = useState('')
+  const [messages, setMessages]         = useState(MESSAGES)
+  const [msgSent, setMsgSent]           = useState(false)
 
   const progress = Math.round((MOCK_CHILD.sessionsCompleted / MOCK_CHILD.totalSessions) * 100)
 
+  const completedScores = SESSIONS.filter(s => s.score != null).map(s => s.score)
+  const avgScore = completedScores.length
+    ? (completedScores.reduce((a, b) => a + b, 0) / completedScores.length).toFixed(1)
+    : '—'
+
+  function sendMessage(e) {
+    e.preventDefault()
+    if (!msgText.trim()) return
+    setMessages(prev => [...prev, { from: 'You', role: 'Parent', avatar: '👨‍👩‍👧', time: 'Just now', text: msgText.trim() }])
+    setMsgText('')
+    setMsgSent(true)
+    setTimeout(() => setMsgSent(false), 3000)
+  }
+
   return (
     <div className="par-page">
-      {/* Hero */}
+
+      {/* ── HERO ── */}
       <div className="par-hero">
         <div className="par-child-card">
           <div className="par-cc-avatar">
@@ -61,11 +111,16 @@ export default function ParentDashboard() {
             <div className="par-cc-name">{MOCK_CHILD.name}</div>
             <div className="par-cc-meta">Age {MOCK_CHILD.age} · {MOCK_CHILD.cell}</div>
             <div className="par-cc-fac">Facilitator: <strong>{MOCK_CHILD.facilitator}</strong></div>
+            <div className="par-cc-pack">Pack: <strong>{MOCK_CHILD.pack}</strong></div>
+          </div>
+          <div className="par-cc-grade">
+            <span className="par-grade-label">Cell Grade</span>
+            <span className="par-grade-value">{MOCK_CHILD.cellGrade}</span>
           </div>
         </div>
 
         <div className="par-progress-block">
-          <div className="par-pb-label">Program Progress</div>
+          <div className="par-pb-label">Program Progress — {progress}%</div>
           <div className="par-pb-bar-wrap">
             <div className="par-pb-bar" style={{ width: `${progress}%` }} />
           </div>
@@ -77,40 +132,42 @@ export default function ParentDashboard() {
         </div>
       </div>
 
-      {/* Quick stats */}
+      {/* ── QUICK STATS ── */}
       <div className="par-stats">
-        <div className="par-stat">
-          <span className="par-stat-icon">📅</span>
-          <div className="par-stat-val">{MOCK_CHILD.sessionsCompleted}/{MOCK_CHILD.totalSessions}</div>
-          <div className="par-stat-label">Sessions</div>
-        </div>
-        <div className="par-stat">
-          <span className="par-stat-icon">🎥</span>
-          <div className="par-stat-val">{MOCK_CHILD.outputsApproved}</div>
-          <div className="par-stat-label">Approved Outputs</div>
-        </div>
-        <div className="par-stat">
-          <span className="par-stat-icon">📋</span>
-          <div className="par-stat-val">{MOCK_CHILD.attendanceRate}%</div>
-          <div className="par-stat-label">Attendance</div>
-        </div>
-        <div className="par-stat">
-          <span className="par-stat-icon">🪙</span>
-          <div className="par-stat-val">{MOCK_CHILD.coinsEarned}</div>
-          <div className="par-stat-label">Coins Earned</div>
-        </div>
+        {[
+          { icon: '📅', val: `${MOCK_CHILD.sessionsCompleted}/${MOCK_CHILD.totalSessions}`, label: 'Sessions' },
+          { icon: '🎥', val: MOCK_CHILD.outputsApproved, label: 'Approved Outputs' },
+          { icon: '📋', val: `${MOCK_CHILD.attendanceRate}%`, label: 'Attendance' },
+          { icon: '🪙', val: MOCK_CHILD.coinsEarned, label: 'Coins Earned' },
+          { icon: '🔥', val: MOCK_CHILD.currentStreak, label: 'Session Streak' },
+          { icon: '⭐', val: avgScore, label: 'Avg Score' },
+        ].map(s => (
+          <div key={s.label} className="par-stat">
+            <span className="par-stat-icon">{s.icon}</span>
+            <div className="par-stat-val">{s.val}</div>
+            <div className="par-stat-label">{s.label}</div>
+          </div>
+        ))}
       </div>
 
-      {/* Tabs */}
+      {/* ── TABS ── */}
       <div className="par-tabs">
-        {['overview', 'outputs', 'sessions', 'notes'].map(t => (
-          <button key={t} className={`par-tab ${activeTab === t ? 'active' : ''}`} onClick={() => setActiveTab(t)}>
-            {t === 'overview' ? '📊 Overview' : t === 'outputs' ? '🎥 Outputs' : t === 'sessions' ? '📅 Sessions' : '📝 Facilitator Notes'}
+        {[
+          { id: 'overview',  label: '📊 Overview' },
+          { id: 'skills',    label: '🎯 Skills' },
+          { id: 'outputs',   label: '🎥 Outputs' },
+          { id: 'sessions',  label: '📅 Sessions' },
+          { id: 'notes',     label: '📝 Notes' },
+          { id: 'messages',  label: '💬 Messages' },
+          { id: 'milestones',label: '🏆 Milestones' },
+        ].map(t => (
+          <button key={t.id} className={`par-tab ${activeTab === t.id ? 'active' : ''}`} onClick={() => setActiveTab(t.id)}>
+            {t.label}
           </button>
         ))}
       </div>
 
-      {/* ── Overview tab ── */}
+      {/* ── OVERVIEW ── */}
       {activeTab === 'overview' && (
         <div className="par-panel">
           {/* Next session */}
@@ -119,9 +176,28 @@ export default function ParentDashboard() {
               <div className="par-ns-badge">NEXT SESSION</div>
               <div className="par-ns-title">{s.topic}</div>
               <div className="par-ns-meta">{s.week} · {s.date}</div>
-              <div className="par-ns-tip">💡 Remind {MOCK_CHILD.name.split(' ')[0]} to practise speaking aloud before this class — debate prep!</div>
+              <div className="par-ns-tip">💡 Remind {MOCK_CHILD.name.split(' ')[0]} to practise speaking aloud before this session — debate prep!</div>
             </div>
           ))}
+
+          {/* Score trend bars */}
+          <div className="par-trend-block">
+            <div className="par-trend-title">Session Score Trend</div>
+            <div className="par-trend-bars">
+              {TREND.map((score, i) => (
+                <div key={i} className="par-trend-col">
+                  <div className="par-trend-bar-wrap">
+                    <div
+                      className={`par-trend-bar${score == null ? ' upcoming' : ''}`}
+                      style={{ height: score != null ? `${(score / 10) * 100}%` : '20%' }}
+                    />
+                  </div>
+                  <div className="par-trend-score">{score != null ? score : '—'}</div>
+                  <div className="par-trend-label">S{i + 1}</div>
+                </div>
+              ))}
+            </div>
+          </div>
 
           {/* Latest output */}
           <div className="par-latest-output">
@@ -143,40 +219,50 @@ export default function ParentDashboard() {
           <div className="par-what-expect">
             <div className="par-we-title">What to Expect</div>
             <div className="par-we-grid">
-              <div className="par-we-item">
-                <span>🎯</span>
-                <div>
-                  <strong>Confidence First</strong>
-                  <p>Sipho is learning to speak before perfecting grammar. Real-world confidence is the goal.</p>
+              {[
+                { icon: '🎯', title: 'Confidence First', desc: 'Sipho is learning to speak before perfecting grammar. Real-world confidence is the goal.' },
+                { icon: '🎥', title: 'Required Outputs',  desc: '1 video or written output per session. These build his portfolio and demonstrate real growth.' },
+                { icon: '👥', title: 'Small Group (5)',    desc: 'Every cell has exactly 5 learners. Sipho gets individual attention every class.' },
+                { icon: '📈', title: 'Your View',         desc: 'You can see all approved outputs. Sponsor never sees personal details — only aggregated impact.' },
+              ].map(item => (
+                <div key={item.title} className="par-we-item">
+                  <span>{item.icon}</span>
+                  <div><strong>{item.title}</strong><p>{item.desc}</p></div>
                 </div>
-              </div>
-              <div className="par-we-item">
-                <span>🎥</span>
-                <div>
-                  <strong>Required Outputs</strong>
-                  <p>1 video or written output per session. These build his portfolio and demonstrate real growth.</p>
-                </div>
-              </div>
-              <div className="par-we-item">
-                <span>👥</span>
-                <div>
-                  <strong>Small Group (6 max)</strong>
-                  <p>Every cell has max 6 learners. Sipho gets individual attention every class.</p>
-                </div>
-              </div>
-              <div className="par-we-item">
-                <span>📈</span>
-                <div>
-                  <strong>Your View</strong>
-                  <p>You can see all approved outputs. Sponsor never sees personal details — only aggregated impact.</p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
       )}
 
-      {/* ── Outputs tab ── */}
+      {/* ── SKILLS ── */}
+      {activeTab === 'skills' && (
+        <div className="par-panel">
+          <div className="par-panel-title">Skill Development Scores</div>
+          <p className="par-panel-sub">Assessed by facilitator across sessions 1–{MOCK_CHILD.sessionsCompleted}. Scale: 0–100.</p>
+          <div className="par-skills-grid">
+            {SKILLS.map(sk => (
+              <div key={sk.label} className="par-skill-card">
+                <div className="par-sk-top">
+                  <span className="par-sk-label">{sk.label}</span>
+                  <span className="par-sk-score" style={{ color: sk.color }}>{sk.score}</span>
+                </div>
+                <div className="par-sk-bar-wrap">
+                  <div className="par-sk-bar" style={{ width: `${sk.score}%`, background: sk.color }} />
+                </div>
+                <div className="par-sk-tier">
+                  {sk.score >= 80 ? '🟢 Strong' : sk.score >= 65 ? '🟡 Developing' : '🔴 Focus Area'}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="par-skills-note">
+            <strong>Focus area this month:</strong> Initiative (59) — facilitator is introducing more self-directed tasks to build autonomy.
+          </div>
+        </div>
+      )}
+
+      {/* ── OUTPUTS ── */}
       {activeTab === 'outputs' && (
         <div className="par-panel">
           <div className="par-outputs-list">
@@ -212,7 +298,7 @@ export default function ParentDashboard() {
         </div>
       )}
 
-      {/* ── Sessions tab ── */}
+      {/* ── SESSIONS ── */}
       {activeTab === 'sessions' && (
         <div className="par-panel">
           <div className="par-sessions-list">
@@ -228,9 +314,16 @@ export default function ParentDashboard() {
                 <div className="par-sr-right">
                   <div className="par-sr-date">{s.date}</div>
                   {s.status === 'completed' && (
-                    <div className="par-sr-att" style={{ color: s.attended ? '#00c896' : '#ff7043' }}>
-                      {s.attended ? '✓ Attended' : '✗ Absent'}
-                    </div>
+                    <>
+                      <div className="par-sr-att" style={{ color: s.attended ? '#00c896' : '#ff7043' }}>
+                        {s.attended ? '✓ Attended' : '✗ Absent'}
+                      </div>
+                      {s.score != null && (
+                        <div className="par-sr-score" style={{ color: s.score >= 8 ? '#00c896' : s.score >= 6 ? '#ffd740' : '#ff7043' }}>
+                          Score {s.score}/10
+                        </div>
+                      )}
+                    </>
                   )}
                   {s.status === 'upcoming' && <div className="par-sr-upcoming">Upcoming</div>}
                 </div>
@@ -240,7 +333,7 @@ export default function ParentDashboard() {
         </div>
       )}
 
-      {/* ── Notes tab ── */}
+      {/* ── NOTES ── */}
       {activeTab === 'notes' && (
         <div className="par-panel">
           <div className="par-notes-intro">
@@ -251,6 +344,55 @@ export default function ParentDashboard() {
               <div key={i} className="par-note-card">
                 <div className="par-nc-date">{note.date}</div>
                 <p className="par-nc-text">"{note.note}"</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ── MESSAGES ── */}
+      {activeTab === 'messages' && (
+        <div className="par-panel">
+          <div className="par-panel-title">Messages with {MOCK_CHILD.facilitator}</div>
+          <div className="par-messages-thread">
+            {messages.map((m, i) => (
+              <div key={i} className={`par-msg${m.from === 'You' ? ' par-msg-self' : ''}`}>
+                <span className="par-msg-avatar">{m.avatar}</span>
+                <div className="par-msg-bubble">
+                  <div className="par-msg-meta">{m.from} · {m.time}</div>
+                  <div className="par-msg-text">{m.text}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <form className="par-msg-form" onSubmit={sendMessage}>
+            <textarea
+              className="par-msg-input"
+              rows={2}
+              placeholder={`Message ${MOCK_CHILD.facilitator}…`}
+              value={msgText}
+              onChange={e => setMsgText(e.target.value)}
+            />
+            <button type="submit" className="par-msg-send-btn">Send →</button>
+          </form>
+          {msgSent && <div className="par-msg-sent-note">✓ Message sent</div>}
+        </div>
+      )}
+
+      {/* ── MILESTONES ── */}
+      {activeTab === 'milestones' && (
+        <div className="par-panel">
+          <div className="par-panel-title">Milestones &amp; Badges</div>
+          <div className="par-milestones-grid">
+            {MILESTONES.map((m, i) => (
+              <div key={i} className={`par-milestone-card${m.earned ? ' earned' : ' locked'}`}>
+                <span className="par-ms-icon">{m.icon}</span>
+                <div className="par-ms-label">{m.label}</div>
+                <div className="par-ms-desc">{m.desc}</div>
+                {m.earned
+                  ? <div className="par-ms-date">Earned {m.date}</div>
+                  : <div className="par-ms-locked">🔒 Not yet earned</div>
+                }
               </div>
             ))}
           </div>

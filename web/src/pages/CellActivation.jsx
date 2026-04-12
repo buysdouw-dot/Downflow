@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import usePageMeta from '../hooks/usePageMeta.js'
+import { useFormSubmit } from '../hooks/useFormSubmit.js'
 
 const STEPS = [
   {
@@ -63,10 +64,23 @@ export default function CellActivation() {
   const [selectedPack, setSelectedPack] = useState(null)
   const [formStep, setFormStep] = useState(0) // 0=intro, 1=form, 2=done
   const [form, setForm] = useState({ name: '', email: '', org: '', location: '', pack: '', role: '', notes: '' })
+  const { send, status: sendStatus, error: sendError } = useFormSubmit()
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    setFormStep(2)
+    const result = await send({
+      templateId: 'template_activation',
+      params: {
+        name:     form.name,
+        email:    form.email,
+        org:      form.org || '—',
+        location: form.location,
+        pack:     form.pack || '—',
+        role:     form.role,
+        notes:    form.notes || '—',
+      }
+    })
+    if (result.ok) setFormStep(2)
   }
 
   return (
@@ -230,7 +244,12 @@ export default function CellActivation() {
                 <label>Anything else we should know?</label>
                 <textarea rows={3} placeholder="Community context, timing, questions…" value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} />
               </div>
-              <button type="submit" className="booking-submit-btn">Submit Application →</button>
+              {sendError && (
+                <div className="form-send-error">⚠️ {sendError}</div>
+              )}
+              <button type="submit" className="booking-submit-btn" disabled={sendStatus === 'sending'}>
+                {sendStatus === 'sending' ? 'Sending…' : 'Submit Application →'}
+              </button>
             </form>
           </div>
         )}

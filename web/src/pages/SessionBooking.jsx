@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import usePageMeta from '../hooks/usePageMeta.js'
+import { useFormSubmit } from '../hooks/useFormSubmit.js'
 
 const CELLS = [
   { id: 'VN-01', region: '🇻🇳 Hanoi', facilitator: 'Dr. Hoa Nguyen', pack: 'Voice & Presence', seats: 2, day: 'Tuesday', time: '5:00 PM', mode: 'In-person' },
@@ -27,6 +28,7 @@ export default function SessionBooking() {
   // Form state
   const [form, setForm] = useState({ name: '', email: '', phone: '', childName: '', age: '', notes: '' })
   const [submitted, setSubmitted] = useState(false)
+  const { send, status: sendStatus, error: sendError } = useFormSubmit()
 
   const filtered = CELLS.filter(c =>
     (packFilter === 'All' || c.pack === packFilter) &&
@@ -39,10 +41,28 @@ export default function SessionBooking() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    setSubmitted(true)
-    setStep(3)
+    const result = await send({
+      templateId: 'template_booking',
+      params: {
+        parent_name:    form.name,
+        email:          form.email,
+        phone:          form.phone || '—',
+        child_name:     form.childName,
+        age_group:      form.age,
+        notes:          form.notes || '—',
+        cell_id:        selected?.id,
+        cell_region:    selected?.region,
+        cell_pack:      selected?.pack,
+        facilitator:    selected?.facilitator,
+        schedule:       `${selected?.day} at ${selected?.time}`,
+      }
+    })
+    if (result.ok) {
+      setSubmitted(true)
+      setStep(3)
+    }
   }
 
   return (
@@ -206,7 +226,12 @@ export default function SessionBooking() {
                 <label>Additional Notes</label>
                 <textarea rows={3} placeholder="Any questions or context for the facilitator…" value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} />
               </div>
-              <button type="submit" className="booking-submit-btn">Confirm Booking →</button>
+              {sendError && (
+                <div className="form-send-error">⚠️ {sendError}</div>
+              )}
+              <button type="submit" className="booking-submit-btn" disabled={sendStatus === 'sending'}>
+                {sendStatus === 'sending' ? 'Sending…' : 'Confirm Booking →'}
+              </button>
             </form>
           </div>
         </section>
