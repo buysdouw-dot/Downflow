@@ -2,6 +2,7 @@ import { Outlet, NavLink, Link, useLocation, useNavigate } from 'react-router-do
 import { useEffect, useState } from 'react'
 import NetworkBg from './NetworkBg.jsx'
 import { useAuth, DEMO_PERSONAS } from '../context/AuthContext.jsx'
+import DownflowLogo from './DownflowLogo.jsx'
 
 // ── Top-level nav groups (keeps topbar clean) ────────────────
 const NAV_GROUPS = [
@@ -119,15 +120,22 @@ export default function Layout() {
       <NetworkBg/>
 
       <header className="topbar">
-        {/* ── ROW 0: Statement headline ── */}
+        {/* ── ROW 0: Brand + Statement headline ── */}
         <div className="topbar-row topbar-row-headline">
-          <span className="topbar-headline-text">Why This Model</span>
-          <div className="topbar-headline-divider"/>
-          <span className="topbar-headline-text"><em>is Different</em></span>
-          <div className="topbar-headline-divider"/>
-          <span className="topbar-headline-text">Infrastructure,</span>
-          <div className="topbar-headline-divider"/>
-          <span className="topbar-headline-text"><em>not a tutoring center.</em></span>
+          <div className="topbar-brand-block">
+            <DownflowLogo size={42} color="#d4a840" />
+            <span className="topbar-brand-tagline">School of Life</span>
+          </div>
+          <div className="topbar-headline-divider topbar-headline-divider--tall"/>
+          <div className="topbar-statement">
+            <span className="topbar-headline-text">Why This Model</span>
+            <div className="topbar-headline-divider"/>
+            <span className="topbar-headline-text"><em>is Different</em></span>
+            <div className="topbar-headline-divider"/>
+            <span className="topbar-headline-text">Infrastructure,</span>
+            <div className="topbar-headline-divider"/>
+            <span className="topbar-headline-text"><em>not a tutoring center.</em></span>
+          </div>
         </div>
 
         {/* ── ROW 1: Brand + Nav groups + Hamburger ── */}

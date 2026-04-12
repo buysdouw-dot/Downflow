@@ -109,15 +109,14 @@ a:hover { color: var(--navy); }
   overflow: visible;
 }
 
-/* ── Row 0 — Statement headline ── */
+/* ── Row 0 — Brand logo + Statement headline ── */
 .topbar-row-headline {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 1.1rem 2rem 0.9rem;
+  justify-content: flex-start;
+  padding: 1.25rem 2rem 1.1rem;
   border-bottom: 1px solid rgba(91,155,213,0.12);
-  text-align: center;
-  gap: 0.5rem;
+  gap: 1.5rem;
   flex-wrap: wrap;
   position: relative;
   overflow: hidden;
@@ -126,14 +125,56 @@ a:hover { color: var(--navy); }
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 50% 120%, rgba(212,168,64,0.07) 0%, transparent 65%);
+  background: radial-gradient(ellipse at 15% 120%, rgba(212,168,64,0.1) 0%, transparent 55%),
+              radial-gradient(ellipse at 85% 0%, rgba(91,155,213,0.05) 0%, transparent 50%);
   pointer-events: none;
 }
+
+/* Logo + tagline block */
+.topbar-brand-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.3rem;
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+}
+.topbar-brand-tagline {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: rgba(212,168,64,0.6);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding-left: 2px;
+}
+
+/* Tall vertical divider between logo and statement */
+.topbar-headline-divider--tall {
+  width: 1px !important;
+  height: 54px !important;
+  border-radius: 1px !important;
+  background: rgba(212,168,64,0.2) !important;
+  flex-shrink: 0;
+}
+
+/* Statement text group */
+.topbar-statement {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+  flex: 1;
+}
+
 .topbar-headline-text {
   font-family: 'Outfit', sans-serif;
-  font-size: clamp(1.35rem, 2.8vw, 2.2rem);
+  font-size: clamp(1.05rem, 2vw, 1.75rem);
   font-weight: 900;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.055em;
   text-transform: uppercase;
   color: #e8eef6;
   line-height: 1.1;
@@ -142,9 +183,8 @@ a:hover { color: var(--navy); }
   z-index: 1;
 }
 .topbar-headline-text em {
-  font-style: normal;
-  color: #d4a840;
   font-style: italic;
+  color: #d4a840;
   font-weight: 900;
   letter-spacing: 0.02em;
   text-transform: none;
@@ -153,7 +193,7 @@ a:hover { color: var(--navy); }
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: rgba(212,168,64,0.5);
+  background: rgba(212,168,64,0.45);
   flex-shrink: 0;
   position: relative;
   z-index: 1;
