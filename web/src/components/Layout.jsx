@@ -119,6 +119,17 @@ export default function Layout() {
       <NetworkBg/>
 
       <header className="topbar">
+        {/* ── ROW 0: Statement headline ── */}
+        <div className="topbar-row topbar-row-headline">
+          <span className="topbar-headline-text">Why This Model</span>
+          <div className="topbar-headline-divider"/>
+          <span className="topbar-headline-text"><em>is Different</em></span>
+          <div className="topbar-headline-divider"/>
+          <span className="topbar-headline-text">Infrastructure,</span>
+          <div className="topbar-headline-divider"/>
+          <span className="topbar-headline-text"><em>not a tutoring center.</em></span>
+        </div>
+
         {/* ── ROW 1: Brand + Nav groups + Hamburger ── */}
         <div className="topbar-row topbar-row-nav">
           <Link to="/" className="brand">
