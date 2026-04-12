@@ -9,10 +9,12 @@ const NAV_GROUPS = [
   {
     label: 'Explore',
     links: [
-      { to: '/',          label: 'Home',           exact: true },
+      { to: '/',           label: 'Home',           exact: true },
+      { to: '/about',      label: '📖 About' },
       { to: '/curriculum', label: 'Curriculum' },
-      { to: '/content',   label: 'Content Engine' },
-      { to: '/news',      label: 'News' },
+      { to: '/content',    label: 'Content Engine' },
+      { to: '/news',       label: 'News' },
+      { to: '/pricing',    label: '💰 Pricing' },
     ]
   },
   {
@@ -70,8 +72,12 @@ const NAV_GROUPS = [
   {
     label: 'Help',
     links: [
-      { to: '/support',  label: '❓ Support & FAQ' },
-      { to: '/legal',    label: '📄 Legal' },
+      { to: '/onboarding', label: '🚀 Get Started' },
+      { to: '/booking',    label: '📅 Book a Session' },
+      { to: '/activate',   label: '🌱 Activate a Cell' },
+      { to: '/progress',   label: '📈 My Progress' },
+      { to: '/support',    label: '❓ Support & FAQ' },
+      { to: '/legal',      label: '📄 Legal' },
     ]
   },
 ]

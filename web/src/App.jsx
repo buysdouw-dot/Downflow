@@ -42,6 +42,13 @@ const GrowthSystem        = lazy(() => import('./pages/GrowthSystem.jsx'))
 const LeadIntelligence    = lazy(() => import('./pages/LeadIntelligence.jsx'))
 const AdminDashboard      = lazy(() => import('./pages/AdminDashboard.jsx'))
 const ParentDashboard     = lazy(() => import('./pages/ParentDashboard.jsx'))
+const SessionBooking      = lazy(() => import('./pages/SessionBooking.jsx'))
+const CellActivation      = lazy(() => import('./pages/CellActivation.jsx'))
+const About               = lazy(() => import('./pages/About.jsx'))
+const Pricing             = lazy(() => import('./pages/Pricing.jsx'))
+const NewsArticle         = lazy(() => import('./pages/NewsArticle.jsx'))
+const StudentProgress     = lazy(() => import('./pages/StudentProgress.jsx'))
+const Onboarding          = lazy(() => import('./pages/Onboarding.jsx'))
 
 function PageLoader() {
   return (
@@ -136,6 +143,15 @@ export default function App() {
           <Route path="/lead-intelligence" element={<ProtectedRoute roles={['platform']}><LeadIntelligence /></ProtectedRoute>} />
           <Route path="/admin"            element={<ProtectedRoute roles={['platform']}><AdminDashboard /></ProtectedRoute>} />
           <Route path="/parent-dashboard" element={<ProtectedRoute roles={['platform','parent']}><ParentDashboard /></ProtectedRoute>} />
+
+          {/* New pages */}
+          <Route path="/booking"   element={<SessionBooking />} />
+          <Route path="/activate"  element={<CellActivation />} />
+          <Route path="/about"     element={<About />} />
+          <Route path="/pricing"   element={<Pricing />} />
+          <Route path="/news/:slug" element={<NewsArticle />} />
+          <Route path="/progress"  element={<ProtectedRoute roles={['student','platform']}><StudentProgress /></ProtectedRoute>} />
+          <Route path="/onboarding" element={<Onboarding />} />
         </Route>
       </Routes>
     </Suspense>

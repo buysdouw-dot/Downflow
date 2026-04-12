@@ -35,6 +35,7 @@ import './styles/session-recordings.css'
 import './styles/new-pages.css'
 import './styles/marketing.css'
 import './styles/intelligence-pages.css'
+import './styles/new-pages-2.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
