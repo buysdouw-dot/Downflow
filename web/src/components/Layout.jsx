@@ -123,11 +123,7 @@ export default function Layout() {
         {/* ── ROW 0: Brand logo + Statement headline ── */}
         <div className="topbar-row topbar-row-headline">
           <div className="topbar-brand-block">
-            <img
-              src="/downflow-logo.png"
-              alt="The Downflow Model"
-              className="topbar-logo-img"
-            />
+            <DownflowLogo height={82} />
           </div>
           <div className="topbar-headline-divider topbar-headline-divider--tall"/>
           <div className="topbar-statement">
