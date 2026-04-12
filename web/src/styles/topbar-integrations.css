@@ -1,27 +1,10 @@
 /* ══════════════════════════════════════════════════════════
    TOPBAR INTEGRATION BUTTONS
 ══════════════════════════════════════════════════════════ */
-.topbar-integrations {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  flex-shrink: 0;
-}
-.topbar-meet-btn,
-.topbar-dojo-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  padding: 0.36rem 0.85rem;
-  border-radius: 999px;
-  font-size: 0.74rem;
-  font-weight: 700;
-  text-decoration: none;
-  transition: all 0.16s;
-  white-space: nowrap;
-  flex-shrink: 0;
-  border: 1.5px solid transparent;
-}
+/* .topbar-integrations retained for backward compat but hidden — buttons now live in topbar-row-actions */
+.topbar-integrations { display: none; }
+
+/* Meet button colours */
 .topbar-meet-btn {
   background: rgba(0,188,212,0.12);
   border-color: rgba(0,188,212,0.35);
@@ -32,6 +15,8 @@
   border-color: #00bcd4;
   box-shadow: 0 2px 10px rgba(0,188,212,0.25);
 }
+
+/* Dojo button colours */
 .topbar-dojo-btn {
   background: rgba(255,159,90,0.12);
   border-color: rgba(255,159,90,0.35);
@@ -41,9 +26,6 @@
   background: rgba(255,159,90,0.22);
   border-color: #ff9f5a;
   box-shadow: 0 2px 10px rgba(255,159,90,0.2);
-}
-@media (max-width: 860px) {
-  .topbar-integrations { display: none; }
 }
 
 /* ── Shared inline join buttons (used in dashboards) ── */

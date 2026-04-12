@@ -95,20 +95,62 @@ a:hover { color: var(--navy); }
 .topbar {
   width: min(1200px, calc(100% - 2rem));
   margin: 1rem auto 0;
-  padding: 0.75rem 1.5rem;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: rgba(10,22,40,0.88);
-  backdrop-filter: blur(16px);
-  border-color: rgba(91,155,213,0.2);
+  padding: 0;
+  border: 1px solid rgba(91,155,213,0.2);
+  border-radius: 20px;
+  background: rgba(10,22,40,0.92);
+  backdrop-filter: blur(18px);
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  flex-direction: column;
   position: sticky;
   top: 0.75rem;
   z-index: 100;
   box-shadow: 0 4px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(91,155,213,0.08);
+  overflow: visible;
+}
+
+/* Row 1 — Brand + Nav groups */
+.topbar-row-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 1.5rem;
+  border-bottom: 1px solid rgba(91,155,213,0.12);
+}
+
+/* Row 2 — Action buttons */
+.topbar-row-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1.5rem;
+  flex-wrap: wrap;
+}
+
+.topbar-action-divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(91,155,213,0.2);
+  margin: 0 0.25rem;
+  flex-shrink: 0;
+}
+
+/* Shared action button base (Row 2) */
+.topbar-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.32rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.16s;
+  white-space: nowrap;
+  flex-shrink: 0;
+  border: 1.5px solid transparent;
+  font-family: 'Outfit', sans-serif;
 }
 
 .brand {
@@ -201,8 +243,11 @@ a:hover { color: var(--navy); }
 .mobile-nav-link.active { background: rgba(91,155,213,0.18); color: #fff; font-weight: 700; }
 
 @media (max-width: 768px) {
-  .hamburger { display: flex; }
-  .nav-links  { display: none; }
+  .hamburger          { display: flex; }
+  .nav-links          { display: none; }
+  .topbar-row-actions { display: none; }
+  .topbar-row-nav     { border-bottom: none; }
+  .topbar             { border-radius: 999px; }
 }
 
 /* ── Topbar Right / Viewer ──────────────────────────────────── */

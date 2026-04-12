@@ -119,37 +119,50 @@ export default function Layout() {
       <NetworkBg/>
 
       <header className="topbar">
-        <Link to="/" className="brand">
-          <span className="brand-down">DOWN</span><span className="brand-flow">FLOW</span>
-          <span className="brand-sub">School of Life — The New Heavenly Order</span>
-        </Link>
+        {/* ── ROW 1: Brand + Nav groups + Hamburger ── */}
+        <div className="topbar-row topbar-row-nav">
+          <Link to="/" className="brand">
+            <span className="brand-down">DOWN</span><span className="brand-flow">FLOW</span>
+            <span className="brand-sub">School of Life — The New Heavenly Order</span>
+          </Link>
 
-        {/* Desktop grouped nav */}
-        <nav className={`nav-links${menuOpen ? ' open' : ''}`}>
-          {NAV_GROUPS.map(g => (
-            <NavGroup key={g.label} group={g} currentPath={pathname} />
-          ))}
-        </nav>
+          <nav className={`nav-links${menuOpen ? ' open' : ''}`}>
+            {NAV_GROUPS.map(g => (
+              <NavGroup key={g.label} group={g} currentPath={pathname} />
+            ))}
+          </nav>
 
-        {/* Integration quick-join buttons */}
-        <div className="topbar-integrations">
-          <a href="https://meet.google.com" target="_blank" rel="noreferrer" className="topbar-meet-btn" title="Join Google Meet session">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+          <button className="hamburger" onClick={() => setMenuOpen(o => !o)} aria-label="Menu">
+            <span/><span/><span/>
+          </button>
+        </div>
+
+        {/* ── ROW 2: Action buttons ── */}
+        <div className="topbar-row topbar-row-actions">
+          {/* Join Session */}
+          <a href="https://meet.google.com" target="_blank" rel="noreferrer" className="topbar-action-btn topbar-meet-btn" title="Join Google Meet session">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
               <path d="M15 10.5L19.5 7.5V16.5L15 13.5V10.5Z" fill="#00897B"/>
               <rect x="4" y="7.5" width="11" height="9" rx="2" fill="#00BCD4"/>
             </svg>
             <span>Join Session</span>
           </a>
-          <a href="https://www.classdojo.com" target="_blank" rel="noreferrer" className="topbar-dojo-btn" title="Open ClassDojo">
+
+          {/* ClassDojo */}
+          <a href="https://www.classdojo.com" target="_blank" rel="noreferrer" className="topbar-action-btn topbar-dojo-btn" title="Open ClassDojo">
             <span>🎯</span>
             <span>ClassDojo</span>
           </a>
-        </div>
 
-        {/* Pay / Sponsor CTA */}
-        <Link to="/funding" className="topbar-pay-btn">Sponsor Now</Link>
+          {/* Sponsor Now */}
+          <Link to="/funding" className="topbar-action-btn topbar-pay-btn">
+            <span>💛</span>
+            <span>Sponsor Now</span>
+          </Link>
 
-        <div className="topbar-right">
+          {/* Divider */}
+          <div className="topbar-action-divider"/>
+
           {/* Live Firebase user badge */}
           {isConfigured && user && (
             <div className="viewer-wrap">
@@ -199,10 +212,6 @@ export default function Layout() {
               )}
             </div>
           )}
-
-          <button className="hamburger" onClick={() => setMenuOpen(o => !o)} aria-label="Menu">
-            <span/><span/><span/>
-          </button>
         </div>
       </header>
 
