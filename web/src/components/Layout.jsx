@@ -137,13 +137,8 @@ export default function Layout() {
           </div>
         </div>
 
-        {/* ── ROW 1: Brand + Nav groups + Hamburger ── */}
+        {/* ── ROW 1: Nav groups + Hamburger ── */}
         <div className="topbar-row topbar-row-nav">
-          <Link to="/" className="brand">
-            <span className="brand-down">DOWN</span><span className="brand-flow">FLOW</span>
-            <span className="brand-sub">School of Life — The New Heavenly Order</span>
-          </Link>
-
           <nav className={`nav-links${menuOpen ? ' open' : ''}`}>
             {NAV_GROUPS.map(g => (
               <NavGroup key={g.label} group={g} currentPath={pathname} />
