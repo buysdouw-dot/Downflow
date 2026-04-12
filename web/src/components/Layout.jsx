@@ -120,17 +120,22 @@ export default function Layout() {
       <NetworkBg/>
 
       <header className="topbar">
-        {/* ── ROW 0: Brand logo + Statement headline ── */}
+        {/* ── ROW 0: Statement left | BIG LOGO (centred) | Statement right ── */}
         <div className="topbar-row topbar-row-headline">
-          <div className="topbar-brand-block">
-            <DownflowLogo height={82} />
-          </div>
-          <div className="topbar-headline-divider topbar-headline-divider--tall"/>
-          <div className="topbar-statement">
+          {/* Left statement */}
+          <div className="topbar-statement topbar-statement--left">
             <span className="topbar-headline-text">Why This Model</span>
             <div className="topbar-headline-divider"/>
             <span className="topbar-headline-text"><em>is Different</em></span>
-            <div className="topbar-headline-divider"/>
+          </div>
+
+          {/* Centre logo */}
+          <div className="topbar-brand-block">
+            <DownflowLogo height={130} />
+          </div>
+
+          {/* Right statement */}
+          <div className="topbar-statement topbar-statement--right">
             <span className="topbar-headline-text">Infrastructure,</span>
             <div className="topbar-headline-divider"/>
             <span className="topbar-headline-text"><em>not a tutoring center.</em></span>
