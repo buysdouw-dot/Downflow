@@ -147,37 +147,203 @@
 .fp-loop-step-title { font-size: 0.88rem; font-weight: 700; color: var(--navy); display: block; }
 .fp-loop-step-desc  { font-size: 0.78rem; color: var(--text-soft); margin: 0.15rem 0 0; }
 
-/* ── Why different ── */
-.fp-compare-grid {
-  display: grid; grid-template-columns: 1fr 60px 1fr; gap: 0; align-items: start;
-  max-width: 900px; margin: 0 auto;
+/* ── Why different (new visual design) ── */
+.fp-different-section {
+  background: #0f1923;
+  padding: 5rem 2rem;
+  position: relative;
+  overflow: hidden;
 }
-.fp-compare-col { border-radius: var(--radius-sm); padding: 1.5rem; }
-.fp-compare-col.traditional {
-  background: rgba(44,62,80,0.04); border: 1.5px solid var(--border);
+.fp-different-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 50%, rgba(91,155,213,0.06) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 50%, rgba(212,168,64,0.08) 0%, transparent 60%);
+  pointer-events: none;
 }
-.fp-compare-col.producing {
-  background: linear-gradient(135deg, var(--green-pale), var(--blue-pale));
-  border: 2px solid color-mix(in srgb, var(--green) 30%, var(--border));
+
+.fp-diff-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 1;
 }
-.fp-compare-head {
-  font-size: 0.78rem; font-weight: 800; text-transform: uppercase;
-  letter-spacing: 0.06em; margin: 0 0 1rem;
-  color: var(--navy);
+.fp-diff-kicker {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.35);
+  margin: 0 0 0.75rem;
 }
-.fp-compare-row { margin-bottom: 0.9rem; }
-.fp-compare-row strong { display: block; font-size: 0.88rem; color: var(--navy); }
-.fp-compare-row span   { font-size: 0.78rem; color: var(--text-soft); }
-.fp-compare-divider {
-  display: flex; align-items: center; justify-content: center;
-  padding-top: 4rem;
+.fp-diff-title {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 900;
+  color: #fff;
+  margin: 0;
+  line-height: 1.2;
 }
-.fp-compare-divider span {
-  width: 36px; height: 36px; border-radius: 50%;
-  background: var(--bg-card); border: 2px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.7rem; font-weight: 900; color: var(--text-muted);
+.fp-diff-accent {
+  color: #d4a840;
 }
+
+.fp-diff-panels {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0;
+  max-width: 880px;
+  margin: 0 auto 2.5rem;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+  position: relative;
+  z-index: 1;
+}
+
+.fp-diff-panel {
+  position: relative;
+  padding: 2.5rem 2rem;
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Traditional side — dark grey classroom feel */
+.fp-diff-traditional {
+  background: #1c2733;
+}
+.fp-diff-traditional::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, rgba(28,39,51,0.92) 0%, rgba(28,39,51,0.75) 100%),
+    repeating-linear-gradient(
+      45deg,
+      rgba(255,255,255,0.015) 0px,
+      rgba(255,255,255,0.015) 1px,
+      transparent 1px,
+      transparent 12px
+    );
+  pointer-events: none;
+}
+
+/* Producing side — warm golden glow */
+.fp-diff-producing {
+  background: #1a1a0a;
+}
+.fp-diff-producing::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, rgba(26,26,10,0.88) 0%, rgba(26,26,10,0.7) 100%),
+    radial-gradient(ellipse at 80% 20%, rgba(212,168,64,0.25) 0%, transparent 55%),
+    radial-gradient(ellipse at 20% 80%, rgba(0,200,150,0.12) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.fp-diff-panel-overlay {
+  display: none;
+}
+
+.fp-diff-panel-content {
+  position: relative;
+  z-index: 1;
+}
+
+.fp-diff-panel-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 1.25rem;
+  border-left: 3px solid rgba(255,255,255,0.2);
+  padding-left: 0.75rem;
+}
+.fp-diff-panel-label-good {
+  color: rgba(212,168,64,0.8);
+  border-color: #d4a840;
+}
+
+.fp-diff-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.fp-diff-row:last-child { border: none; }
+
+.fp-diff-row-bad .fp-diff-row-label {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.55);
+}
+.fp-diff-row-bad .fp-diff-row-icon {
+  font-size: 1.1rem;
+  opacity: 0.5;
+  filter: grayscale(1);
+}
+
+.fp-diff-row-good .fp-diff-row-label {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #fff;
+}
+.fp-diff-row-good .fp-diff-row-icon {
+  font-size: 1.1rem;
+}
+.fp-diff-row-check {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(212,168,64,0.2);
+  border: 1.5px solid #d4a840;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 900;
+  color: #d4a840;
+  flex-shrink: 0;
+}
+
+.fp-diff-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #141e28;
+  width: 52px;
+  font-size: 1.4rem;
+  color: #d4a840;
+  position: relative;
+  z-index: 2;
+}
+
+.fp-diff-footer {
+  text-align: center;
+  font-size: 1.05rem;
+  font-style: italic;
+  color: rgba(255,255,255,0.5);
+  position: relative;
+  z-index: 1;
+}
+.fp-diff-footer-accent {
+  color: #d4a840;
+  font-style: italic;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Keep old classes for backward compat */
+.fp-compare-grid { display: none; }
+.fp-compare-col, .fp-compare-divider, .fp-compare-head, .fp-compare-row { display: none; }
 
 /* ── Teacher section ── */
 .fp-teacher-point {
@@ -338,6 +504,8 @@
   .fp-compare-grid    { grid-template-columns: 1fr; }
   .fp-compare-divider { padding: 0; }
   .fp-compare-divider span { display: none; }
+  .fp-diff-panels     { grid-template-columns: 1fr; }
+  .fp-diff-arrow      { width: 100%; height: 40px; font-size: 1.4rem; transform: rotate(90deg); }
   .fp-cta-tiers       { grid-template-columns: 1fr; max-width: 360px; margin-inline: auto; }
   .fp-regions-grid    { grid-template-columns: 1fr; }
   .fp-vision-grid     { grid-template-columns: 1fr; }

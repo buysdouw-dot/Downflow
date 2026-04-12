@@ -278,44 +278,56 @@ export default function FundingProposal() {
       </section>
 
       {/* ── SLIDE: WHY DIFFERENT ── */}
-      <section className="fp-section fp-different-section">
-        <div className="fp-section-inner">
-          <div className="fp-section-head">
-            <p className="kicker">Slide 7 · Competitive Positioning</p>
-            <h2>Why This Model Is Different</h2>
-            <p className="fp-section-sub">Infrastructure, not a tutoring center.</p>
-          </div>
-          <div className="fp-compare-grid">
-            <div className="fp-compare-col traditional">
-              <p className="fp-compare-head">❌ Traditional Education</p>
+      <section className="fp-different-section">
+        <div className="fp-diff-header">
+          <p className="fp-diff-kicker">Slide 7 · Competitive Positioning</p>
+          <h2 className="fp-diff-title">Why This Model <span className="fp-diff-accent">is Different</span></h2>
+        </div>
+
+        <div className="fp-diff-panels">
+          {/* Left: Traditional */}
+          <div className="fp-diff-panel fp-diff-traditional">
+            <div className="fp-diff-panel-overlay" />
+            <div className="fp-diff-panel-content">
+              <div className="fp-diff-panel-label">Traditional Education:</div>
               {[
-                ['Tuition-dependent', 'Revenue fails if enrollment drops'],
-                ['Marketing-heavy',   'Constant spend to acquire students'],
-                ['Linear growth',     'More students = more overhead'],
-              ].map(([t, d]) => (
-                <div key={t} className="fp-compare-row">
-                  <strong>{t}</strong>
-                  <span>{d}</span>
-                </div>
-              ))}
-            </div>
-            <div className="fp-compare-divider">
-              <span>VS</span>
-            </div>
-            <div className="fp-compare-col producing">
-              <p className="fp-compare-head">✅ Producing Model (DOWNFLOW)</p>
-              {[
-                ['Sponsor-backed',             'Revenue is pre-secured per cell, per cycle'],
-                ['Distribution via Connectors','Zero marketing cost — Connectors find students'],
-                ['Compounding expansion',      'Every cell funds the next — exponential by design'],
-              ].map(([t, d]) => (
-                <div key={t} className="fp-compare-row">
-                  <strong>{t}</strong>
-                  <span>{d}</span>
+                { icon: '🎓', label: 'Tuition-dependent' },
+                { icon: '📣', label: 'Marketing-heavy' },
+                { icon: '📈', label: 'Linear Growth' },
+              ].map(({ icon, label }) => (
+                <div key={label} className="fp-diff-row fp-diff-row-bad">
+                  <span className="fp-diff-row-icon">{icon}</span>
+                  <span className="fp-diff-row-label">{label}</span>
                 </div>
               ))}
             </div>
           </div>
+
+          {/* Arrow */}
+          <div className="fp-diff-arrow">→</div>
+
+          {/* Right: Producing Model */}
+          <div className="fp-diff-panel fp-diff-producing">
+            <div className="fp-diff-panel-overlay" />
+            <div className="fp-diff-panel-content">
+              <div className="fp-diff-panel-label fp-diff-panel-label-good">Producing Model:</div>
+              {[
+                { icon: '🤝', label: 'Sponsor-backed' },
+                { icon: '🔗', label: 'Distribution via Connectors' },
+                { icon: '♾️', label: 'Compounding Expansion' },
+              ].map(({ icon, label }) => (
+                <div key={label} className="fp-diff-row fp-diff-row-good">
+                  <span className="fp-diff-row-check">✓</span>
+                  <span className="fp-diff-row-icon">{icon}</span>
+                  <span className="fp-diff-row-label">{label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="fp-diff-footer">
+          <span className="fp-diff-footer-accent">Infrastructure</span>, not a tutoring center.
         </div>
       </section>
 
