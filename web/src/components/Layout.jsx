@@ -120,11 +120,14 @@ export default function Layout() {
       <NetworkBg/>
 
       <header className="topbar">
-        {/* ── ROW 0: Brand + Statement headline ── */}
+        {/* ── ROW 0: Brand logo + Statement headline ── */}
         <div className="topbar-row topbar-row-headline">
           <div className="topbar-brand-block">
-            <DownflowLogo size={42} color="#d4a840" />
-            <span className="topbar-brand-tagline">School of Life</span>
+            <img
+              src="/downflow-logo.png"
+              alt="The Downflow Model"
+              className="topbar-logo-img"
+            />
           </div>
           <div className="topbar-headline-divider topbar-headline-divider--tall"/>
           <div className="topbar-statement">

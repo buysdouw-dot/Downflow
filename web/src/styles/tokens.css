@@ -114,9 +114,9 @@ a:hover { color: var(--navy); }
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: 1.25rem 2rem 1.1rem;
+  padding: 0.85rem 2rem;
   border-bottom: 1px solid rgba(91,155,213,0.12);
-  gap: 1.5rem;
+  gap: 2rem;
   flex-wrap: wrap;
   position: relative;
   overflow: hidden;
@@ -130,30 +130,26 @@ a:hover { color: var(--navy); }
   pointer-events: none;
 }
 
-/* Logo + tagline block */
+/* Logo image block */
 .topbar-brand-block {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.3rem;
+  align-items: center;
   position: relative;
   z-index: 1;
   flex-shrink: 0;
 }
-.topbar-brand-tagline {
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.68rem;
-  font-weight: 600;
-  color: rgba(212,168,64,0.6);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  padding-left: 2px;
+.topbar-logo-img {
+  height: 80px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 2px 12px rgba(212,168,64,0.3));
 }
 
 /* Tall vertical divider between logo and statement */
 .topbar-headline-divider--tall {
   width: 1px !important;
-  height: 54px !important;
+  height: 72px !important;
   border-radius: 1px !important;
   background: rgba(212,168,64,0.2) !important;
   flex-shrink: 0;
