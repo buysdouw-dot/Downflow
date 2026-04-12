@@ -423,6 +423,102 @@
 .flywheel-step strong { font-size: 0.9rem; color: var(--navy); }
 .flywheel-step p      { margin: 0.2rem 0 0; font-size: 0.78rem; color: var(--text-soft); }
 
+/* ── Platform Intelligence Section ──────────────────────────── */
+.home-intelligence-section {
+  background: linear-gradient(160deg, #0d1520 0%, #111c2a 100%);
+  padding: 5rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.home-intelligence-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 60% 0%, rgba(114,208,255,0.06) 0%, transparent 55%),
+              radial-gradient(ellipse at 10% 80%, rgba(77,232,176,0.05) 0%, transparent 45%);
+  pointer-events: none;
+}
+.home-intelligence-section .section-head h2 { color: #fff; }
+.home-intelligence-section .section-head .kicker { color: rgba(114,208,255,0.7); }
+.home-intelligence-section .section-head .lead  { color: rgba(255,255,255,0.5); }
+
+.home-intel-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.home-intel-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.home-intel-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #72d0ff, #4de8b0);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.home-intel-card:hover {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(114,208,255,0.3);
+  transform: translateY(-3px);
+}
+.home-intel-card:hover::before { opacity: 1; }
+
+.home-intel-icon {
+  font-size: 1.75rem;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+.home-intel-card strong {
+  display: block;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.2;
+}
+.home-intel-card p {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.6;
+  margin: 0;
+  flex: 1;
+}
+.home-intel-arrow {
+  display: inline-block;
+  font-size: 0.85rem;
+  color: #72d0ff;
+  font-weight: 700;
+  margin-top: auto;
+  padding-top: 0.5rem;
+  transition: transform 0.2s;
+}
+.home-intel-card:hover .home-intel-arrow { transform: translateX(4px); }
+
+@media (max-width: 900px) {
+  .home-intel-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .home-intel-grid { grid-template-columns: 1fr; }
+}
+
 /* ── Brand values strip ──────────────────────────────────────── */
 .brand-values-strip {
   display: flex; justify-content: center; align-items: center; gap: 2.5rem; flex-wrap: wrap;

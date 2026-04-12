@@ -457,6 +457,53 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── PLATFORM INTELLIGENCE BUTTONS ── */}
+      <section className="section home-intelligence-section" id="intelligence">
+        <div className="section-head">
+          <p className="kicker">Platform Intelligence · Operations · Growth</p>
+          <h2>Run the Full System</h2>
+          <p className="lead">Every operational tool in one place — from lead intelligence to admin control.</p>
+        </div>
+        <div className="home-intel-grid">
+          <Link to="/admin" className="home-intel-card">
+            <span className="home-intel-icon">🛡</span>
+            <strong>Admin Dashboard</strong>
+            <p>Platform control centre — funnel health, cell alerts, payout queue, and weekly ops checklist.</p>
+            <span className="home-intel-arrow">→</span>
+          </Link>
+          <Link to="/growth-system" className="home-intel-card">
+            <span className="home-intel-icon">⚙️</span>
+            <strong>Growth System</strong>
+            <p>Full growth architecture — 7-layer stack, funnel stages, and role-based automation workflows.</p>
+            <span className="home-intel-arrow">→</span>
+          </Link>
+          <Link to="/lead-intelligence" className="home-intel-card">
+            <span className="home-intel-icon">🎯</span>
+            <strong>Lead Intelligence</strong>
+            <p>CRM + lead scoring — search, filter, pipeline view, and score simulator across all four roles.</p>
+            <span className="home-intel-arrow">→</span>
+          </Link>
+          <Link to="/marketing" className="home-intel-card">
+            <span className="home-intel-icon">📣</span>
+            <strong>Marketing Engine</strong>
+            <p>4-role acquisition system, scored channels, content calendar, and live campaign tracker.</p>
+            <span className="home-intel-arrow">→</span>
+          </Link>
+          <Link to="/parent-dashboard" className="home-intel-card">
+            <span className="home-intel-icon">👨‍👩‍👧</span>
+            <strong>Parent Dashboard</strong>
+            <p>Child progress tracker — sessions, approved outputs, facilitator notes, and programme overview.</p>
+            <span className="home-intel-arrow">→</span>
+          </Link>
+          <Link to="/metrics" className="home-intel-card">
+            <span className="home-intel-icon">📊</span>
+            <strong>Business Metrics</strong>
+            <p>Live network stats — cells, revenue, connector performance, and sponsor ROI in one view.</p>
+            <span className="home-intel-arrow">→</span>
+          </Link>
+        </div>
+      </section>
+
       {/* ── Brand Values Strip ── */}
       <div className="brand-values-strip">
         {[
