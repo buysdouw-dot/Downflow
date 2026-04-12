@@ -49,6 +49,7 @@ const Pricing             = lazy(() => import('./pages/Pricing.jsx'))
 const NewsArticle         = lazy(() => import('./pages/NewsArticle.jsx'))
 const StudentProgress     = lazy(() => import('./pages/StudentProgress.jsx'))
 const Onboarding          = lazy(() => import('./pages/Onboarding.jsx'))
+const NotFound            = lazy(() => import('./pages/NotFound.jsx'))
 
 function PageLoader() {
   return (
@@ -153,6 +154,7 @@ export default function App() {
           <Route path="/progress"  element={<ProtectedRoute roles={['student','platform']}><StudentProgress /></ProtectedRoute>} />
           <Route path="/onboarding" element={<Onboarding />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
   )

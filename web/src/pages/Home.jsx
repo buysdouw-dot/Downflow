@@ -135,6 +135,52 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── START HERE GATEWAY ── */}
+      <section className="section home-gateway-section">
+        <div className="section-head">
+          <p className="kicker">New Here? Start With One of These</p>
+          <h2>Where Do You Fit?</h2>
+        </div>
+        <div className="home-gateway-grid">
+          <Link to="/onboarding" className="home-gateway-card onboarding">
+            <span className="hgc-icon">🚀</span>
+            <strong>Get Started</strong>
+            <p>Find your role — parent, student, facilitator, sponsor, or connector.</p>
+            <span className="hgc-arrow">→</span>
+          </Link>
+          <Link to="/about" className="home-gateway-card about">
+            <span className="hgc-icon">📖</span>
+            <strong>About the Model</strong>
+            <p>Why we built this, what the inversion means, and our founding principles.</p>
+            <span className="hgc-arrow">→</span>
+          </Link>
+          <Link to="/pricing" className="home-gateway-card pricing">
+            <span className="hgc-icon">💰</span>
+            <strong>Pricing</strong>
+            <p>Full transparency — what it costs, where every dollar goes, and how to start.</p>
+            <span className="hgc-arrow">→</span>
+          </Link>
+          <Link to="/booking" className="home-gateway-card booking">
+            <span className="hgc-icon">📅</span>
+            <strong>Book a Session</strong>
+            <p>Find a cell near you and reserve a seat for your child in minutes.</p>
+            <span className="hgc-arrow">→</span>
+          </Link>
+          <Link to="/activate" className="home-gateway-card activate">
+            <span className="hgc-icon">🌱</span>
+            <strong>Activate a Cell</strong>
+            <p>Start a learning cell in your community — six steps, 30 days to launch.</p>
+            <span className="hgc-arrow">→</span>
+          </Link>
+          <Link to="/curriculum" className="home-gateway-card curriculum">
+            <span className="hgc-icon">📦</span>
+            <strong>View Curriculum</strong>
+            <p>10 life-skills packs, ages 5–14. See what students actually learn and build.</p>
+            <span className="hgc-arrow">→</span>
+          </Link>
+        </div>
+      </section>
+
       {/* ECOSYSTEM DIAGRAM */}
       <section className="section ecosystem-section" id="ecosystem">
         <div className="section-head">

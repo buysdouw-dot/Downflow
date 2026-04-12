@@ -249,7 +249,7 @@ export default function Pricing() {
         <div className="pricing-faq-grid">
           {[
             { q: 'Can I sponsor part of a cell?', a: 'Yes — the Pack Sponsor tier lets you fund a single student at $480/year. Five pack sponsors together fund one complete cell.' },
-            { q: 'What if the cell doesn't complete the year?', a: 'We offer a pro-rated refund or credit toward a new cell. Completion rates are above 90% across all active cells.' },
+            { q: "What if the cell doesn't complete the year?", a: 'We offer a pro-rated refund or credit toward a new cell. Completion rates are above 90% across all active cells.' },
             { q: 'Are parents ever charged?', a: 'Only when they choose Direct Enrolment ($480/yr). Sponsor-funded cells are always free for families.' },
             { q: 'How do facilitators get paid?', a: 'Via the Earnings Wallet on the platform. Payments are issued monthly, with bonuses tied to cell grade outcomes.' },
             { q: 'Is there a discount for multi-year commitments?', a: 'Yes — 10% for 2-year sponsorships and 20% for 3-year. Contact us for regional partnership pricing.' },

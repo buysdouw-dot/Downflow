@@ -3,6 +3,140 @@
    Pricing, News Article, Student Progress, Onboarding
    ============================================================ */
 
+/* ── 404 NOT FOUND ─────────────────────────────────────────── */
+.notfound-page {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+.notfound-inner { max-width: 560px; }
+.notfound-code {
+  font-size: clamp(5rem, 15vw, 9rem);
+  font-weight: 900;
+  color: var(--border);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  margin-bottom: -0.5rem;
+}
+.notfound-mark {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+  color: var(--gold);
+  animation: spin-slow 8s linear infinite;
+}
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+.notfound-title {
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  font-weight: 900;
+  color: var(--text-main);
+  margin: 0 0 0.75rem;
+}
+.notfound-sub {
+  font-size: 0.95rem;
+  color: var(--text-soft);
+  line-height: 1.65;
+  margin: 0 0 2rem;
+}
+.notfound-path {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  padding: 0.15rem 0.5rem;
+  font-size: 0.88rem;
+  color: var(--gold);
+  font-family: monospace;
+}
+.notfound-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+}
+.notfound-links-label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin: 0 0 1rem;
+}
+.notfound-links-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+@media (max-width: 440px) { .notfound-links-grid { grid-template-columns: repeat(2, 1fr); } }
+.notfound-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.75rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+  color: var(--text-soft);
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.notfound-link:hover { border-color: var(--gold); color: var(--gold); }
+.notfound-link span:first-child { font-size: 1.25rem; }
+
+/* ── HOME GATEWAY SECTION ──────────────────────────────────── */
+.home-gateway-section { background: var(--bg-card); }
+.home-gateway-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+.home-gateway-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  background: var(--bg-page);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.75rem 1.5rem;
+  text-decoration: none;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.home-gateway-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+.home-gateway-card:hover::before { transform: scaleX(1); }
+.home-gateway-card:hover { border-color: var(--blue); transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.home-gateway-card.onboarding:hover { border-color: #f0c840; }
+.home-gateway-card.about:hover      { border-color: #72d0ff; }
+.home-gateway-card.pricing:hover    { border-color: #4de8b0; }
+.home-gateway-card.booking:hover    { border-color: #b083ff; }
+.home-gateway-card.activate:hover   { border-color: #3ecf8e; }
+.home-gateway-card.curriculum:hover { border-color: #ff9f5a; }
+.home-gateway-card.onboarding::before   { background: #f0c840; }
+.home-gateway-card.about::before        { background: #72d0ff; }
+.home-gateway-card.pricing::before      { background: #4de8b0; }
+.home-gateway-card.booking::before      { background: #b083ff; }
+.home-gateway-card.activate::before     { background: #3ecf8e; }
+.home-gateway-card.curriculum::before   { background: #ff9f5a; }
+.hgc-icon { font-size: 1.75rem; margin-bottom: 0.25rem; }
+.home-gateway-card strong { font-size: 1rem; font-weight: 800; color: var(--text-main); }
+.home-gateway-card p { font-size: 0.82rem; color: var(--text-soft); margin: 0; line-height: 1.55; flex: 1; }
+.hgc-arrow { font-size: 1rem; color: var(--text-muted); margin-top: 0.5rem; transition: transform 0.15s; }
+.home-gateway-card:hover .hgc-arrow { transform: translateX(4px); color: var(--text-main); }
+
 /* ── Shared Hero Patterns ──────────────────────────────────── */
 .booking-hero, .activate-hero, .about-hero, .pricing-hero,
 .onboarding-hero {
