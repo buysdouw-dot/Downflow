@@ -662,6 +662,94 @@ export default function Home() {
           <Link to="/platform" className="btn btn-secondary" style={{padding:'0.75rem 2rem'}}>See How It Works</Link>
         </div>
       </section>
+
+      {/* ── Downloads Section ── */}
+      <section className="section" id="downloads">
+        <p className="kicker">Resources</p>
+        <h2>Download Our Documents</h2>
+        <p className="lead" style={{marginTop:'0.75rem',marginBottom:'2rem',maxWidth:'540px'}}>
+          Get the full DOWNFLOW pitch deck and business plan. Share with partners, investors, or sponsors.
+        </p>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))',gap:'1.25rem',maxWidth:'680px'}}>
+
+          {/* PPTX Card */}
+          <a
+            href="/DOWNFLOW-Presentation-2026.pptx"
+            download
+            style={{
+              display:'flex',alignItems:'flex-start',gap:'1rem',
+              padding:'1.4rem 1.5rem',
+              background:'var(--bg-card)',
+              border:'1.5px solid var(--gold)',
+              borderRadius:'16px',
+              textDecoration:'none',
+              transition:'all 0.2s ease',
+              boxShadow:'0 4px 20px rgba(212,168,64,0.12)',
+            }}
+            onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-3px)';e.currentTarget.style.boxShadow='0 8px 32px rgba(212,168,64,0.25)'}}
+            onMouseLeave={e=>{e.currentTarget.style.transform='';e.currentTarget.style.boxShadow='0 4px 20px rgba(212,168,64,0.12)'}}
+          >
+            <span style={{fontSize:'2.2rem',lineHeight:1,flexShrink:0}}>📊</span>
+            <div>
+              <strong style={{display:'block',fontSize:'1rem',color:'var(--navy)',marginBottom:'0.25rem'}}>
+                Investor Presentation
+              </strong>
+              <span style={{fontSize:'0.78rem',color:'var(--text-soft)',display:'block',marginBottom:'0.6rem',lineHeight:1.5}}>
+                10-slide pitch deck covering problem, solution, traction, model, market, team &amp; ask.
+              </span>
+              <span style={{
+                display:'inline-flex',alignItems:'center',gap:'0.3rem',
+                fontSize:'0.75rem',fontWeight:700,
+                color:'var(--gold)',
+                background:'rgba(212,168,64,0.1)',
+                border:'1px solid rgba(212,168,64,0.3)',
+                borderRadius:'999px',padding:'0.25rem 0.7rem',
+              }}>
+                ⬇ PPTX · 226 KB
+              </span>
+            </div>
+          </a>
+
+          {/* DOCX Card */}
+          <a
+            href="/DOWNFLOW-Business-Plan-2026.docx"
+            download
+            style={{
+              display:'flex',alignItems:'flex-start',gap:'1rem',
+              padding:'1.4rem 1.5rem',
+              background:'var(--bg-card)',
+              border:'1.5px solid var(--blue)',
+              borderRadius:'16px',
+              textDecoration:'none',
+              transition:'all 0.2s ease',
+              boxShadow:'0 4px 20px rgba(91,155,213,0.10)',
+            }}
+            onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-3px)';e.currentTarget.style.boxShadow='0 8px 32px rgba(91,155,213,0.22)'}}
+            onMouseLeave={e=>{e.currentTarget.style.transform='';e.currentTarget.style.boxShadow='0 4px 20px rgba(91,155,213,0.10)'}}
+          >
+            <span style={{fontSize:'2.2rem',lineHeight:1,flexShrink:0}}>📄</span>
+            <div>
+              <strong style={{display:'block',fontSize:'1rem',color:'var(--navy)',marginBottom:'0.25rem'}}>
+                Full Business Plan
+              </strong>
+              <span style={{fontSize:'0.78rem',color:'var(--text-soft)',display:'block',marginBottom:'0.6rem',lineHeight:1.5}}>
+                15-section Word document with financials, market analysis, curriculum overview &amp; projections.
+              </span>
+              <span style={{
+                display:'inline-flex',alignItems:'center',gap:'0.3rem',
+                fontSize:'0.75rem',fontWeight:700,
+                color:'var(--blue)',
+                background:'rgba(91,155,213,0.1)',
+                border:'1px solid rgba(91,155,213,0.3)',
+                borderRadius:'999px',padding:'0.25rem 0.7rem',
+              }}>
+                ⬇ DOCX · 21 KB
+              </span>
+            </div>
+          </a>
+
+        </div>
+      </section>
     </>
   )
 }
