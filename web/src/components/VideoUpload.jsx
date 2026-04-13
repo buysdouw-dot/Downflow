@@ -1,4 +1,3 @@
-import React from 'react'
 import { useState, useRef } from 'react'
 import { storage, storageRef, uploadBytesResumable, getDownloadURL, isConfigured } from '../services/firebase.js'
 import { submitVideoReview } from '../services/api.js'

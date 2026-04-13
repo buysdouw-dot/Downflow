@@ -1,4 +1,3 @@
-import React from 'react'
 import { useState, useEffect } from 'react'
 import VideoUpload from '../components/VideoUpload.jsx'
 import SessionFeedback from '../components/SessionFeedback.jsx'

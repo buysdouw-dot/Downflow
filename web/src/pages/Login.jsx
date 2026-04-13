@@ -1,4 +1,3 @@
-import React from 'react'
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { auth, db, isConfigured, signInWithEmailAndPassword, doc, getDoc } from '../services/firebase.js'

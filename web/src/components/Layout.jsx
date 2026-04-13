@@ -1,4 +1,3 @@
-import React from 'react'
 import { Outlet, NavLink, Link, useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import NetworkBg from './NetworkBg.jsx'
