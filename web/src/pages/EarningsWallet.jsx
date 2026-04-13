@@ -1,3 +1,4 @@
+import React from 'react'
 // ============================================================
 // EarningsWallet — Facilitator payout history + balance
 // Shows: sessions taught, earnings by phase, payout history,

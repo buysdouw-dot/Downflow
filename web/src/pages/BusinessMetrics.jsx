@@ -1,3 +1,4 @@
+import React from 'react'
 // ============================================================
 // BusinessMetrics — Weekly control dashboard + live calculator
 // The "System Map" control panel from the business framework.

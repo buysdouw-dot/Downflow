@@ -1,3 +1,4 @@
+import React from 'react'
 // ============================================================
 // DOWNFLOW Hex Symbol System
 // 7 Core Hex icons from the visual design universe

@@ -1,3 +1,4 @@
+import React from 'react'
 import { useState, useRef } from 'react'
 import VideoUpload from '../components/VideoUpload.jsx'
 import { useAuth } from '../context/AuthContext.jsx'

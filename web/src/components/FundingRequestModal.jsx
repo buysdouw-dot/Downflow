@@ -1,3 +1,4 @@
+import React from 'react'
 import { useState } from 'react'
 import { FUNDING_TIERS, WISE_DETAILS, createFundingRequest } from '../services/funding.js'
 import { useAuth } from '../context/AuthContext.jsx'

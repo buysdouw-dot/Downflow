@@ -1,3 +1,4 @@
+import React from 'react'
 import { useState, useEffect, useRef } from 'react'
 import { getCells } from '../services/api.js'
 import { db, isConfigured, addDoc, collection, serverTimestamp } from '../services/firebase.js'

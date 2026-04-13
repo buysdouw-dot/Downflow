@@ -1,3 +1,4 @@
+import React from 'react'
 // ============================================================
 // DOWNFLOW Onboarding Banners
 // Role-specific welcome flows: Parent · Connector · Facilitator · Sponsor

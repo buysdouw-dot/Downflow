@@ -1,3 +1,4 @@
+import React from 'react'
 // ============================================================
 // MarketingEngine — Full acquisition system for all 4 roles
 // Strategies, scripts, content calendar, campaign tracker

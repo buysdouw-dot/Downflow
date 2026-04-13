@@ -1,3 +1,4 @@
+import React from 'react'
 import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext.jsx'
 import { getAllFundingRequests, confirmPaymentReceived } from '../services/funding.js'

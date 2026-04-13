@@ -1,3 +1,4 @@
+import React from 'react'
 // ============================================================
 // Legal — Terms & Conditions + Privacy Policy
 // Required before public launch. Covers:

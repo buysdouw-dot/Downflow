@@ -1,3 +1,4 @@
+import React from 'react'
 // ============================================================
 // Support — FAQ + Issue Submission
 // Covers: missed class, wrong booking, payment confusion,

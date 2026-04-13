@@ -1,3 +1,4 @@
+import React from 'react'
 // ============================================================
 // Referrals — Referral system for connectors + sponsors
 // Generates unique referral links, tracks clicks + conversions.

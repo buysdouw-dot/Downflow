@@ -1,3 +1,4 @@
+import React from 'react'
 // ============================================================
 // SessionFeedback — Post-class rating modal
 // Shown to students after each session.
