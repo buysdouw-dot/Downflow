@@ -135,9 +135,11 @@ export default function Layout() {
             <span className="topbar-headline-text"><em>is Different</em></span>
           </div>
 
-          {/* Centre logo */}
+          {/* Centre logo — absolutely positioned so it doesn't inflate row height */}
           <div className="topbar-brand-block">
-            <DownflowLogo height={550} />
+            <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', zIndex: 2, pointerEvents: 'none' }}>
+              <DownflowLogo height={550} />
+            </div>
           </div>
 
           {/* Right statement */}
