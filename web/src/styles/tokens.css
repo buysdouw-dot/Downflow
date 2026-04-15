@@ -81,14 +81,13 @@ a:hover { color: var(--navy); }
 .site-shell { position: relative; min-height: 100vh; }
 
 /* ── Background ─────────────────────────────────────────────── */
+/* Cinematic slideshow handled by NetworkBg.jsx — this is a subtle grid overlay only */
 .bg-grid {
   position: fixed; inset: 0; pointer-events: none; z-index: -1;
   background-image:
-    radial-gradient(circle at 15% 20%, rgba(91,155,213,0.12) 0%, transparent 45%),
-    radial-gradient(circle at 85% 75%, rgba(212,168,64,0.08) 0%, transparent 40%),
-    linear-gradient(rgba(91,155,213,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(91,155,213,0.04) 1px, transparent 1px);
-  background-size: auto, auto, 64px 64px, 64px 64px;
+    linear-gradient(rgba(91,155,213,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(91,155,213,0.03) 1px, transparent 1px);
+  background-size: 64px 64px;
 }
 
 /* ── Topbar ─────────────────────────────────────────────────── */

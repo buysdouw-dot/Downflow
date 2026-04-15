@@ -282,7 +282,7 @@ export default function Layout() {
       <footer className="site-footer">
         <div className="footer-inner">
           <div>
-            <img src="/downflow-logo-v2.webp" alt="DOWNFLOW" style={{ height: 48, display: 'block', marginBottom: '0.5rem', objectFit: 'contain' }} />
+            <img src="/downflow-logo-v3.webp" alt="DOWNFLOW" style={{ height: 48, display: 'block', marginBottom: '0.5rem', objectFit: 'contain', mixBlendMode: 'lighten' }} />
             <p className="footer-sub">School of Life — A sponsor-funded, globally distributed education infrastructure.<br/>Vietnam · Russia · Germany · Global</p>
           </div>
           <div className="footer-links">
