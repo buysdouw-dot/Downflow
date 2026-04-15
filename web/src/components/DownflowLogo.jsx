@@ -1,4 +1,4 @@
-// DOWNFLOW brand logo — blends into the blue topbar on all sides
+// DOWNFLOW brand logo — fiery tornado version, blends via screen mode
 export default function DownflowLogo({ height = 56, className = '' }) {
   return (
     <div
@@ -8,23 +8,13 @@ export default function DownflowLogo({ height = 56, className = '' }) {
         display:  'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        // At large sizes the radial vignette must be wide enough to fully dissolve edges
-        WebkitMaskImage: [
-          'radial-gradient(ellipse 48% 44% at 50% 50%, black 20%, transparent 100%)',
-          'linear-gradient(to right, transparent 0%, black 28%, black 72%, transparent 100%)',
-          'linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)',
-        ].join(', '),
-        maskImage: [
-          'radial-gradient(ellipse 48% 44% at 50% 50%, black 20%, transparent 100%)',
-          'linear-gradient(to right, transparent 0%, black 28%, black 72%, transparent 100%)',
-          'linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)',
-        ].join(', '),
-        WebkitMaskComposite: 'destination-in, destination-in',
-        maskComposite:       'intersect, intersect',
+        // soft fade on all edges so it dissolves into the dark topbar
+        WebkitMaskImage: 'radial-gradient(ellipse 80% 75% at 50% 50%, black 35%, transparent 100%)',
+        maskImage:        'radial-gradient(ellipse 80% 75% at 50% 50%, black 35%, transparent 100%)',
       }}
     >
       <img
-        src="/downflow-logo-v3.webp"
+        src="/downflow-logo-v4.jpeg"
         alt="DOWNFLOW"
         height={height}
         width="auto"

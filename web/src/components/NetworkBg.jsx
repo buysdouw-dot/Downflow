@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
 
 const SLIDES = [
-  { src: '/bg-evolution.png',  pos: 'center 30%' },
-  { src: '/bg-hourglass.png',  pos: 'center center' },
-  { src: '/bg-ecosystem.png',  pos: 'center 40%' },
-  { src: '/bg-stability.png',  pos: 'center 20%' },
+  { src: '/bg-ecosystem-new.png', pos: 'center center' },
+  { src: '/bg-hourglass.png',     pos: 'center center' },
+  { src: '/bg-ecosystem.png',     pos: 'center 40%' },
+  { src: '/bg-stability.png',     pos: 'center 20%' },
 ]
 
 const INTERVAL = 8000   // ms per slide
