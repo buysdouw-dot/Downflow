@@ -1,5 +1,4 @@
 // DOWNFLOW brand logo — blends into the blue topbar on all sides
-// Wrapper uses a radial mask so edges dissolve into the surrounding navy/blue
 export default function DownflowLogo({ height = 56, className = '' }) {
   return (
     <div
@@ -9,17 +8,19 @@ export default function DownflowLogo({ height = 56, className = '' }) {
         display:  'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        // Radial fade: fully visible centre, transparent at all edges
+        // At large sizes the radial vignette must be wide enough to fully dissolve edges
         WebkitMaskImage: [
-          'radial-gradient(ellipse 46% 52% at 50% 50%, black 30%, transparent 100%)',
-          'linear-gradient(to right, transparent 0%, black 22%, black 78%, transparent 100%)',
+          'radial-gradient(ellipse 48% 44% at 50% 50%, black 20%, transparent 100%)',
+          'linear-gradient(to right, transparent 0%, black 28%, black 72%, transparent 100%)',
+          'linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)',
         ].join(', '),
         maskImage: [
-          'radial-gradient(ellipse 46% 52% at 50% 50%, black 30%, transparent 100%)',
-          'linear-gradient(to right, transparent 0%, black 22%, black 78%, transparent 100%)',
+          'radial-gradient(ellipse 48% 44% at 50% 50%, black 20%, transparent 100%)',
+          'linear-gradient(to right, transparent 0%, black 28%, black 72%, transparent 100%)',
+          'linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)',
         ].join(', '),
-        WebkitMaskComposite: 'destination-in',
-        maskComposite:       'intersect',
+        WebkitMaskComposite: 'destination-in, destination-in',
+        maskComposite:       'intersect, intersect',
       }}
     >
       <img
@@ -30,7 +31,6 @@ export default function DownflowLogo({ height = 56, className = '' }) {
         style={{
           display: 'block',
           objectFit: 'contain',
-          // screen blend: removes the dark background, keeps white+gold text
           mixBlendMode: 'screen',
         }}
       />

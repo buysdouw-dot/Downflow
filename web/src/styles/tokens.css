@@ -117,7 +117,7 @@ a:hover { color: var(--navy); }
   border-bottom: 1px solid rgba(91,155,213,0.12);
   gap: 2rem;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 .topbar-row-headline::before {
   content: '';
