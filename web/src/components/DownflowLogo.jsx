@@ -8,9 +8,9 @@ export default function DownflowLogo({ height = 56, className = '' }) {
         display:  'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        // soft fade on all edges so it dissolves into the dark topbar
-        WebkitMaskImage: 'radial-gradient(ellipse 80% 75% at 50% 50%, black 35%, transparent 100%)',
-        maskImage:        'radial-gradient(ellipse 80% 75% at 50% 50%, black 35%, transparent 100%)',
+        // wide ellipse keeps text sharp at centre, fades only the outer edges
+        WebkitMaskImage: 'radial-gradient(ellipse 90% 80% at 50% 50%, black 55%, transparent 100%)',
+        maskImage:        'radial-gradient(ellipse 90% 80% at 50% 50%, black 55%, transparent 100%)',
       }}
     >
       <img

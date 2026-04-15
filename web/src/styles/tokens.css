@@ -113,12 +113,12 @@ a:hover { color: var(--navy); }
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  padding: 2rem 2.5rem;
+  padding: 0.6rem 2.5rem;
   border-bottom: 1px solid rgba(91,155,213,0.12);
-  gap: 2.5rem;
+  gap: 2rem;
   position: relative;
   overflow: hidden;
-  min-height: 420px;
+  min-height: 90px;
 }
 .topbar-row-headline::before {
   content: '';
@@ -175,12 +175,12 @@ a:hover { color: var(--navy); }
 
 .topbar-headline-text {
   font-family: 'Outfit', sans-serif;
-  font-size: clamp(0.85rem, 1.3vw, 1.25rem);
+  font-size: clamp(0.7rem, 1vw, 1rem);
   font-weight: 900;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #e8eef6;
-  line-height: 1.15;
+  line-height: 1.2;
   white-space: nowrap;
   position: relative;
   z-index: 1;
@@ -188,9 +188,10 @@ a:hover { color: var(--navy); }
 .topbar-headline-text em {
   font-style: italic;
   color: #d4a840;
-  font-weight: 900;
-  letter-spacing: 0.02em;
+  font-weight: 700;
+  letter-spacing: 0.01em;
   text-transform: none;
+  font-size: clamp(0.75rem, 1.05vw, 1.05rem);
 }
 .topbar-headline-divider {
   display: none;
