@@ -108,16 +108,17 @@ a:hover { color: var(--navy); }
   overflow: visible;
 }
 
-/* ── Row 0 — Slogan | BIG LOGO (centre) | Slogan ── */
+/* ── Row 0 — Slogan | LOGO (centre) | Slogan ── */
 .topbar-row-headline {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  padding: 1rem 2.5rem;
+  padding: 0.45rem 2rem;
   border-bottom: 1px solid rgba(91,155,213,0.12);
-  gap: 2rem;
+  gap: 1.5rem;
   position: relative;
-  overflow: visible;
+  overflow: hidden;
+  min-height: 0;
 }
 .topbar-row-headline::before {
   content: '';
@@ -162,22 +163,23 @@ a:hover { color: var(--navy); }
 .topbar-statement {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
+  gap: 0.6rem;
+  flex-wrap: nowrap;
   position: relative;
   z-index: 1;
+  overflow: hidden;
 }
 .topbar-statement--left  { justify-content: flex-end;   }
 .topbar-statement--right { justify-content: flex-start; }
 
 .topbar-headline-text {
   font-family: 'Outfit', sans-serif;
-  font-size: clamp(0.9rem, 1.5vw, 1.45rem);
+  font-size: clamp(0.7rem, 1.1vw, 1.05rem);
   font-weight: 900;
   letter-spacing: 0.055em;
   text-transform: uppercase;
   color: #e8eef6;
-  line-height: 1.1;
+  line-height: 1;
   white-space: nowrap;
   position: relative;
   z-index: 1;
@@ -190,8 +192,8 @@ a:hover { color: var(--navy); }
   text-transform: none;
 }
 .topbar-headline-divider {
-  width: 6px;
-  height: 6px;
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
   background: rgba(212,168,64,0.45);
   flex-shrink: 0;
