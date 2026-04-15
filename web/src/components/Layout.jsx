@@ -126,28 +126,27 @@ export default function Layout() {
       <NetworkBg/>
 
       <header className="topbar">
-        {/* ── ROW 0: Statement left | BIG LOGO (centred) | Statement right ── */}
+        {/* ── ROW 0: LOGO left | SLOGAN right ── */}
         <div className="topbar-row topbar-row-headline">
-          {/* Left statement */}
-          <div className="topbar-statement topbar-statement--left">
-            <span className="topbar-headline-text">Why This Model</span>
-            <div className="topbar-headline-divider"/>
-            <span className="topbar-headline-text"><em>is Different</em></span>
-          </div>
 
-          {/* Centre logo — absolutely positioned so it doesn't inflate row height */}
-          <div className="topbar-brand-block">
-            <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', zIndex: 2, pointerEvents: 'none' }}>
+          {/* Left — logo, absolutely placed so row height stays compact */}
+          <div className="topbar-brand-block topbar-brand-block--left">
+            <div style={{ position: 'absolute', left: '1.5rem', top: '50%', transform: 'translateY(-50%)', zIndex: 2, pointerEvents: 'none' }}>
               <DownflowLogo height={550} />
             </div>
           </div>
 
-          {/* Right statement */}
-          <div className="topbar-statement topbar-statement--right">
+          {/* Right — slogan */}
+          <div className="topbar-statement topbar-statement--right" style={{ gridColumn: 2 }}>
+            <span className="topbar-headline-text">Why This Model</span>
+            <div className="topbar-headline-divider"/>
+            <span className="topbar-headline-text"><em>is Different</em></span>
+            <div className="topbar-headline-divider"/>
             <span className="topbar-headline-text">Infrastructure,</span>
             <div className="topbar-headline-divider"/>
             <span className="topbar-headline-text"><em>not a tutoring center.</em></span>
           </div>
+
         </div>
 
         {/* ── ROW 1: Nav groups + Hamburger ── */}
