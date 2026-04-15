@@ -126,20 +126,23 @@ export default function Layout() {
       <NetworkBg/>
 
       <header className="topbar">
-        {/* ── ROW 0: LOGO left | SLOGAN right ── */}
+        {/* ── ROW 0: LEFT SLOGAN | BIG LOGO (centre) | RIGHT SLOGAN ── */}
         <div className="topbar-row topbar-row-headline">
 
-          {/* Left — logo in normal flow, grid auto column sizes to it */}
-          <div className="topbar-brand-block topbar-brand-block--left">
-            <DownflowLogo height={160} />
-          </div>
-
-          {/* Right — slogan */}
-          <div className="topbar-statement topbar-statement--right">
+          {/* Left — why this model is different */}
+          <div className="topbar-statement topbar-statement--left">
             <span className="topbar-headline-text">Why This Model</span>
             <div className="topbar-headline-divider"/>
             <span className="topbar-headline-text"><em>is Different</em></span>
-            <div className="topbar-headline-divider"/>
+          </div>
+
+          {/* Centre — big logo */}
+          <div className="topbar-brand-block">
+            <DownflowLogo height={220} />
+          </div>
+
+          {/* Right — infrastructure tagline */}
+          <div className="topbar-statement topbar-statement--right">
             <span className="topbar-headline-text">Infrastructure,</span>
             <div className="topbar-headline-divider"/>
             <span className="topbar-headline-text"><em>not a tutoring center.</em></span>

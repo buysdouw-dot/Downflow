@@ -108,10 +108,10 @@ a:hover { color: var(--navy); }
   overflow: visible;
 }
 
-/* ── Row 0 — BIG LOGO left | Slogan right ── */
+/* ── Row 0 — Slogan | BIG LOGO (centre) | Slogan ── */
 .topbar-row-headline {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
   padding: 1rem 2.5rem;
   border-bottom: 1px solid rgba(91,155,213,0.12);
@@ -130,11 +130,11 @@ a:hover { color: var(--navy); }
   pointer-events: none;
 }
 
-/* Left logo block */
+/* Centre logo block */
 .topbar-brand-block {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   position: relative;
   z-index: 1;
   flex-shrink: 0;
@@ -167,8 +167,8 @@ a:hover { color: var(--navy); }
   position: relative;
   z-index: 1;
 }
-.topbar-statement--left  { justify-content: flex-end;  }
-.topbar-statement--right { justify-content: flex-end;  }
+.topbar-statement--left  { justify-content: flex-end;   }
+.topbar-statement--right { justify-content: flex-start; }
 
 .topbar-headline-text {
   font-family: 'Outfit', sans-serif;
