@@ -132,19 +132,19 @@ export default function Layout() {
           {/* Left — why this model is different */}
           <div className="topbar-statement topbar-statement--left">
             <span className="topbar-headline-text">Why This Model</span>
-            <div className="topbar-headline-divider"/>
+            <div className="topbar-headline-rule"/>
             <span className="topbar-headline-text"><em>is Different</em></span>
           </div>
 
-          {/* Centre — big logo */}
+          {/* Centre — hero logo */}
           <div className="topbar-brand-block">
-            <DownflowLogo height={52} />
+            <DownflowLogo height={130} />
           </div>
 
           {/* Right — infrastructure tagline */}
           <div className="topbar-statement topbar-statement--right">
             <span className="topbar-headline-text">Infrastructure,</span>
-            <div className="topbar-headline-divider"/>
+            <div className="topbar-headline-rule"/>
             <span className="topbar-headline-text"><em>not a tutoring center.</em></span>
           </div>
 
