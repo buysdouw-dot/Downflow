@@ -137,7 +137,7 @@ export default function Layout() {
 
           {/* Centre logo */}
           <div className="topbar-brand-block">
-            <DownflowLogo height={130} />
+            <DownflowLogo height={64} />
           </div>
 
           {/* Right statement */}
@@ -282,7 +282,7 @@ export default function Layout() {
       <footer className="site-footer">
         <div className="footer-inner">
           <div>
-            <p className="brand"><span className="brand-down">DOWN</span><span className="brand-flow">FLOW</span></p>
+            <img src="/downflow-logo-v2.webp" alt="DOWNFLOW" style={{ height: 48, display: 'block', marginBottom: '0.5rem', objectFit: 'contain' }} />
             <p className="footer-sub">School of Life — A sponsor-funded, globally distributed education infrastructure.<br/>Vietnam · Russia · Germany · Global</p>
           </div>
           <div className="footer-links">
