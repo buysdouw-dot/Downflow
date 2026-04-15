@@ -1,5 +1,5 @@
 // DOWNFLOW brand logo — official wordmark: DOWN (white) + FLOW (gold) + gold wave
-// Background matches app's --bg-page (#0f1b2d) so it blends seamlessly
+// mix-blend-mode:lighten strips the dark bg; CSS mask fades the sides to transparent
 export default function DownflowLogo({ height = 56, className = '' }) {
   return (
     <img
@@ -11,9 +11,10 @@ export default function DownflowLogo({ height = 56, className = '' }) {
       style={{
         display: 'block',
         objectFit: 'contain',
-        // Blend: the logo has a near-black navy bg; mix-blend-mode lighten
-        // removes the dark bg and leaves only the white/gold text
         mixBlendMode: 'lighten',
+        // Fade left + right edges into the surrounding background
+        WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 18%, black 82%, transparent 100%)',
+        maskImage:        'linear-gradient(to right, transparent 0%, black 18%, black 82%, transparent 100%)',
       }}
     />
   )
