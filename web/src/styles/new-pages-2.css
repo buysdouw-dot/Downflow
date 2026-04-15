@@ -2635,3 +2635,152 @@
   color: var(--text-muted);
 }
 
+
+/* ── Onboarding v2 ─────────────────────────────────────────── */
+
+/* Network ticker */
+.ob-ticker {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow: hidden;
+  padding: 0.6rem 1.5rem;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  border-top: 1px solid var(--border);
+}
+.ob-ticker-label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--gold);
+  white-space: nowrap;
+  padding-right: 0.75rem;
+  border-right: 1px solid var(--border);
+  margin-right: 0.25rem;
+}
+.ob-ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid transparent;
+  transition: all 0.4s;
+  white-space: nowrap;
+}
+.ob-ticker-item strong { color: var(--text-soft); font-weight: 800; }
+.ob-ticker-item.ob-ticker-active {
+  background: rgba(212,168,64,0.08);
+  border-color: rgba(212,168,64,0.25);
+  color: var(--text-main);
+}
+.ob-ticker-item.ob-ticker-active strong { color: var(--gold); }
+
+/* Two-column layout: diagram + cards */
+.ob-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+.ob-diagram-col { }
+.ob-cards-col   { }
+
+/* Role stats strip inside pathway */
+.ob-role-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+.ob-role-stat {
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--role-color, var(--gold));
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 0.9rem;
+  text-align: center;
+}
+.ob-role-stat strong {
+  display: block;
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: var(--role-color, var(--gold));
+  line-height: 1.1;
+  margin-bottom: 0.2rem;
+}
+.ob-role-stat span {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+/* Other roles row */
+.ob-other-roles {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+/* Cell flow diagram */
+.ob-flow-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1.5rem;
+  position: relative;
+}
+.ob-flow-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  position: relative;
+}
+.ob-flow-icon {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.2s;
+}
+.ob-flow-step:hover .ob-flow-icon { border-color: var(--gold); }
+.ob-flow-label {
+  font-size: 0.72rem;
+  color: var(--text-soft);
+  text-align: center;
+  max-width: 72px;
+  line-height: 1.35;
+}
+.ob-flow-arrow {
+  font-size: 1rem;
+  color: var(--text-muted);
+  padding: 0 0.5rem;
+  line-height: 52px;
+  align-self: flex-start;
+  margin-top: 0;
+  transform: translateY(16px);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .ob-two-col { grid-template-columns: 1fr; gap: 1.5rem; }
+  .ob-diagram-col { display: none; }
+  .ob-cards-col .onboarding-roles-grid { grid-template-columns: 1fr 1fr !important; }
+}
+@media (max-width: 600px) {
+  .ob-role-stats { grid-template-columns: repeat(2, 1fr); }
+  .ob-cards-col .onboarding-roles-grid { grid-template-columns: 1fr !important; }
+  .ob-flow-arrow { display: none; }
+}

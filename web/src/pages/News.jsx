@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useFormSubmit } from '../hooks/useFormSubmit.js'
 
 const SIGNALS = [
   { id: 1, slug: 'cell-vn01-season-1', type: 'milestone', icon: '🏆', title: 'Cell VN-01 completes Season 1', body: 'Hanoi Learning Cell VN-01 has completed all 24 sessions of Season 1. All 5 students advanced to the next cycle. Succession rate: 100%.', date: '1 Apr 2026', region: '🇻🇳 Vietnam', pinned: true },
@@ -54,6 +55,14 @@ function SignalCard({ signal, featured }) {
 
 export default function News() {
   const [filter, setFilter] = useState('all')
+  const [subEmail, setSubEmail] = useState('')
+  const { send, status: subStatus } = useFormSubmit()
+
+  async function handleSubscribe(e) {
+    e.preventDefault()
+    if (!subEmail) return
+    await send({ templateId: 'template_subscribe', params: { email: subEmail, source: 'news-signal' } })
+  }
 
   const pinned = SIGNALS.filter(s => s.pinned)
   const rest = SIGNALS.filter(s => !s.pinned && (filter === 'all' || s.type === filter))
@@ -124,10 +133,26 @@ export default function News() {
         <div className="news-subscribe">
           <h3>Stay in the loop</h3>
           <p>Get system updates, expansion news, and milestone reports delivered to sponsors, connectors, and facilitators when they matter.</p>
-          <div className="news-subscribe-row">
-            <input className="form-input" placeholder="Your email address" style={{ maxWidth: '320px' }} />
-            <button className="btn btn-primary">Subscribe to Signals</button>
-          </div>
+          {subStatus === 'sent' ? (
+            <div style={{ display:'flex', alignItems:'center', gap:'0.6rem', padding:'0.75rem 1.25rem', background:'rgba(62,207,142,0.1)', border:'1.5px solid var(--green)', borderRadius:'12px', color:'var(--green)', fontWeight:700, fontSize:'0.9rem' }}>
+              ✓ You're subscribed. We'll reach out when something real happens.
+            </div>
+          ) : (
+            <form className="news-subscribe-row" onSubmit={handleSubscribe}>
+              <input
+                className="form-input"
+                placeholder="Your email address"
+                style={{ maxWidth: '320px' }}
+                type="email"
+                value={subEmail}
+                onChange={e => setSubEmail(e.target.value)}
+                required
+              />
+              <button className="btn btn-primary" type="submit" disabled={subStatus === 'sending'}>
+                {subStatus === 'sending' ? 'Subscribing…' : 'Subscribe to Signals'}
+              </button>
+            </form>
+          )}
           <p style={{ fontSize: '0.75rem', color: 'var(--text-soft)', marginTop: '0.6rem' }}>No marketing. No frequency pressure. Only real updates.</p>
         </div>
 
