@@ -129,15 +129,13 @@ export default function Layout() {
         {/* ── ROW 0: LOGO left | SLOGAN right ── */}
         <div className="topbar-row topbar-row-headline">
 
-          {/* Left — logo, absolutely placed so row height stays compact */}
+          {/* Left — logo in normal flow, grid auto column sizes to it */}
           <div className="topbar-brand-block topbar-brand-block--left">
-            <div style={{ position: 'absolute', left: '1.5rem', top: '50%', transform: 'translateY(-50%)', zIndex: 2, pointerEvents: 'none' }}>
-              <DownflowLogo height={550} />
-            </div>
+            <DownflowLogo height={160} />
           </div>
 
           {/* Right — slogan */}
-          <div className="topbar-statement topbar-statement--right" style={{ gridColumn: 2 }}>
+          <div className="topbar-statement topbar-statement--right">
             <span className="topbar-headline-text">Why This Model</span>
             <div className="topbar-headline-divider"/>
             <span className="topbar-headline-text"><em>is Different</em></span>
