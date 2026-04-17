@@ -3,9 +3,7 @@
 > vite --port 3000 --host 0.0.0.0
 
 
-  VITE v7.3.1  ready in 102 ms
+  VITE v7.3.1  ready in 147 ms
 
   ➜  Local:   http://localhost:3000/
-  ➜  Network: http://172.20.0.7:3000/
-2:22:34 PM [vite] (client) hmr update /src/components/Layout.jsx
-2:22:41 PM [vite] (client) hmr update /src/components/Layout.jsx
+  ➜  Network: http://172.20.0.43:3000/
