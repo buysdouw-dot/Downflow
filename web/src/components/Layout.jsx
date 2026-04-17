@@ -49,7 +49,6 @@ const NAV_GROUPS = [
       { to: '/join',                  label: '🌐 Join' },
       { to: '/auto-funnel',           label: '⚡ Funnel' },
       { to: '/social-ads',            label: '📣 Ads' },
-      { to: '/referrals',             label: '🔗 Referrals' },
       { to: '/marketing',             label: '📣 Marketing Engine' },
       { to: '/facilitator-app',       label: '📱 Facilitator App' },
       { to: '/facilitator-onboarding',label: '📄 Contract' },
@@ -67,6 +66,14 @@ const NAV_GROUPS = [
       { to: '/parent-dashboard',  label: '👨‍👩‍👧 Parent Dashboard' },
       { to: '/backup-system',     label: '🛡 Backup System' },
       { to: '/metrics',           label: '📊 Business Metrics' },
+    ]
+  },
+  {
+    label: 'Earnings',
+    links: [
+      { to: '/earnings',          label: '💳 Earnings Wallet' },
+      { to: '/funding-proposal',  label: '📋 Funding Proposal' },
+      { to: '/referrals',         label: '🔗 Referrals' },
     ]
   },
   {
