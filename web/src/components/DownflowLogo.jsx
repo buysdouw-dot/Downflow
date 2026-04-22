@@ -1,4 +1,4 @@
-// DOWNFLOW brand logo — fiery tornado version, blends via screen mode
+// DOWNFLOW brand logo — white/gold on dark navy, blends via screen mode
 export default function DownflowLogo({ height = 56, className = '' }) {
   return (
     <div
@@ -8,13 +8,21 @@ export default function DownflowLogo({ height = 56, className = '' }) {
         display:  'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        // wide ellipse keeps text sharp at centre, fades only the outer edges
-        WebkitMaskImage: 'radial-gradient(ellipse 90% 80% at 50% 50%, black 55%, transparent 100%)',
-        maskImage:        'radial-gradient(ellipse 90% 80% at 50% 50%, black 55%, transparent 100%)',
+        // Fade only the very outer edges — keeps text crisp, dissolves dark border
+        WebkitMaskImage: [
+          'linear-gradient(to right,  transparent 0%, black 12%, black 88%, transparent 100%)',
+          'linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)',
+        ].join(', '),
+        maskImage: [
+          'linear-gradient(to right,  transparent 0%, black 12%, black 88%, transparent 100%)',
+          'linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)',
+        ].join(', '),
+        WebkitMaskComposite: 'destination-in',
+        maskComposite: 'intersect',
       }}
     >
       <img
-        src="/downflow-logo-v4.jpeg"
+        src="/downflow-logo-v5.webp"
         alt="DOWNFLOW"
         height={height}
         width="auto"
