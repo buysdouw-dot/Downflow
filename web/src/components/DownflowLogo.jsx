@@ -8,14 +8,14 @@ export default function DownflowLogo({ height = 56, className = '' }) {
         display:  'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        // Wide fade — text stays crisp, outer dark edges dissolve into topbar
+        // Tight fade — only the very corners dissolve, logo text stays fully visible
         WebkitMaskImage: [
-          'linear-gradient(to right,  transparent 0%, black 18%, black 82%, transparent 100%)',
-          'linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%)',
+          'linear-gradient(to right,  transparent 0%, black 8%, black 92%, transparent 100%)',
+          'linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%)',
         ].join(', '),
         maskImage: [
-          'linear-gradient(to right,  transparent 0%, black 18%, black 82%, transparent 100%)',
-          'linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%)',
+          'linear-gradient(to right,  transparent 0%, black 8%, black 92%, transparent 100%)',
+          'linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%)',
         ].join(', '),
         WebkitMaskComposite: 'destination-in',
         maskComposite: 'intersect',
