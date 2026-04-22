@@ -118,7 +118,7 @@ a:hover { color: var(--navy); }
   gap: 1rem;
   position: relative;
   overflow: hidden;
-  height: 90px;
+  height: 150px;
 }
 .topbar-row-headline::before {
   content: '';

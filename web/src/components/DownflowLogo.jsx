@@ -24,8 +24,8 @@ export default function DownflowLogo({ height = 72, className = '' }) {
           height:      'auto',
           left:        0,
           top:         '50%',
-          // shift up so the text centre (~53% down the image) aligns with container centre
-          transform:   'translateY(-53%)',
+          // 53% = text centre, -4% extra to give the wave room at bottom
+          transform:   'translateY(-57%)',
           mixBlendMode:'screen',
         }}
       />
