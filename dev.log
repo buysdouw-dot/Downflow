@@ -3,26 +3,7 @@
 > vite --port 3000 --host 0.0.0.0
 
 
-  VITE v7.3.1  ready in 140 ms
+  VITE v7.3.1  ready in 135 ms
 
   ➜  Local:   http://localhost:3000/
   ➜  Network: http://172.20.0.10:3000/
-1:54:08 AM [vite] (client) hmr update /src/components/DownflowLogo.jsx
-1:56:59 AM [vite] (client) hmr update /src/components/Layout.jsx
-1:57:06 AM [vite] (client) hmr update /src/styles/tokens.css
-1:57:15 AM [vite] (client) hmr update /src/styles/tokens.css
-1:57:21 AM [vite] (client) hmr update /src/styles/tokens.css
-1:57:31 AM [vite] (client) hmr update /src/components/DownflowLogo.jsx
-2:03:27 AM [vite] (client) hmr update /src/styles/tokens.css
-2:03:47 AM [vite] (client) hmr update /src/components/Layout.jsx
-2:03:59 AM [vite] (client) hmr update /src/components/DownflowLogo.jsx
-2:06:03 AM [vite] (client) hmr update /src/components/Layout.jsx
-2:06:28 AM [vite] (client) hmr update /src/styles/tokens.css
-2:10:36 AM [vite] (client) hmr update /src/styles/tokens.css
-2:10:58 AM [vite] (client) hmr update /src/components/DownflowLogo.jsx
-2:11:11 AM [vite] (client) hmr update /src/components/Layout.jsx
-2:13:43 AM [vite] (client) hmr update /src/components/DownflowLogo.jsx
-2:14:04 AM [vite] (client) hmr update /src/components/Layout.jsx
-2:16:14 AM [vite] (client) hmr update /src/styles/tokens.css
-2:16:27 AM [vite] (client) hmr update /src/components/Layout.jsx
-2:16:36 AM [vite] (client) hmr update /src/components/DownflowLogo.jsx
