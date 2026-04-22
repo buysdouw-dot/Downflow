@@ -145,7 +145,7 @@ export default function Layout() {
 
           {/* Centre — hero logo */}
           <div className="topbar-brand-block">
-            <DownflowLogo height={72} />
+            <DownflowLogo height={80} />
           </div>
 
           {/* Right — infrastructure tagline */}
