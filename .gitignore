@@ -1,0 +1,11 @@
+# Security (VERY IMPORTANT)
+*.json
+.env
+serviceAccountKey.json
+firebase-adminsdk*.json
+
+# Node modules
+node_modules/
+
+# Logs
+*.log
